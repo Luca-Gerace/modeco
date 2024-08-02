@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { getUserData } from "../services/api";
 import { useState, useEffect } from "react";
+import { SidebarWithBurgerMenu } from "./SidebarWithBurgerMenu";
 
 export default function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -56,6 +57,7 @@ export default function Navbar() {
   return (
     <nav className="w-full px-4 py-6 border-b-2">
       <div className="w-full lg:w-1/2 flex justify-between items-center m-auto">
+        <SidebarWithBurgerMenu />
         <Link to="/">
           <img 
             src='https://res.cloudinary.com/dicfymkdl/image/upload/v1722538420/modeco-logo-light_qfngkh.svg' 
