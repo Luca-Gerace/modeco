@@ -20,7 +20,7 @@ router.get('/:id', async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
     if (!product) {
-      return res.status(404).json({ message: 'Product not found' });
+      return res.status(404).json({ message: 'Prodotto non trovato' });
     }
     res.json(product);
   } catch (err) {
@@ -28,8 +28,8 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// Auth middleware for the others routes
-router.use(authMiddleware);
+// Auth middleware per le altre rotte
+// router.use(authMiddleware);
 
 // POST /products
 router.post('/', async (req, res) => {
@@ -42,11 +42,28 @@ router.post('/', async (req, res) => {
   }
 });
 
+// PUT /products/:id
+router.put('/:id', async (req, res) => {
+  try {
+    const updatedProduct = await Product.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true, runValidators: true }
+    );
+    if (!updatedProduct) {
+      return res.status(404).json({ message: 'Prodotto non trovato' });
+    }
+    res.json(updatedProduct);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
 // PATCH /products/:id/image
 router.patch('/:id/image', cloudinaryUploader.single('image'), async (req, res) => {
   try {
     if (!req.file) {
-      return res.status(400).json({ message: 'No file uploaded' });
+      return res.status(400).json({ message: 'Nessun file caricato' });
     }
 
     const updatedProduct = await Product.findByIdAndUpdate(
@@ -56,27 +73,10 @@ router.patch('/:id/image', cloudinaryUploader.single('image'), async (req, res) 
     );
 
     if (!updatedProduct) {
-      return res.status(404).json({ message: 'Product not found' });
+      return res.status(404).json({ message: 'Prodotto non trovato' });
     }
 
     res.json({ image: updatedProduct.image });
-  } catch (err) {
-    res.status(400).json({ message: err.message });
-  }
-});
-
-// PUT /products/:id
-router.put('/:id', async (req, res) => {
-  try {
-    const updatedProduct = await Product.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true }
-    );
-    if (!updatedProduct) {
-      return res.status(404).json({ message: 'Product not found' });
-    }
-    res.json(updatedProduct);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -87,9 +87,9 @@ router.delete('/:id', async (req, res) => {
   try {
     const deletedProduct = await Product.findByIdAndDelete(req.params.id);
     if (!deletedProduct) {
-      return res.status(404).json({ message: 'Product not found' });
+      return res.status(404).json({ message: 'Prodotto non trovato' });
     }
-    res.json({ message: 'Product deleted' });
+    res.json({ message: 'Prodotto eliminato' });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

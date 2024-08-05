@@ -88,7 +88,7 @@ export const getProducts = async () => {
     const response = await api.get('/products');
     return response.data;
   } catch (err) {
-    console.error('Error retrieving products:', err);
+    console.error('Errore nel recupero dei prodotti:', err);
     throw err;
   }
 };
@@ -98,7 +98,7 @@ export const getProduct = async (productId) => {
     const response = await api.get(`/products/${productId}`);
     return response.data;
   } catch (err) {
-    console.error('Error retrieving product:', err);
+    console.error('Errore nel recupero del prodotto:', err);
     throw err;
   }
 };
@@ -108,7 +108,7 @@ export const createProduct = async (productData) => {
     const response = await api.post('/products', productData);
     return response.data;
   } catch (err) {
-    console.error('Error creating product:', err);
+    console.error('Errore nella creazione del prodotto:', err);
     throw err;
   }
 };
@@ -118,7 +118,7 @@ export const updateProduct = async (productId, productData) => {
     const response = await api.put(`/products/${productId}`, productData);
     return response.data;
   } catch (err) {
-    console.error('Error updating product:', err);
+    console.error('Errore nell\'aggiornamento del prodotto:', err);
     throw err;
   }
 };
@@ -128,7 +128,7 @@ export const deleteProduct = async (productId) => {
     const response = await api.delete(`/products/${productId}`);
     return response.data;
   } catch (err) {
-    console.error('Error deleting product:', err);
+    console.error('Errore nell\'eliminazione del prodotto:', err);
     throw err;
   }
 };
@@ -142,28 +142,18 @@ export const updateProductImage = async (productId, imageFile) => {
     });
     return response.data;
   } catch (err) {
-    console.error('Error updating product image:', err);
+    console.error('Errore nell\'aggiornamento dell\'immagine del prodotto:', err);
     throw err;
   }
 };
 
 // Cart
-export const getCarts = async () => {
+export const getCart = async () => {
   try {
-    const response = await api.get('/carts');
+    const response = await api.get('/cart');
     return response.data;
   } catch (err) {
-    console.error('Error retrieving carts:', err);
-    throw err;
-  }
-};
-
-export const getCart = async (cartId) => {
-  try {
-    const response = await api.get(`/carts/${cartId}`);
-    return response.data;
-  } catch (err) {
-    console.error('Error retrieving cart:', err);
+    console.error('Errore nel recupero del carrello:', err);
     throw err;
   }
 };

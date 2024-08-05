@@ -1,4 +1,4 @@
-export default function Shop() {
+export default function ShopCosmetics() {
     return (
         <div>Shop</div>
     )

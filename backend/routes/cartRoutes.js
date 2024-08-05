@@ -5,24 +5,14 @@ import { authMiddleware } from '../middlewares/authMiddleware.js';
 const router = express.Router();
 
 // Auth middleware for the others routes
-router.use(authMiddleware);
+// router.use(authMiddleware);
 
-// GET /carts
-router.get('/', async (req, res) => {
+// GET /cart
+router.get('/', authMiddleware, async (req, res) => {
   try {
-    const carts = await Cart.find();
-    res.json(carts);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
-
-// GET /carts/:id
-router.get('/:id', async (req, res) => {
-  try {
-    const cart = await Cart.findById(req.params.id);
+    const cart = await Cart.findOne({ userId: req.user._id }).populate('items.productId');
     if (!cart) {
-      return res.status(404).json({ message: 'Cart not found' });
+      return res.status(404).json({ message: 'Carrello non trovato' });
     }
     res.json(cart);
   } catch (err) {
