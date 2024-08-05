@@ -9,12 +9,13 @@ import ShopClothes from "./pages/ShopClothes";
 import ShopCosmetics from "./pages/ShopCosmetics";
 import ShopFoodAndBaverage from "./pages/ShopFoodAndBaverage";
 import ShopSecondHand from "./pages/ShopSecondHand";
+import Wishlist from "./pages/Wishlist";
 
 function App() {
   return (
     <Router>
       <Navbar />
-      <main className="w-full lg:w-1/2 px-4 py-8 m-auto">
+      <main className="w-full lg:w-[1024px] px-4 py-8 m-auto">
         <Routes>
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
@@ -24,6 +25,7 @@ function App() {
           <Route path="/food-and-beverage" element={<ShopFoodAndBaverage />} />
           <Route path="/second-hand" element={<ShopSecondHand />} />
           <Route path="/product/:id" element={<Product />} />
+          <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/checkout" element={<Checkout />} />
         </Routes>
       </main>

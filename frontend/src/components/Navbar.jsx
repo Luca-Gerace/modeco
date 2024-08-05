@@ -54,7 +54,7 @@ export default function Navbar() {
   };
 
   const toggleCart = () => {
-    setIsCartOpen(!isCartOpen);
+    setIsCartOpen(prev => !prev); // Cambia lo stato del carrello
   };
 
   const fallbackAvatar = "https://res.cloudinary.com/dicfymkdl/image/upload/v1721642624/avatar_rsyffw.png";
@@ -62,7 +62,7 @@ export default function Navbar() {
   return (
     <>
       <nav className="w-full px-4 py-6">
-        <div className="w-full lg:w-1/2 flex justify-between items-center m-auto">
+        <div className="w-full lg:w-[1024px] flex justify-between items-center m-auto">
           <div className="flex items-center gap-6">
             <SidebarWithBurgerMenu />
             <Link to="/">
@@ -77,14 +77,18 @@ export default function Navbar() {
             {isLoggedIn ? (
               <>
                 <li>
-                  <Link to="/create">
-                    <button type="submit" className="px-4 py-2 text-white bg-[#646ECB] rounded-md">New post</button>
+                  <Link to="/wishlist" className="nav-link">
+                    Wishlist
                   </Link>
                 </li>
                 <li>
                   <button onClick={toggleCart} className="relative">
-                    <SidebarCart isOpen={isCartOpen} onClose={toggleCart} />
+                    <SidebarCart isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
                     {/* Qui puoi aggiungere un badge per il numero di articoli nel carrello se necessario */}
+                    <span className="absolute top-0 right-0 bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs">
+                      {/* Qui inserire il numero di articoli nel carrello */}
+                      {/* {cartItems && cartItems.length > 0 && cartItems.length} */}
+                    </span>
                   </button>
                 </li>
                 <li>
@@ -117,7 +121,7 @@ export default function Navbar() {
         </div>
       </nav>
       <div className="w-full px-4 py-6 border-t border-[#000] shadow-md">
-        <div className="w-full lg:w-1/2 flex m-auto">
+        <div className="w-full lg:w-[1024px] flex m-auto">
           <div className="flex items-center justify-between gap-6">
             <NavLink 
               to="/clothes" 

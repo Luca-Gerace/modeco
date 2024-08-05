@@ -158,32 +158,40 @@ export const getCart = async () => {
   }
 };
 
-export const createCart = async (cartData) => {
+export const addToCart = async (productId, quantity) => {
   try {
-    const response = await api.post('/carts', cartData);
+    const product = await getProduct(productId);
+    const cartItem = {
+      productId,
+      quantity,
+      name: product.name,
+      price: product.price,
+      image: product.image
+    };
+    const response = await api.post('/cart', cartItem);
     return response.data;
   } catch (err) {
-    console.error('Error creating cart:', err);
+    console.error('Errore nell\'aggiunta al carrello:', err);
     throw err;
   }
 };
 
-export const updateCart = async (cartId, cartData) => {
+export const updateCartItem = async (productId, quantity) => {
   try {
-    const response = await api.put(`/carts/${cartId}`, cartData);
+    const response = await api.put('/cart', { productId, quantity });
     return response.data;
   } catch (err) {
-    console.error('Error updating cart:', err);
+    console.error('Errore nell\'aggiornamento dell\'articolo nel carrello:', err);
     throw err;
   }
 };
 
-export const deleteCart = async (cartId) => {
+export const removeFromCart = async (productId) => {
   try {
-    const response = await api.delete(`/carts/${cartId}`);
+    const response = await api.delete(`/cart/${productId}`);
     return response.data;
   } catch (err) {
-    console.error('Error deleting cart:', err);
+    console.error('Errore nella rimozione dell\'articolo dal carrello:', err);
     throw err;
   }
 };
@@ -291,22 +299,12 @@ export const deleteReview = async (reviewId) => {
 };
 
 // Wishlist
-export const getWishlists = async () => {
+export const getWishlist = async () => {
   try {
     const response = await api.get('/wishlist');
     return response.data;
   } catch (err) {
-    console.error('Error retrieving wishlists:', err);
-    throw err;
-  }
-};
-
-export const getWishlist = async (wishlistId) => {
-  try {
-    const response = await api.get(`/wishlist/${wishlistId}`);
-    return response.data;
-  } catch (err) {
-    console.error('Error retrieving wishlist:', err);
+    console.error('Errore nel recupero della wishlist:', err);
     throw err;
   }
 };
@@ -321,12 +319,12 @@ export const createWishlist = async (wishlistData) => {
   }
 };
 
-export const updateWishlist = async (wishlistId, wishlistData) => {
+export const updateWishlist = async (productId) => {
   try {
-    const response = await api.put(`/wishlist/${wishlistId}`, wishlistData);
+    const response = await api.post('/wishlist', { productId });
     return response.data;
   } catch (err) {
-    console.error('Error updating wishlist:', err);
+    console.error('Errore nell\'aggiornamento della wishlist:', err);
     throw err;
   }
 };

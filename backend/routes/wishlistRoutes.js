@@ -1,7 +1,9 @@
 import express from 'express';
 import Wishlist from '../models/Wishlist.js';
+import { authMiddleware } from '../middlewares/authMiddleware.js';
 
 const router = express.Router();
+router.use(authMiddleware);
 
 // GET /wishlists
 router.get('/', async (req, res) => {
@@ -32,6 +34,29 @@ router.post('/', async (req, res) => {
   try {
     const newWishlist = await wishlist.save();
     res.status(201).json(newWishlist);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
+// POST /wishlist
+router.post('/', authMiddleware, async (req, res) => {
+  try {
+    const { productId } = req.body;
+    const userId = req.user._id;
+
+    let wishlist = await Wishlist.findOne({ userId });
+
+    if (!wishlist) {
+      wishlist = new Wishlist({ userId, products: [productId] });
+    } else {
+      if (!wishlist.products.includes(productId)) {
+        wishlist.products.push(productId);
+      }
+    }
+
+    await wishlist.save();
+    res.status(200).json(wishlist);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }

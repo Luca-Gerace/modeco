@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import {
   IconButton,
   Typography,
@@ -33,9 +33,9 @@ import {
 } from "@heroicons/react/24/outline";
  
 export function SidebarWithBurgerMenu() {
-  const [open, setOpen] = React.useState(0);
-  const [openAlert, setOpenAlert] = React.useState(true);
-  const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
+  const [open, setOpen] = useState(0);
+  const [openAlert, setOpenAlert] = useState(true);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
  
   const handleOpen = (value) => {
     setOpen(open === value ? 0 : value);
