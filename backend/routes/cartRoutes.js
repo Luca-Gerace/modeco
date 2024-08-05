@@ -4,78 +4,53 @@ import { authMiddleware } from '../middlewares/authMiddleware.js';
 
 const router = express.Router();
 
-// Auth middleware for the others routes
-// router.use(authMiddleware);
-
-// GET /cart
+// GET /cart (recupera il carrello dell'utente autenticato)
 router.get('/', authMiddleware, async (req, res) => {
   try {
     const cart = await Cart.findOne({ userId: req.user._id }).populate({
       path: 'items.productId',
-      select: 'name price image'
+      select: 'name price image' // Seleziona solo i campi necessari
     });
+
     if (!cart) {
       return res.status(404).json({ message: 'Carrello non trovato' });
     }
-    const cartData = {
-      _id: cart._id,
-      items: cart.items.map(item => ({
-        _id: item._id,
-        quantity: item.quantity,
-        name: item.productId.name,
-        price: item.productId.price,
-        image: item.productId.image
-      })),
-      totalPrice: cart.totalPrice
-    };
-    res.json(cartData);
+
+    // Calcola totalPrice e totalQuantity
+    cart.totalQuantity = cart.items.reduce((total, item) => total + item.quantity, 0);
+    cart.totalPrice = cart.items.reduce((total, item) => total + (item.productId.price * item.quantity), 0);
+
+    res.json(cart);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
 
-// POST /cart (add to cart or update quantity if already exists)
+// POST /cart 
 router.post('/', authMiddleware, async (req, res) => {
   try {
-    const { productId, quantity } = req.body;
-    let cart = await Cart.findOne({ userId: req.user._id });
-
-    if (!cart) {
-      cart = new Cart({ userId: req.user._id, items: [] });
-    }
-
-    const itemIndex = cart.items.findIndex(item => item.productId.toString() === productId);
-
-    if (itemIndex > -1) {
-      cart.items[itemIndex].quantity += quantity;
-    } else {
-      cart.items.push({ productId, quantity });
-    }
-
+    const { userId, items } = req.body;
+    const cart = new Cart({ userId, items });
     await cart.save();
-    res.status(200).json(cart);
+    res.status(201).json(cart);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
 });
 
-// PUT /cart (update item quantity)
-router.put('/', authMiddleware, async (req, res) => {
+// PATCH /cart/:id (aggiorna la quantità di un articolo nel carrello)
+router.patch('/:id', authMiddleware, async (req, res) => {
   try {
-    const { productId, quantity } = req.body;
-    const cart = await Cart.findOne({ userId: req.user._id });
-
+    const cart = await Cart.findById(req.params.id);
     if (!cart) {
       return res.status(404).json({ message: 'Carrello non trovato' });
     }
 
-    const itemIndex = cart.items.findIndex(item => item.productId.toString() === productId);
-
-    if (itemIndex > -1) {
-      cart.items[itemIndex].quantity = quantity;
-    } else {
-      return res.status(404).json({ message: 'Articolo non trovato nel carrello' });
-    }
+    // Aggiorna gli articoli nel carrello
+    const { items } = req.body;
+    cart.items = items; // Aggiorna gli articoli
+    cart.totalQuantity = cart.items.reduce((total, item) => total + item.quantity, 0);
+    cart.totalPrice = cart.items.reduce((total, item) => total + (item.productId.price * item.quantity), 0);
 
     await cart.save();
     res.status(200).json(cart);
@@ -84,7 +59,7 @@ router.put('/', authMiddleware, async (req, res) => {
   }
 });
 
-// DELETE /cart/:productId (remove item from cart)
+// DELETE /cart/:productId (rimuovi un articolo dal carrello)
 router.delete('/:productId', authMiddleware, async (req, res) => {
   try {
     const productId = req.params.productId;
@@ -95,11 +70,10 @@ router.delete('/:productId', authMiddleware, async (req, res) => {
     }
 
     cart.items = cart.items.filter(item => item.productId.toString() !== productId);
-
     await cart.save();
     res.status(200).json(cart);
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    res.status(500).json({ message: err.message });
   }
 });
 

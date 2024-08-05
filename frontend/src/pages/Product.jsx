@@ -12,7 +12,7 @@ export default function Product() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const data = await getProduct(id)
+        const data = await getProduct(id);
         setProduct(data);
       } catch (error) {
         console.error('Errore nel recupero del prodotto:', error);
@@ -47,24 +47,6 @@ export default function Product() {
           <p className="text-xl font-semibold mb-2">{product.brand}</p>
           <p className="text-2xl font-bold mb-4">€{product.price?.toFixed(2)}</p>
           <p className="mb-4">{product.description}</p>
-          {product.category === 'clothes' && (
-            <>
-              <p className="mb-2"><span className="font-semibold">Colore:</span> {product.color}</p>
-              <p className="mb-4"><span className="font-semibold">Taglia:</span> {product.size}</p>
-            </>
-          )}
-          {product.category === 'cosmetics' && (
-            <>
-              <p className="mb-2"><span className="font-semibold">Ingredienti:</span> {product.ingredients}</p>
-              <p className="mb-4"><span className="font-semibold">Data di scadenza:</span> {new Date(product.expirationDate).toLocaleDateString()}</p>
-            </>
-          )}
-          {product.category === 'food and beverage' && (
-            <>
-              <p className="mb-2"><span className="font-semibold">Valori nutrizionali:</span> {product.nutritionFacts}</p>
-              <p className="mb-4"><span className="font-semibold">Data di scadenza:</span> {new Date(product.expirationDate).toLocaleDateString()}</p>
-            </>
-          )}
           <div className="flex items-center gap-4 mb-4">
             <button 
               onClick={() => setQuantity(Math.max(1, quantity - 1))}

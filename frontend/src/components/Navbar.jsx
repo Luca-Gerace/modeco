@@ -2,18 +2,17 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { getUserData } from "../services/api";
 import { useState, useEffect } from "react";
 import { SidebarWithBurgerMenu } from "./SidebarWithBurgerMenu";
-import { SidebarCart } from "./SidebarCart";
+import { SidebarCart } from "./Cart/SidebarCart";
 
 export default function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
-  const [isCartOpen, setIsCartOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     const checkLoginStatus = async () => {
       const token = localStorage.getItem('token');
-
+console.log(token);
       if (token) {
         try {
           const userData = await getUserData();
@@ -53,10 +52,6 @@ export default function Navbar() {
     navigate("/");
   };
 
-  const toggleCart = () => {
-    setIsCartOpen(prev => !prev); // Cambia lo stato del carrello
-  };
-
   const fallbackAvatar = "https://res.cloudinary.com/dicfymkdl/image/upload/v1721642624/avatar_rsyffw.png";
 
   return (
@@ -82,14 +77,7 @@ export default function Navbar() {
                   </Link>
                 </li>
                 <li>
-                  <button onClick={toggleCart} className="relative">
-                    <SidebarCart isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
-                    {/* Qui puoi aggiungere un badge per il numero di articoli nel carrello se necessario */}
-                    <span className="absolute top-0 right-0 bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs">
-                      {/* Qui inserire il numero di articoli nel carrello */}
-                      {/* {cartItems && cartItems.length > 0 && cartItems.length} */}
-                    </span>
-                  </button>
+                  <SidebarCart />
                 </li>
                 <li>
                   {user ? (

@@ -27,10 +27,20 @@ api.interceptors.request.use(
 export const userLogin = async (credentials) => {
   try {
     const response = await api.post("/auth/login", credentials);
+    // Crea un carrello vuoto dopo il login
+    await createEmptyCart(response.data.userId);
     return response.data;
   } catch (error) {
     console.error("Authentication failed:", error);
     throw error;
+  }
+};
+
+const createEmptyCart = async (userId) => {
+  try {
+    await api.post('/cart', { userId, items: [] });
+  } catch (error) {
+    console.error("Failed to create empty cart:", error);
   }
 };
 
@@ -151,7 +161,13 @@ export const updateProductImage = async (productId, imageFile) => {
 export const getCart = async () => {
   try {
     const response = await api.get('/cart');
-    return response.data;
+    const cart = response.data;
+
+    // Calcola totalQuantity e totalPrice se non sono già presenti
+    cart.totalQuantity = cart.items.reduce((total, item) => total + item.quantity, 0);
+    cart.totalPrice = cart.items.reduce((total, item) => total + (item.productId.price * item.quantity), 0);
+
+    return cart; // Restituisci l'intero oggetto cart
   } catch (err) {
     console.error('Errore nel recupero del carrello:', err);
     throw err;
@@ -160,15 +176,12 @@ export const getCart = async () => {
 
 export const addToCart = async (productId, quantity) => {
   try {
-    const product = await getProduct(productId);
+    const cart = await getCart(); // Recupera il carrello esistente
     const cartItem = {
       productId,
       quantity,
-      name: product.name,
-      price: product.price,
-      image: product.image
     };
-    const response = await api.post('/cart', cartItem);
+    const response = await api.patch(`/cart/${cart._id}`, { items: [...cart.items, cartItem] });
     return response.data;
   } catch (err) {
     console.error('Errore nell\'aggiunta al carrello:', err);
@@ -176,9 +189,9 @@ export const addToCart = async (productId, quantity) => {
   }
 };
 
-export const updateCartItem = async (productId, quantity) => {
+export const updateCartItem = async (cartId, productId, quantity) => {
   try {
-    const response = await api.put('/cart', { productId, quantity });
+    const response = await api.patch(`/cart/${cartId}`, { productId, quantity });
     return response.data;
   } catch (err) {
     console.error('Errore nell\'aggiornamento dell\'articolo nel carrello:', err);
