@@ -6,14 +6,16 @@ const router = express.Router();
 
 // GET /cart (recupera il carrello dell'utente autenticato)
 router.get('/', authMiddleware, async (req, res) => {
-  try {
-    const cart = await Cart.findOne({ userId: req.user._id }).populate({
+  try {    
+    let cart = await Cart.findOne({ userId: req.user._id }).populate({
       path: 'items.productId',
-      select: 'name price image' // Seleziona solo i campi necessari
+      select: 'name price image'
     });
 
+    // Se il carrello non esiste, creane uno vuoto
     if (!cart) {
-      return res.status(404).json({ message: 'Carrello non trovato' });
+      cart = new Cart({ userId: req.user._id, items: [] });
+      await cart.save();
     }
 
     // Calcola totalPrice e totalQuantity
@@ -22,19 +24,8 @@ router.get('/', authMiddleware, async (req, res) => {
 
     res.json(cart);
   } catch (err) {
+    console.error('Errore nel recupero del carrello:', err);
     res.status(500).json({ message: err.message });
-  }
-});
-
-// POST /cart 
-router.post('/', authMiddleware, async (req, res) => {
-  try {
-    const { userId, items } = req.body;
-    const cart = new Cart({ userId, items });
-    await cart.save();
-    res.status(201).json(cart);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
   }
 });
 

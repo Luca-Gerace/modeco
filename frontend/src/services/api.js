@@ -27,20 +27,10 @@ api.interceptors.request.use(
 export const userLogin = async (credentials) => {
   try {
     const response = await api.post("/auth/login", credentials);
-    // Crea un carrello vuoto dopo il login
-    await createEmptyCart(response.data.userId);
     return response.data;
   } catch (error) {
     console.error("Authentication failed:", error);
     throw error;
-  }
-};
-
-const createEmptyCart = async (userId) => {
-  try {
-    await api.post('/cart', { userId, items: [] });
-  } catch (error) {
-    console.error("Failed to create empty cart:", error);
   }
 };
 

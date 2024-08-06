@@ -17,7 +17,7 @@ const productSchema = new mongoose.Schema({
   },
   // Proprietà specifiche per 'clothes'
   color: { type: String, required: function() { return this.category === 'clothes' || this.category === 'second hand'; } },
-  size: { type: String, required: function() { return this.category === 'clothes' || this.category === 'second hand'; } },
+  size: { type: [String], required: function() { return this.category === 'clothes' || this.category === 'second hand'; } },
   // Proprietà specifiche per 'cosmetics'
   ingredients: { type: String, required: function() { return this.category === 'cosmetics'; } },
   expirationDate: { type: Date, required: function() { return this.category === 'cosmetics'; } },

@@ -3,18 +3,20 @@ import {
   Drawer,
   Typography,
   IconButton,
-  List,
   Card,
   Badge,
+  Button,
 } from "@material-tailwind/react";
 import { ShoppingBagIcon } from "@heroicons/react/24/outline";
 import { getCart } from '../../services/api';
 import CartItem from "./CartItem";
+import { useNavigate } from "react-router-dom";
 export function SidebarCart() {
 
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const navigate = useNavigate();
 
   const openDrawer = () => setIsDrawerOpen(true);
   const closeDrawer = () => setIsDrawerOpen(false);
@@ -30,7 +32,6 @@ export function SidebarCart() {
       const cartData = await getCart();
       setCartItems(cartData.items);
       setTotalPrice(cartData.totalPrice);
-      console.log(cartData);
     } catch (error) {
       console.error('Errore nel recupero dei dati del carrello:', error);
       setCartItems([]);
@@ -38,6 +39,10 @@ export function SidebarCart() {
     }
   };
 
+  const handleCheckout = () => {
+    closeDrawer(); // Chiude il carrello
+    navigate('/checkout'); // Naviga verso la pagina di checkout
+  };
 
   return (
     <>
@@ -62,18 +67,36 @@ export function SidebarCart() {
               Carrello
             </Typography>
           </div>
-          <List className="overflow-y-auto max-h-[calc(100vh-6rem)]">
+          <ul className="overflow-y-auto max-h-[calc(100vh-12rem)]">
             {cartItems.map(item => (
               <CartItem key={item._id} item={item} fetchCartData={fetchCartData} />
             ))}
-          </List>
-          <div className="mt-auto">
-            <Typography variant="h6" color="blue-gray" className="mx-auto mb-2">
-              Totale: €{totalPrice}
-            </Typography>
-            <button className="w-full bg-blue-500 text-white py-2 rounded-md">
+          </ul>
+          <div className="mt-auto pt-6 border-t-2 border-[#23C16B]">
+            <div className="flex justify-between items-center">
+              <Typography variant="paragraph" color="blue-gray" className="mb-2">
+                Spedizione <small className="text-[10px]">(100% ecologica)</small>
+              </Typography>
+              <Typography variant="paragraph" color="blue-gray" className="mb-2">
+                {totalPrice < 100 ? `€9.00` : 'Gratis'}
+              </Typography>
+            </div>
+            <div className="flex justify-between items-center">
+              <Typography variant="h6" color="blue-gray" className="mb-6">
+                Totale
+              </Typography>
+              <Typography variant="h6" color="blue-gray" className="mb-6">
+                €{(totalPrice + (totalPrice < 100 ? 9 : 0)).toFixed(2)}
+              </Typography>
+            </div>
+            <Button 
+              onClick={handleCheckout}
+              className="w-full bg-[#23C16B] text-white py-4 rounded-full capitalize text-[16px]" 
+              color="green" 
+              disabled={cartItems.length === 0}
+            >
               Procedi al checkout
-            </button>
+            </Button>
           </div>
         </Card>
       </Drawer>
