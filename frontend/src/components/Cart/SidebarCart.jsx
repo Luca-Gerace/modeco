@@ -5,12 +5,13 @@ import {
   IconButton,
   List,
   Card,
+  Badge,
 } from "@material-tailwind/react";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+import { ShoppingBagIcon } from "@heroicons/react/24/outline";
 import { getCart } from '../../services/api';
-import { Bars3Icon } from "@heroicons/react/24/solid";
 import CartItem from "./CartItem";
 export function SidebarCart() {
+
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -37,15 +38,19 @@ export function SidebarCart() {
     }
   };
 
+
   return (
     <>
       <IconButton variant="text" size="lg" onClick={openDrawer}>
-        {isDrawerOpen ? (
-          <XMarkIcon className="h-8 w-8 stroke-2" />
-        ) : (
-          <Bars3Icon className="h-8 w-8 stroke-2" />
-        )}
+        <ShoppingBagIcon className="h-8 w-8 stroke-2" />
       </IconButton>
+      {
+        cartItems.length > 1&& (
+          <Badge overlap="circular" className="absolute -mt-8" color="red" content={cartItems.length}>
+            {' '}
+          </Badge>
+        )
+      }
       <Drawer open={isDrawerOpen} onClose={closeDrawer} placement="right">
         <Card
           color="transparent"
@@ -57,13 +62,13 @@ export function SidebarCart() {
               Carrello
             </Typography>
           </div>
-          <List>
+          <List className="overflow-y-auto max-h-[calc(100vh-6rem)]">
             {cartItems.map(item => (
               <CartItem key={item._id} item={item} fetchCartData={fetchCartData} />
             ))}
           </List>
           <div className="mt-auto">
-            <Typography variant="h6" color="blue-gray" className="mb-2">
+            <Typography variant="h6" color="blue-gray" className="mx-auto mb-2">
               Totale: €{totalPrice}
             </Typography>
             <button className="w-full bg-blue-500 text-white py-2 rounded-md">
