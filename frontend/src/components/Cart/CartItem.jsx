@@ -3,10 +3,10 @@ import {
   IconButton,
 } from "@material-tailwind/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { updateCartItem } from "../../services/api";
+import { removeFromCart, updateCartItem } from "../../services/api";
 
 export default function CartItem({ item, fetchCartData }) {
-  
+
   const handleUpdateQuantity = async (newQuantity) => {
     try {
       await updateCartItem(item._id, newQuantity);
@@ -18,7 +18,9 @@ export default function CartItem({ item, fetchCartData }) {
     
   const handleRemoveItem = async () => {
     try {
-      await updateCartItem(item._id, 0); // Imposta la quantità a 0 per rimuovere l'articolo
+      console.log("Rimuovendo l'articolo con ID:", item.productId._id); // Verifica l'ID
+      const response = await removeFromCart(item.productId._id); // Passa l'ID del prodotto da rimuovere
+      console.log("Risposta dalla rimozione:", response); // Stampa la risposta
       fetchCartData(); // Chiamata per aggiornare il carrello
     } catch (error) {
       console.error('Errore nella rimozione dell\'articolo:', error);

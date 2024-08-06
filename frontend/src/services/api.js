@@ -179,22 +179,24 @@ export const addToCart = async (productId, quantity) => {
   }
 };
 
+export const removeFromCart = async (productId) => {
+  try {
+    const cart = await getCart(); // Recupera il carrello esistente
+    const updatedItems = cart.items.filter(item => item.productId._id !== productId); // Filtra l'articolo da rimuovere
+    const response = await api.patch(`/cart/${cart._id}`, { items: updatedItems }); // Usa PATCH per aggiornare il carrello
+    return response.data;
+  } catch (err) {
+    console.error('Errore nella rimozione dell\'articolo dal carrello:', err);
+    throw err;
+  }
+};
+
 export const updateCartItem = async (cartId, productId, quantity) => {
   try {
     const response = await api.patch(`/cart/${cartId}`, { productId, quantity });
     return response.data;
   } catch (err) {
     console.error('Errore nell\'aggiornamento dell\'articolo nel carrello:', err);
-    throw err;
-  }
-};
-
-export const removeFromCart = async (productId) => {
-  try {
-    const response = await api.delete(`/cart/${productId}`);
-    return response.data;
-  } catch (err) {
-    console.error('Errore nella rimozione dell\'articolo dal carrello:', err);
     throw err;
   }
 };
