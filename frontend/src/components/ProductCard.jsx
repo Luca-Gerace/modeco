@@ -24,7 +24,7 @@ export default function ProductCard({ product, isInWishlist = false }) {
         <div className="w-full h-[250px] bg-[#EDF1FA] rounded-xl relative">
           <img className="w-full relative top-4" src={product.image} alt={product.name} />
             {product.quantity <= 0 && (
-              <Badge color="red">Esaurito</Badge>
+              <Badge color="gray">Esaurito</Badge>
             )}
             <button 
               onClick={handleWishlist}

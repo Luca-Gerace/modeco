@@ -10,6 +10,7 @@ import ShopCosmetics from "./pages/ShopCosmetics";
 import ShopFoodAndBaverage from "./pages/ShopFoodAndBaverage";
 import ShopSecondHand from "./pages/ShopSecondHand";
 import Wishlist from "./pages/Wishlist";
+import ThankYou from "./pages/Thankyou";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/product/:id" element={<Product />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/thank-you" element={<ThankYou />} />
         </Routes>
       </main>
     </Router>

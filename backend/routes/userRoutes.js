@@ -5,9 +5,6 @@ import { authMiddleware } from '../middlewares/authMiddleware.js';
 
 const router = express.Router();
 
-// Auth middleware for the others routes
-router.use(authMiddleware);
-
 // GET /users
 router.get('/', async (req, res) => {
   try {

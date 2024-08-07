@@ -42,8 +42,8 @@ router.post('/', async (req, res) => {
   }
 });
 
-// PUT /products/:id
-router.put('/:id', async (req, res) => {
+// PATCH /products/:id
+router.patch('/:id', async (req, res) => {
   try {
     const updatedProduct = await Product.findByIdAndUpdate(
       req.params.id,

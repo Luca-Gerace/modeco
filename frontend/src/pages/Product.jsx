@@ -6,6 +6,7 @@ import { updateWishlist } from '../services/api';
 import { HeartIcon, PlusIcon } from '@heroicons/react/24/outline';
 import { Button, Input, Select } from "@material-tailwind/react";
 import SelectOption from "@material-tailwind/react/components/Select/SelectOption";
+import Badge from "../components/Badge";
 
 export default function Product({isInWishlist = false}) {
   const { id } = useParams();
@@ -54,6 +55,9 @@ export default function Product({isInWishlist = false}) {
       <div className="flex flex-col md:flex-row md:space-x-8">
         <div className="w-full md:w-1/2 bg-[#EDF1FA] rounded-xl relative mb-6 md:mb-0">
           <img className="w-full relative top-4" src={product.image} alt={product.name} />
+          {product.quantity <= 0 && (
+              <Badge color="gray">Esaurito</Badge>
+            )}
           <button 
             onClick={handleWishlist}
             className="absolute top-2 right-2 bg-white rounded-full p-1 shadow-md hover:bg-gray-100 transition-colors"
@@ -100,8 +104,8 @@ export default function Product({isInWishlist = false}) {
               className="w-full outline-1 focus:border-t-[#333]" 
             />
           </div>
-          <Button onClick={handleAddToCart} className="flex items-center justify-center gap-4 w-full bg-[#000] text-white py-4 rounded-full capitalize text-[16px]" color="black" disabled={quantity === 0}>
-            Aggiungi al carrello <PlusIcon className="h-5 w-5" />
+          <Button onClick={handleAddToCart} className="flex items-center justify-center gap-4 w-full bg-[#000] text-white py-4 rounded-full capitalize text-[16px]" color="black" disabled={quantity === 0 || product.quantity === 0}>
+            {product.quantity === 0 ? "Prodotto esaurito" : `Aggiungi al carrello`} {product.quantity > 0 && <PlusIcon className="h-5 w-5" />}
           </Button>
           {alert && <Alert message={alert.message} type={alert.type} onClose={() => setAlert(null)} />}
         </div>

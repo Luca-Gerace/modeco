@@ -115,7 +115,7 @@ export const createProduct = async (productData) => {
 
 export const updateProduct = async (productId, productData) => {
   try {
-    const response = await api.put(`/products/${productId}`, productData);
+    const response = await api.patch(`/products/${productId}`, productData);
     return response.data;
   } catch (err) {
     console.error('Errore nell\'aggiornamento del prodotto:', err);
@@ -201,9 +201,12 @@ export const removeFromCart = async (productId) => {
   }
 };
 
-export const updateCartItem = async (cartId, productId, quantity) => {
+export const updateCartItem = async (cartId, items, totalPrice) => {
   try {
-    const response = await api.patch(`/cart/${cartId}`, { productId, quantity });
+    const response = await api.patch(`/cart/${cartId}`, {
+      items,
+      totalPrice
+    });
     return response.data;
   } catch (err) {
     console.error('Errore nell\'aggiornamento dell\'articolo nel carrello:', err);
@@ -237,7 +240,7 @@ export const createOrder = async (orderData) => {
     const response = await api.post('/orders', orderData);
     return response.data;
   } catch (err) {
-    console.error('Error creating order:', err);
+    console.error('Error creating order:', err.response.data);
     throw err;
   }
 };

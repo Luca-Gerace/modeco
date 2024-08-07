@@ -81,8 +81,8 @@ export default function Login() {
             <h1 className="text-[36px] font-bold text-center mb-6">Login</h1>
             {alert && <Alert message={alert.message} type={alert.type} onClose={() => setAlert(null)} />}
             <form onSubmit={handleSubmit}>
-                <Input label="Email" type="email" onChange={handleChange} required />
-                <Input label="Password" type="password" onChange={handleChange} required />
+                <Input label="Email" type="email" name="email" onChange={handleChange} required />
+                <Input label="Password" type="password" name="password" onChange={handleChange} required />
                 <button type="submit" className="w-full mt-4 p-4 text-white bg-[#646ECB] rounded-md">Login</button>
             </form>
             <div className="flex flex-col mt-8 gap-4">

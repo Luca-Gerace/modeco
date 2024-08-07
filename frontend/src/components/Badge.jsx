@@ -1,9 +1,9 @@
 export default function Badge({ children, color }) {
-    const colorClass = color === 'gray' ? 'bg-green-500' : 'bg-red-500';
+    const colorClass = color === 'gray' ? 'bg-gray-500' : 'bg-red-500';
 
     return (
-        <Badge className={`absolute text-white top-2 right-2 ${colorClass} rounded-full p-1 shadow-md`}>
+        <div className={`${colorClass} absolute text-[12px] text-white top-2.5 left-2.5 rounded-full py-1 px-2 shadow-md`}>
             {children}
-        </Badge>
+        </div>
     );
 }

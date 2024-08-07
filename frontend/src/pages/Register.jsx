@@ -28,6 +28,8 @@ export default function Register() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         
+        console.log(formData); // Added this to log the formData for debugging
+
         try {
             // register user function with form data
             await registerUser(formData);
@@ -38,7 +40,7 @@ export default function Register() {
             }, 3000);
 
         } catch (error) {
-            console.error('Registration error:', error);
+            console.error('Registration error:', error.response ? error.response.data : error);
             setAlert({ message: 'Registration error. Retry.', type: 'error' });
         }
     };
@@ -48,10 +50,10 @@ export default function Register() {
             <h1 className="text-[36px] font-bold text-center mb-6">Sign up</h1>
             {alert && <Alert message={alert.message} type={alert.type} onClose={() => setAlert(null)} />}
             <form onSubmit={handleSubmit}>
-                <Input label="Name" type="text" onChange={handleChange} required />
-                <Input label="Surname" type="text" onChange={handleChange} required />
-                <Input label="Email" type="email" onChange={handleChange} required />
-                <Input label="Password" type="password" onChange={handleChange} required />      
+                <Input label="Name" type="text" name="name" onChange={handleChange} required />
+                <Input label="Surname" type="text" name="surname" onChange={handleChange} required />
+                <Input label="Email" type="email" name="email" onChange={handleChange} required />
+                <Input label="Password" type="password" name="password" onChange={handleChange} required />      
                 <button type="submit" className="w-full mt-4 p-4 text-white bg-[#646ECB] rounded-md">Sign up</button>
             </form>
         </>
