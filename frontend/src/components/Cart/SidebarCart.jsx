@@ -40,8 +40,8 @@ export function SidebarCart() {
   };
 
   const handleCheckout = () => {
-    closeDrawer(); // Chiude il carrello
-    navigate('/checkout'); // Naviga verso la pagina di checkout
+    closeDrawer();
+    navigate('/checkout');
   };
 
   return (
@@ -50,7 +50,7 @@ export function SidebarCart() {
         <ShoppingBagIcon className="h-8 w-8 stroke-2" />
       </IconButton>
       {
-        cartItems.length > 1&& (
+        cartItems.length > 1 && (
           <Badge overlap="circular" className="absolute -mt-8" color="red" content={cartItems.length}>
             {' '}
           </Badge>

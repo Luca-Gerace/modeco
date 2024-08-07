@@ -167,11 +167,21 @@ export const getCart = async () => {
 export const addToCart = async (productId, quantity) => {
   try {
     const cart = await getCart(); // Recupera il carrello esistente
-    const cartItem = {
-      productId,
-      quantity,
-    };
-    const response = await api.patch(`/cart/${cart._id}`, { items: [...cart.items, cartItem] });
+    const existingItem = cart.items.find(item => item.productId._id === productId); // Controlla se il prodotto è già nel carrello
+
+    if (existingItem) {
+      // Se il prodotto esiste, aggiorna la quantità
+      existingItem.quantity += parseInt(quantity);
+    } else {
+      // Se il prodotto non esiste, aggiungilo come nuovo articolo
+      const cartItem = {
+        productId,
+        quantity,
+      };
+      cart.items.push(cartItem);
+    }
+
+    const response = await api.patch(`/cart/${cart._id}`, { items: cart.items });
     return response.data;
   } catch (err) {
     console.error('Errore nell\'aggiunta al carrello:', err);

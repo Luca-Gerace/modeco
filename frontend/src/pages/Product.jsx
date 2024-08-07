@@ -78,13 +78,13 @@ export default function Product({isInWishlist = false}) {
                   className: "hidden",
                 }} 
                 value={size} 
-                onChange={(e) => setSize(e.target.value)}
+                onChange={(e) => setSize(e)}
                 className="w-full outline-1 focus:border-t-[#333]" 
               >
-                <SelectOption value="S">S</SelectOption>
-                <SelectOption value="M">M</SelectOption>
-                <SelectOption value="L">L</SelectOption>
-                <SelectOption value="XL">XL</SelectOption>
+                <SelectOption value="" disabled>Seleziona una taglia</SelectOption>
+                {product.size.map((sizeOption) => (
+                  <SelectOption key={sizeOption} value={sizeOption}>{sizeOption}</SelectOption>
+                ))}
               </Select>
             </div>
           )}
