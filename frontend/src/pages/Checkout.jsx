@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getUserData ,getCart, createOrder, updateProduct, updateCartItem, getProduct } from '../services/api';
 import { Button, Typography, Input } from '@material-tailwind/react';
-import CartItem from '../components/Cart/CartItem';
 import {
   Accordion,
   AccordionHeader,
@@ -9,6 +8,7 @@ import {
 } from "@material-tailwind/react";
 import { useNavigate } from 'react-router-dom';
 import Alert from '../components/Alert';
+import ProductListItem from '../components/Product/ProductListItem';
 
 function Icon({ id, open }) {
   return (
@@ -44,14 +44,20 @@ export default function Checkout() {
       setUser(currentUser);
     };
     fetchUserData();
+    fetchCartData();
+  }, []);
 
-    const fetchCartData = async () => {
+  const fetchCartData = async () => {
+    try {
       const cartData = await getCart();
       setCartItems(cartData.items);
       setTotalPrice(cartData.totalPrice);
-    };
-    fetchCartData();
-  }, []);
+    } catch (error) {
+      console.error('Errore nel recupero dei dati del carrello:', error);
+      setCartItems([]);
+      setTotalPrice(0);
+    }
+  };
 
   const handleConfirmOrder = async () => {
     const orderData = {
@@ -120,7 +126,7 @@ export default function Checkout() {
         <AccordionBody>
           <ul>
             {cartItems.map(item => (
-              <CartItem key={item._id} item={item} fetchCartData={() => {}} />
+              <ProductListItem key={item._id} item={item} fetchCartData={fetchCartData} />
             ))}
           </ul>
           <Typography variant="h6" color="blue-gray" className="mt-4">

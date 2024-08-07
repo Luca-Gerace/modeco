@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import { HeartIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
-import { updateWishlist } from '../services/api';
-import Badge from './Badge';
+import { updateWishlist } from '../../services/api';
+import Badge from '../Badge';
 
 export default function ProductCard({ product, isInWishlist = false }) {
   const [inWishlist, setInWishlist] = useState(isInWishlist);

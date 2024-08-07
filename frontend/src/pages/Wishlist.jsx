@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getWishlist } from '../services/api';
-import ProductCard from '../components/ProductCard';
+import ProductCard from '../components/Product/ProductCard';
 
 export default function Wishlist() {
   const [wishlistItems, setWishlistItems] = useState([]);

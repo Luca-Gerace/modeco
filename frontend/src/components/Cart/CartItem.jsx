@@ -3,13 +3,19 @@ import {
   IconButton,
 } from "@material-tailwind/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { removeFromCart, updateCartItem } from "../../services/api";
+import { removeFromCart, updateCartItem, getCart } from "../../services/api";
 
 export default function CartItem({ item, fetchCartData }) {
 
   const handleUpdateQuantity = async (newQuantity) => {
     try {
-      await updateCartItem(item._id, newQuantity);
+      const cart = await getCart(); // Assicurati di avere l'ultimo stato del carrello
+      const updatedItems = cart.items.map(item =>
+        item.productId._id === item.productId._id ? { ...item, quantity: newQuantity } : item
+      );
+      const updatedTotalPrice = updatedItems.reduce((total, item) => total + (item.productId.price * item.quantity), 0);
+
+      await updateCartItem(cart._id, updatedItems, updatedTotalPrice);
       fetchCartData(); // Chiamata per aggiornare il carrello
     } catch (error) {
       console.error('Errore nell\'aggiornamento della quantità:', error);
