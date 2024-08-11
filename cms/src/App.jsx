@@ -1,0 +1,38 @@
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Products from "./pages/products/Products";
+import Product from "./pages/products/Product";
+import Blogs from "./pages/blogs/Blogs";
+import Blog from "./pages/blogs/Blog";
+import Users from "./pages/users/Users";
+import User from "./pages/users/User";
+import Orders from "./pages/orders/Orders";
+import Order from "./pages/orders/Order";
+
+function App() {
+  return (
+    <Router>
+      <Navbar />
+      <main className="w-full lg:w-[1024px] px-4 py-8 m-auto">
+        <Routes>
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/products/:id" element={<Product />} />
+          <Route path="/blogs" element={<Blogs />} />
+          <Route path="/blogs/:id" element={<Blog />} />
+          <Route path="/users" element={<Users />} />
+          <Route path="/users/:id" element={<User />} />
+          <Route path="/orders" element={<Orders />} />
+          <Route path="/orders/:id" element={<Order />} />
+        </Routes>
+      </main>
+    </Router>
+  );
+}
+
+export default App;

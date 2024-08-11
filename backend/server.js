@@ -33,7 +33,8 @@ const app = express();
 const corsOptions = {
   origin: function(origin, callback) {
     const whiteList = [
-      'http://localhost:5173', // development
+      'http://localhost:5173', // development - frontend
+      'http://localhost:5174', // development - cms
       // 'https://mern-blog-eight-pearl.vercel.app', // vercel
       // 'https://mern-blog-b8ed.onrender.com' // render
     ];

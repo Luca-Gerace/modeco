@@ -4,6 +4,8 @@ import { generateJWT } from '../utils/jwt.js';
 import { authMiddleware } from '../middlewares/authMiddleware.js';
 import passport from '../config/passportConfig.js';
 
+
+// TODO: Gestire doppio endpoint (frontend e cms)
 const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173';
 
 const router = express.Router();
@@ -59,6 +61,7 @@ router.get('/google/callback', passport.authenticate('google', { failureRedirect
         const token = await generateJWT({ id: req.user._id });
 
         // redirect user with token to frontend, use token for the other requests
+        // TODO: Gestire doppio endpoint (frontend e cms)
         res.redirect(`${FRONTEND_URL}/login?token=${token}`);
 
     } catch (err) {
