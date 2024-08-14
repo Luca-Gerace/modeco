@@ -11,11 +11,13 @@ passport.use(
         {
             clientID: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-            callbackURL: `${process.env.BACKEND_URL}/api/auth/google/callback`
+            callbackURL: `${process.env.BACKEND_URL}/api/auth/google/callback`,
+            passReqToCallback: true // Important to have access to req in the callback
         },
         // Run function after a successful auth request
-        async (accessToken, refreshToken, profile, done) => {
+        async (req, accessToken, refreshToken, profile, done) => {
             try {
+                const redirect = req.query.state; // Use the original state passed as redirect
                 // Search author in mongoDB by googleid
                 let user = await User.findOne({ googleId: profile.id })
 
@@ -34,7 +36,7 @@ passport.use(
                 await user.save();
 
                 // Pass author to passport middleware without error
-                done(null, user);
+                done(null, user, { redirect }); // Pass redirect as part of the login
 
             } catch (err) {
                 console.error(err);

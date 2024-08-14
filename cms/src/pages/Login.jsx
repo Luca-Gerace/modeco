@@ -73,7 +73,7 @@ export default function Login() {
     // input handler
     const handleGoogleLogin = () => {
         // redirect to google login
-        window.location.href = `${API_URL}/api/auth/google`;
+        window.location.href = `${API_URL}/api/auth/google?redirect=cms`;
     };
     
     return (

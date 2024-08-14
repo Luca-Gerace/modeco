@@ -7,6 +7,7 @@ import passport from '../config/passportConfig.js';
 
 // TODO: Gestire doppio endpoint (frontend e cms)
 const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173';
+const CMS_URL = process.env.CMS_URL || 'http://localhost:5174';
 
 const router = express.Router();
 
@@ -52,21 +53,26 @@ router.get('/me', authMiddleware, async (req, res) => {
 });
 
 // GET /google - handle google auth
-router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+router.get('/google', (req, res, next) => {
+    const redirect = req.query.redirect || 'frontend'; // Default to 'frontend'
+    passport.authenticate('google', {
+        scope: ['profile', 'email'],
+        state: redirect // Pass the redirect target through state parameter
+    })(req, res, next);
+});
 
 // GET /google/callback - callback function after google auth
 router.get('/google/callback', passport.authenticate('google', { failureRedirect: `${FRONTEND_URL}/login` }), async (req, res) => {
     try {
         // generate jwt token
         const token = await generateJWT({ id: req.user._id });
-
-        // redirect user with token to frontend, use token for the other requests
-        // TODO: Gestire doppio endpoint (frontend e cms)
-        res.redirect(`${FRONTEND_URL}/login?token=${token}`);
+        const redirectUrl = req.authInfo.redirect || 'frontend'; // Use the redirect passed from the strategy
+        const destinationUrl = redirectUrl === 'cms' ? CMS_URL : FRONTEND_URL;
+        res.redirect(`${destinationUrl}/login?token=${token}`);
 
     } catch (err) {
         console.error('Token generation error', err);
-        res.redirect(`${FRONTEND_URL}/login/error=auth_failed`);
+        res.redirect(`${FRONTEND_URL}/login?error=auth_failed`);
     }
 });
 
