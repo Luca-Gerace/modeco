@@ -94,7 +94,7 @@ export default function Products() {
           {products.map(product => (
               <tr key={product._id} className="border-b border-blue-gray-50 last:border-b-0">
                   <td className="p-4">
-                    <Link to={`/product/${product._id}`} className="block relative">
+                    <Link to={`/products/${product._id}`} className="block relative">
                       <div className="flex items-center gap-3">
                         <Avatar src={product.image} alt={product.name} size="sm" />
                         <div className="flex flex-col">

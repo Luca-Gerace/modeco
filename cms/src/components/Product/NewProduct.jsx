@@ -6,7 +6,7 @@ import { IconButton, Typography } from '@mui/material';
 import { XMarkIcon } from '@heroicons/react/24/solid';
 
 function NewProductModal({ open, handleOpen, setAllProducts }) {
-    const [step, setStep] = useState(1); // Step corrente
+    const [step, setStep] = useState(1);
     const [sizes, setSizes] = useState([]);
     const [newSize, setNewSize] = useState('');
     const [productImage, setProductImage] = useState(null);
@@ -179,15 +179,17 @@ function NewProductModal({ open, handleOpen, setAllProducts }) {
                                             </Button>
                                         </div>
                                         {sizes.length > 0 && (
-                                            <div className="my-4">
+                                            <div className="my-4 flex gap-2 items-center">
                                                 <h4>Sizes:</h4>
-                                                <ul className="list-disc ml-4">
+                                                <ul className="list-disc flex gap-2">
                                                     {sizes.map((size, index) => (
-                                                        <li key={index} className="flex justify-between">
-                                                            {size}
-                                                            <Button color="red" onClick={() => handleRemoveSize(size)}>
-                                                                Remove
-                                                            </Button>
+                                                        <li key={index} className="flex justify-between items-center bg-[#333] hover:bg-[#242424] rounded-full px-4 py-1 my-1">
+                                                            <span className="font-bold text-white">{size}</span>
+                                                            <button onClick={() => handleRemoveSize(size)} className="ml-2 text-white">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                                                                </svg>
+                                                            </button>
                                                         </li>
                                                     ))}
                                                 </ul>

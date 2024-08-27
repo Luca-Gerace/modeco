@@ -3,14 +3,14 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Products from "./pages/products/Products";
-import Product from "./pages/products/Product";
 import Blogs from "./pages/blogs/Blogs";
 import Blog from "./pages/blogs/Blog";
 import Users from "./pages/users/Users";
 import User from "./pages/users/User";
 import Orders from "./pages/orders/Orders";
 import Order from "./pages/orders/Order";
+import Products from "./pages/Products/Products";
+import Product from "./pages/Products/Product";
 
 function App() {
   return (

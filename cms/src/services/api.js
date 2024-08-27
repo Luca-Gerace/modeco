@@ -126,14 +126,15 @@ export const getProduct = async (productId) => {
 export const createProduct = (productData) => api.post("/products", productData, {headers: {'Content-Type': 'multipart/form-data'},});
 
 export const updateProduct = async (productId, productData) => {
+  api.patch(`/products/${productId}`, productData, {headers: {'Content-Type': 'multipart/form-data'},});
   try {
-    const response = await api.patch(`/products/${productId}`, productData);
+    const response = await api.patch(`/products/${productId}`, productData, {headers: {'Content-Type': 'multipart/form-data'},});
     return response.data;
   } catch (err) {
     console.error('Errore nell\'aggiornamento del prodotto:', err);
     throw err;
   }
-};
+}
 
 export const deleteProduct = async (productId) => {
   try {
