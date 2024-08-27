@@ -15,15 +15,15 @@ const productSchema = new mongoose.Schema({
     default: 'clothes',
     required: true
   },
-  // Proprietà specifiche per 'clothes'
+  // Proprietà specifiche per 'clothes' e 'second hand'
   color: { type: String, required: function() { return this.category === 'clothes' || this.category === 'second hand'; } },
   size: { type: [String], required: function() { return this.category === 'clothes' || this.category === 'second hand'; } },
   // Proprietà specifiche per 'cosmetics'
   ingredients: { type: String, required: function() { return this.category === 'cosmetics'; } },
-  expirationDate: { type: Date, required: function() { return this.category === 'cosmetics'; } },
   // Proprietà specifiche per 'food and beverage'
   nutritionFacts: { type: String, required: function() { return this.category === 'food and beverage'; } },
-  expirationDate: { type: Date, required: function() { return this.category === 'food and beverage'; } }
+  // Proprietà specifiche per 'cosmetics' e 'food and beverage'
+  expirationDate: { type: Date, required: function() { return this.category === 'cosmetics' || this.category === 'food and beverage'; } },
 }, {
   timestamps: true,
   collection: "products"

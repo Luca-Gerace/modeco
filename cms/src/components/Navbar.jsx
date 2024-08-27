@@ -11,8 +11,6 @@ export default function Navbar() {
   useEffect(() => {
     const checkLoginStatus = async () => {
       const token = localStorage.getItem('token');
-      // TODO: Remove this
-      console.log(token);
       if (token) {
         try {
           const userData = await getUserData();

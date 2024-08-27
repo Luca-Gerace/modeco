@@ -32,12 +32,33 @@ router.get('/:id', async (req, res) => {
 // router.use(authMiddleware);
 
 // POST /products
-router.post('/', async (req, res) => {
-  const product = new Product(req.body);
+router.post('/', cloudinaryUploader.single('image'), async (req, res) => {
   try {
-    const newProduct = await product.save();
+    const productData = req.body;
+
+    if (req.file) {
+      productData.image = req.file.path;
+    }
+
+    const newProduct = new Product(productData);
+
+    // Save new product in MongoDB
+    await newProduct.save();
+
+    // const htmlContent = `
+    //   <h1>Post published!</h1>
+    //   <p>Hi</p>
+    //   <p>This is your product: "${newProduct.brand}"</p>
+    //   <p>thank you</p>
+    // `
+
+    // // Mailgun trigger
+    // await sendEmail(newPost.author, 'post created!', htmlContent)
+
     res.status(201).json(newProduct);
+
   } catch (err) {
+    console.error('Product creation error', err);
     res.status(400).json({ message: err.message });
   }
 });

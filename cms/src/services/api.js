@@ -103,15 +103,27 @@ export const getProduct = async (productId) => {
   }
 };
 
-export const createProduct = async (productData) => {
-  try {
-    const response = await api.post('/products', productData);
-    return response.data;
-  } catch (err) {
-    console.error('Errore nella creazione del prodotto:', err);
-    throw err;
-  }
-};
+// export const createProduct = async (productData) => {
+//   try {
+//     const formData = new FormData();
+//     Object.keys(productData).forEach(key => {
+//       if (key === 'image' && productData[key]) {
+//         formData.append('image', productData[key]);
+//       } else {
+//         formData.append(key, productData[key]);
+//       }
+//     });
+
+//     const response = await api.post('/products', formData, {
+//       headers: { 'Content-Type': 'multipart/form-data' }
+//     });
+//     return response.data;
+//   } catch (err) {
+//     console.error('Errore nella creazione del prodotto:', err);
+//     throw err;
+//   }
+// };
+export const createProduct = (productData) => api.post("/products", productData, {headers: {'Content-Type': 'multipart/form-data'},});
 
 export const updateProduct = async (productId, productData) => {
   try {
