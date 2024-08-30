@@ -1,6 +1,15 @@
 import { getUserData } from "../services/api";
 import { useState, useEffect } from "react";
 import { Link } from "@mui/material";
+import { IconizedCard } from "../components/IconizedCard";
+import {
+  ShoppingCartIcon,
+  SparklesIcon,
+  UsersIcon,
+  TruckIcon,
+  CheckBadgeIcon,
+  NewspaperIcon
+} from "@heroicons/react/24/solid";
 
 export default function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -41,26 +50,47 @@ export default function Home() {
     };
   }, []);
 
+  const SECTIONS = [
+    { icon: ShoppingCartIcon, title: 'Products', link: '/products' },
+    { icon: TruckIcon, title: 'Orders', link: '/orders' },
+    { icon: NewspaperIcon, title: 'Blog posts', link: '/blog' },
+    { icon: UsersIcon, title: 'Users', link: '/users' },
+    { icon: SparklesIcon, title: 'Brands', link: '/brands' },
+    { icon: CheckBadgeIcon, title: 'Green licenses', link: '/licenses' }
+  ];
+
   return (
     <>
       {isLoggedIn ? (
         <>
-          <h1>Welcome back {user.name}</h1>
+          <h1 className="text-[40px] font-bold">Welcome back {user.name}</h1>
+          <p className="">What would you like to do today?
+          Let&apos;s make the world a better place together!</p>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-6 pt-10">
+            {SECTIONS.map((section, index) => (
+              <IconizedCard
+                key={index}
+                icon={section.icon}
+                title={section.title}
+                link={section.link}
+              />
+            ))}
+          </div>
         </>
       ) : (
         <>
           <div className="nav-item">
-            <Link to="/login" className="nav-link">
+            <Link href="/login" className="nav-link">
               Login
             </Link>
           </div>
           <div className="nav-item">
-            <Link to="/register" className="nav-link">
+            <Link href="/register" className="nav-link">
               Registrati
             </Link>
           </div>
         </>
       )}
     </>
-  )
+  );
 }
