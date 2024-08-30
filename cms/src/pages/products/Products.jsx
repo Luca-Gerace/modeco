@@ -18,26 +18,27 @@ import {
   Select,
   Option
 } from "@material-tailwind/react";
-import NewProductModal from '../../components/Product/NewProduct';
+import CreateProductModal from '../../components/Product/CreateProductModal';
 import SkeletonRow from '../../components/Skeleton/SkeletonRow';
 
 export default function Products() {
   const [allProducts, setAllProducts] = useState([]);
   const [products, setProducts] = useState([]);
   const [productFilter, setProductFilter] = useState("clothes");
+  const [searchTerm, setSearchTerm] = useState("");
   const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(true); // Loading state
+  const [loading, setLoading] = useState(true);
   const handleOpen = () => setOpen(!open);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const data = await getProducts();
-        setAllProducts(data); // Store products data in a new array 
-        setLoading(false); // Set loading to false after data is fetched
+        setAllProducts(data);
+        setLoading(false)
       } catch (error) {
         console.error('Errore nel recupero del prodotto:', error);
-        setLoading(false); // Ensure loading is false even if there is an error
+        setLoading(false);
       }
     };
 
@@ -45,10 +46,14 @@ export default function Products() {
   }, []);
 
   useEffect(() => {
-    // Filtra i prodotti ogni volta che productFilter o allProducts cambia
-    const filteredData = allProducts.filter(product => product.category === productFilter);
+    const filteredData = allProducts
+      .filter(product => product.category === productFilter)
+      .filter(product =>
+        product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        product.brand.toLowerCase().includes(searchTerm.toLowerCase())
+      );
     setProducts(filteredData);
-  }, [productFilter, allProducts]);
+  }, [productFilter, searchTerm, allProducts]);
 
   return (
     <>
@@ -82,6 +87,8 @@ export default function Products() {
             <Input
               label="Search"
               icon={<MagnifyingGlassIcon className="h-5 w-5" />}
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
         </div>
@@ -177,7 +184,7 @@ export default function Products() {
           </tbody>
         </table>
       </CardBody>
-      <NewProductModal open={open} handleOpen={handleOpen} setAllProducts={setAllProducts} />
+      <CreateProductModal open={open} handleOpen={handleOpen} setAllProducts={setAllProducts} />
     </Card>
     </>
   );

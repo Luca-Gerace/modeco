@@ -1,15 +1,23 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { getProduct } from "../../services/api";
-import EditProductModal from "../../components/Product/EditProduct";
+import EditProductModal from "../../components/Product/EditProductModal";
+import EditProductImageModal from "../../components/Product/EditProductImageModal";
+import ConfirmDeleteModal from "../../components/Product/DeleteProductModal";
 import { Button } from "@mui/material";
-import { UserPlusIcon } from "@heroicons/react/24/solid";
+import { PencilIcon, TrashIcon, PhotoIcon } from "@heroicons/react/24/solid";
 
 export default function Product() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [product, setProduct] = useState({});
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(!open);
+  const [openEditModal, setOpenEditModal] = useState(false);
+  const [openImageModal, setOpenImageModal] = useState(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+
+  const handleEditModalOpen = () => setOpenEditModal(!openEditModal);
+  const handleImageModalOpen = () => setOpenImageModal(!openImageModal);
+  const handleDeleteModalOpen = () => setOpenDeleteModal(!openDeleteModal);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -46,7 +54,7 @@ export default function Product() {
                   <p className="mb-4">{product.color}</p>
                   <h4 className="font-bold">Available Sizes:</h4>
                   <ul className="list-disc flex gap-2">
-                    {product.size.map((sizeOption) => (
+                    {product.size?.map((sizeOption) => (
                       <li key={sizeOption} className="flex justify-between items-center bg-[#333] hover:bg-[#242424] rounded-full px-4 py-1 my-1">
                         <span className="font-bold text-white">{sizeOption}</span>
                       </li>
@@ -58,12 +66,22 @@ export default function Product() {
           </div>
         </div>
         <div className="w-screen p-6 bg-white fixed bottom-0 left-0 border-t-2 shadow-2xl">
-          <Button onClick={handleOpen} className="flex items-center gap-3" size="sm">
-            <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Edit Product
-          </Button>
+          <div className="w-full lg:w-[1024px] m-auto px-4 flex justify-between items-center">
+            <Button onClick={handleEditModalOpen} className="flex items-center gap-3 rounded-full">
+              <PencilIcon strokeWidth={2} className="h-4 w-4" /> Edit Product
+            </Button>
+            <Button onClick={handleImageModalOpen} className="flex items-center gap-3 rounded-full">
+              <PhotoIcon strokeWidth={2} className="h-4 w-4" /> Edit Image
+            </Button>
+            <Button onClick={handleDeleteModalOpen} className="flex items-center gap-3 rounded-full">
+              <TrashIcon strokeWidth={2} className="h-4 w-4" /> Delete Product
+            </Button>
+          </div>
         </div>
       </div>
-      <EditProductModal open={open} handleOpen={handleOpen} productData={product} setProduct={setProduct} />
+      <EditProductModal open={openEditModal} handleOpen={handleEditModalOpen} productData={product} setProduct={setProduct} />
+      <EditProductImageModal open={openImageModal} handleOpen={handleImageModalOpen} productId={id} setProduct={setProduct} />
+      <ConfirmDeleteModal open={openDeleteModal} handleOpen={handleDeleteModalOpen} productId={id} navigate={navigate} />
     </>
   );
 }

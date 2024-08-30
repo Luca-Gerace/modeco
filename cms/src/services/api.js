@@ -103,32 +103,12 @@ export const getProduct = async (productId) => {
   }
 };
 
-// export const createProduct = async (productData) => {
-//   try {
-//     const formData = new FormData();
-//     Object.keys(productData).forEach(key => {
-//       if (key === 'image' && productData[key]) {
-//         formData.append('image', productData[key]);
-//       } else {
-//         formData.append(key, productData[key]);
-//       }
-//     });
-
-//     const response = await api.post('/products', formData, {
-//       headers: { 'Content-Type': 'multipart/form-data' }
-//     });
-//     return response.data;
-//   } catch (err) {
-//     console.error('Errore nella creazione del prodotto:', err);
-//     throw err;
-//   }
-// };
 export const createProduct = (productData) => api.post("/products", productData, {headers: {'Content-Type': 'multipart/form-data'},});
 
 export const updateProduct = async (productId, productData) => {
-  api.patch(`/products/${productId}`, productData, {headers: {'Content-Type': 'multipart/form-data'},});
+  api.patch(`/products/${productId}`, productData);
   try {
-    const response = await api.patch(`/products/${productId}`, productData, {headers: {'Content-Type': 'multipart/form-data'},});
+    const response = await api.patch(`/products/${productId}`, productData);
     return response.data;
   } catch (err) {
     console.error('Errore nell\'aggiornamento del prodotto:', err);
@@ -156,73 +136,6 @@ export const updateProductImage = async (productId, imageFile) => {
     return response.data;
   } catch (err) {
     console.error('Errore nell\'aggiornamento dell\'immagine del prodotto:', err);
-    throw err;
-  }
-};
-
-// Cart
-export const getCart = async () => {
-  try {
-    const response = await api.get('/cart');
-    const cart = response.data;
-
-    // Calcola totalQuantity e totalPrice se non sono già presenti
-    cart.totalQuantity = cart.items.reduce((total, item) => total + item.quantity, 0);
-    cart.totalPrice = cart.items.reduce((total, item) => total + (item.productId.price * item.quantity), 0);
-
-    return cart; // Restituisci l'intero oggetto cart
-  } catch (err) {
-    console.error('Errore nel recupero del carrello:', err);
-    throw err;
-  }
-};
-
-export const addToCart = async (productId, quantity) => {
-  try {
-    const cart = await getCart(); // Recupera il carrello esistente
-    const existingItem = cart.items.find(item => item.productId._id === productId); // Controlla se il prodotto è già nel carrello
-
-    if (existingItem) {
-      // Se il prodotto esiste, aggiorna la quantità
-      existingItem.quantity += parseInt(quantity);
-    } else {
-      // Se il prodotto non esiste, aggiungilo come nuovo articolo
-      const cartItem = {
-        productId,
-        quantity,
-      };
-      cart.items.push(cartItem);
-    }
-
-    const response = await api.patch(`/cart/${cart._id}`, { items: cart.items });
-    return response.data;
-  } catch (err) {
-    console.error('Errore nell\'aggiunta al carrello:', err);
-    throw err;
-  }
-};
-
-export const removeFromCart = async (productId) => {
-  try {
-    const cart = await getCart(); // Recupera il carrello esistente
-    const updatedItems = cart.items.filter(item => item.productId._id !== productId); // Filtra l'articolo da rimuovere
-    const response = await api.patch(`/cart/${cart._id}`, { items: updatedItems }); // Usa PATCH per aggiornare il carrello
-    return response.data;
-  } catch (err) {
-    console.error('Errore nella rimozione dell\'articolo dal carrello:', err);
-    throw err;
-  }
-};
-
-export const updateCartItem = async (cartId, items, totalPrice) => {
-  try {
-    const response = await api.patch(`/cart/${cartId}`, {
-      items,
-      totalPrice
-    });
-    return response.data;
-  } catch (err) {
-    console.error('Errore nell\'aggiornamento dell\'articolo nel carrello:', err);
     throw err;
   }
 };
