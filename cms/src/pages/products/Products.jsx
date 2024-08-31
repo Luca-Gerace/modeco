@@ -34,10 +34,12 @@ export default function Products() {
   useEffect(() => {
     const filteredData = allProducts
       .filter(product => product.category === productFilter)
-      .filter(product =>
-        product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        product.brand.toLowerCase().includes(searchTerm.toLowerCase())
-      );
+      .filter(product => {
+        const productName = product.name.toLowerCase();
+        const productBrand = typeof product.brand === 'string' ? product.brand.toLowerCase() : product.brand.name.toLowerCase();
+        const searchLower = searchTerm.toLowerCase();
+        return productName.includes(searchLower) || productBrand.includes(searchLower);
+      });
     setProducts(filteredData);
   }, [productFilter, searchTerm, allProducts]);
 

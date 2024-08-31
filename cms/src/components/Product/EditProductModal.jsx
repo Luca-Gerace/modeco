@@ -6,6 +6,7 @@ import { IconButton, Typography } from '@mui/material';
 import { XMarkIcon } from '@heroicons/react/24/solid';
 
 function EditProductModal({ open, handleOpen, productData = {}, setProduct }) {
+    const [step, setStep] = useState(1);
     const [sizes, setSizes] = useState(productData.size || []);
     const [newSize, setNewSize] = useState('');
     
@@ -116,97 +117,120 @@ function EditProductModal({ open, handleOpen, productData = {}, setProduct }) {
                     </IconButton>
                 </DialogHeader>
                 <DialogBody divider>
-                    <form onSubmit={handleSubmit}>
-                        <Select
-                            label="Brand"
-                            name="brand"
-                            value={editedProduct.brand?._id}
-                            onChange={(value) => handleChange(value, 'brand')}
-                        >
-                            {brands.map((brand) => (
-                                <Option key={brand._id} value={brand._id}>{brand.name}</Option>
-                            ))}
-                        </Select>
-                        <Select
-                            label="Category"
-                            value={category}
-                            onChange={(value) => {
-                                setCategory(value);
-                                setEditedProduct({ ...editedProduct, category: value });
-                            }}
-                        >
-                            <Option value="clothes">Clothes</Option>
-                            <Option value="cosmetics">Cosmetics</Option>
-                            <Option value="food and beverage">Food and Beverage</Option>
-                            <Option value="second hand">Second Hand</Option>
-                        </Select>
-                        <Input
-                            label="Type"
-                            name="type"
-                            value={editedProduct.type}
-                            onChange={(e) => handleChange(e.target.value, 'type')}
-                        />
-                        <Input
-                            label="Name"
-                            name="name"
-                            value={editedProduct.name}
-                            onChange={(e) => handleChange(e.target.value, 'name')}
-                        />
-                        <Input
-                            label="Description"
-                            name="description"
-                            value={editedProduct.description}
-                            onChange={(e) => handleChange(e.target.value, 'description')}
-                        />
-                        <Input
-                            label="Price"
-                            name="price"
-                            type='number'
-                            value={editedProduct.price}
-                            onChange={(e) => handleChange(e.target.value, 'price')}
-                        />
-                        <Input
-                            label="Quantity"
-                            name="quantity"
-                            type='number'
-                            value={editedProduct.quantity}
-                            onChange={(e) => handleChange(e.target.value, 'quantity')}
-                        />
-                        {editedProduct.category === 'clothes' && (
+                    <form>
+                        {step === 1 && (
                             <>
+                                <Select
+                                    label="Brand"
+                                    name="brand"
+                                    value={editedProduct.brand?._id}
+                                    onChange={(value) => handleChange(value, 'brand')}
+                                >
+                                    {brands.map((brand) => (
+                                        <Option key={brand._id} value={brand._id}>{brand.name}</Option>
+                                    ))}
+                                </Select>
+                                <Select
+                                    label="Category"
+                                    value={category}
+                                    onChange={(value) => {
+                                        setCategory(value);
+                                        setEditedProduct({ ...editedProduct, category: value });
+                                    }}
+                                >
+                                    <Option value="clothes">Clothes</Option>
+                                    <Option value="cosmetics">Cosmetics</Option>
+                                    <Option value="food and beverage">Food and Beverage</Option>
+                                    <Option value="second hand">Second Hand</Option>
+                                </Select>
                                 <Input
-                                    label="Color"
-                                    name="color"
-                                    value={editedProduct.color}
-                                    onChange={(e) => handleChange(e.target.value, 'color')}
+                                    label="Type"
+                                    name="type"
+                                    value={editedProduct.type}
+                                    onChange={(e) => handleChange(e.target.value, 'type')}
                                 />
-                                <div>
-                                    <Input
-                                        label="Add Size"
-                                        name="newSize"
-                                        value={newSize}
-                                        onChange={(e) => setNewSize(e.target.value)}
-                                    />
-                                    <Button onClick={handleAddSize}>Add Size</Button>
-                                    <div className="my-4 flex gap-2 items-center">
-                                        <h4>Sizes:</h4>
-                                        <ul className="list-disc flex gap-2">
-                                            {sizes.map((size, index) => (
-                                                <li key={index} className="flex justify-between items-center bg-[#333] hover:bg-[#242424] rounded-full px-4 py-1 my-1">
-                                                    <span className="font-bold text-white">{size}</span>
-                                                    <button onClick={() => handleRemoveSize(size)} className="ml-2 text-white">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                                                        </svg>
-                                                    </button>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                </div>
+                                <Input
+                                    label="Name"
+                                    name="name"
+                                    value={editedProduct.name}
+                                    onChange={(e) => handleChange(e.target.value, 'name')}
+                                />
                             </>
                         )}
-                        <Button type="submit">Save Changes</Button>
+                        {step === 2 && (
+                            <>
+                                <Input
+                                    label="Description"
+                                    name="description"
+                                    value={editedProduct.description}
+                                    onChange={(e) => handleChange(e.target.value, 'description')}
+                                />
+                                <Input
+                                    label="Price"
+                                    name="price"
+                                    type='number'
+                                    value={editedProduct.price}
+                                    onChange={(e) => handleChange(e.target.value, 'price')}
+                                />
+                                <Input
+                                    label="Quantity"
+                                    name="quantity"
+                                    type='number'
+                                    value={editedProduct.quantity}
+                                    onChange={(e) => handleChange(e.target.value, 'quantity')}
+                                />
+                                {editedProduct.category === 'clothes' && (
+                                    <>
+                                        <Input
+                                            label="Color"
+                                            name="color"
+                                            value={editedProduct.color}
+                                            onChange={(e) => handleChange(e.target.value, 'color')}
+                                        />
+                                        <div>
+                                            <Input
+                                                label="Add Size"
+                                                name="newSize"
+                                                value={newSize}
+                                                onChange={(e) => setNewSize(e.target.value)}
+                                            />
+                                            <Button onClick={handleAddSize}>Add Size</Button>
+                                            <div className="my-4 flex gap-2 items-center">
+                                                <h4>Sizes:</h4>
+                                                <ul className="list-disc flex gap-2">
+                                                    {sizes.map((size, index) => (
+                                                        <li key={index} className="flex justify-between items-center bg-[#333] hover:bg-[#242424] rounded-full px-4 py-1 my-1">
+                                                            <span className="font-bold text-white">{size}</span>
+                                                            <button onClick={() => handleRemoveSize(size)} className="ml-2 text-white">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                                                                </svg>
+                                                            </button>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </>
+                                )}
+                            </>
+                        )}
+                        <div className="flex justify-between mt-4">
+                            {step > 1 && (
+                                <Button color="blue" type="button" onClick={() => setStep(step - 1)}>
+                                    Previous
+                                </Button>
+                            )}
+                            {step < 2 ? (
+                                <Button color="green" type="button" onClick={() => setStep(step + 1)}>
+                                    Next
+                                </Button>
+                            ) : (
+                                <Button color="green" type="button" onClick={handleSubmit}>
+                                    Save Product
+                                </Button>
+                            )}
+                        </div>
                     </form>
                 </DialogBody>
             </Dialog>

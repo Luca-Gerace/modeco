@@ -112,7 +112,7 @@ function NewProductModal({ open, handleOpen, setAllProducts }) {
                         <XMarkIcon className="h-4 w-4 stroke-2" />
                     </IconButton>
                 </DialogHeader>
-                <DialogBody>
+                <DialogBody divider>
                     <form className="create-post-form">
                         {step === 1 && (
                             <>
