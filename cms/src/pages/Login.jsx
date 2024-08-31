@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { userLogin } from '../services/api';
 import GoogleIcon from '@mui/icons-material/Google';
-import Alert from '../components/Alert';
+import Alert from '../../../frontend/src/components/Alert';
 import { Input } from "@material-tailwind/react";
 
 // const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";

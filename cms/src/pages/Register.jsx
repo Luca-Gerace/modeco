@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { registerUser } from '../services/api';
-import Alert from '../components/Alert';
+import Alert from '../../../frontend/src/components/Alert';
 import { Input } from "@material-tailwind/react";
 
 export default function Register() {
