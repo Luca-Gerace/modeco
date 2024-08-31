@@ -11,6 +11,7 @@ import Orders from "./pages/orders/Orders";
 import Order from "./pages/orders/Order";
 import Products from "./pages/Products/Products";
 import Product from "./pages/Products/Product";
+import Brands from "./pages/brands/Brands";
 
 function App() {
   return (
@@ -23,12 +24,14 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
           <Route path="/products/:id" element={<Product />} />
+          <Route path="/orders" element={<Orders />} />
+          <Route path="/orders/:id" element={<Order />} />
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/blogs/:id" element={<Blog />} />
           <Route path="/users" element={<Users />} />
           <Route path="/users/:id" element={<User />} />
-          <Route path="/orders" element={<Orders />} />
-          <Route path="/orders/:id" element={<Order />} />
+          <Route path="/brands" element={<Brands />} />
+          {/* <Route path="/brands/:id" element={<Brand />} /> */}
         </Routes>
       </main>
     </Router>

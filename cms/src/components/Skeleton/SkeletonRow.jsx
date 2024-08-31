@@ -4,7 +4,7 @@ export default function SkeletonRow() {
   return (
     <tr className="animate-pulse border-b border-blue-gray-50 last:border-b-0">
         <td className="p-4 w-12">
-            <div className="grid h-9 w-9 place-items-center rounded-full bg-gray-300">
+            <div className="grid h-12 w-12 place-items-center rounded-full bg-gray-300">
                 <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
