@@ -1,13 +1,22 @@
 import mongoose from "mongoose";
+import User from './User.js';
+
+const reviewSchema = new mongoose.Schema({
+  comment: { type: String, required: true },
+  rate: { type: Number, required: true, min: 1, max: 5 },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
+}, {
+  timestamps: true
+});
 
 const productSchema = new mongoose.Schema({
+  brand: { type: mongoose.Schema.Types.ObjectId, ref: 'Brand', required: true },
   name: { type: String, required: true },
   description: { type: String, required: true },
-  brand: { type: String, required: true },
+  licenses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'License' }],
   ecoPoints: { type: Number },
   quantity: { type: Number, required: true },
   price: { type: Number, required: true },
-  sale: { type: Number, default: 0,  min: 0, max: 100 },
   image: { type: String, required: true },
   category: { 
     type: String,
@@ -15,15 +24,17 @@ const productSchema = new mongoose.Schema({
     default: 'clothes',
     required: true
   },
-  // Proprietà specifiche per 'clothes' e 'second hand'
-  color: { type: String, required: function() { return this.category === 'clothes' || this.category === 'second hand'; } },
-  size: { type: [String], required: function() { return this.category === 'clothes' || this.category === 'second hand'; } },
-  // Proprietà specifiche per 'cosmetics'
-  ingredients: { type: String, required: function() { return this.category === 'cosmetics'; } },
-  // Proprietà specifiche per 'food and beverage'
-  nutritionFacts: { type: String, required: function() { return this.category === 'food and beverage'; } },
-  // Proprietà specifiche per 'cosmetics' e 'food and beverage'
-  expirationDate: { type: Date, required: function() { return this.category === 'cosmetics' || this.category === 'food and beverage'; } },
+  color: { 
+    type: String, 
+    required: function() { return this.category === 'clothes' || this.category === 'second hand'; } 
+  },
+  size: { 
+    type: [String], 
+    required: function() { return this.category === 'clothes' || this.category === 'second hand'; } 
+  },
+  type: { type: String, required: true },
+  reviews: [reviewSchema],
+  averageRate: { type: Number, default: 0 }
 }, {
   timestamps: true,
   collection: "products"

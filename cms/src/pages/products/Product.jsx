@@ -5,7 +5,7 @@ import EditProductModal from "../../components/Product/EditProductModal";
 import EditProductImageModal from "../../components/Product/EditProductImageModal";
 import ConfirmDeleteModal from "../../components/Product/DeleteProductModal";
 import { Button } from "@mui/material";
-import { PencilIcon, TrashIcon, PhotoIcon } from "@heroicons/react/24/solid";
+import { PencilIcon, TrashIcon, PhotoIcon, ArrowLeftIcon } from "@heroicons/react/24/solid";
 
 export default function Product() {
   const { id } = useParams();
@@ -32,8 +32,15 @@ export default function Product() {
     fetchProduct();
   }, [id]);
 
+  const handleBack = () => {
+    navigate(-1);
+  };
+
   return (
     <>
+      <button onClick={handleBack} className="flex items-center gap-3 mb-4">
+        <ArrowLeftIcon className="h-5 w-5" /> Go back
+      </button>
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col md:flex-row md:space-x-8 pb-24">
           <div className="w-full md:w-1/2 bg-[#EDF1FA] rounded-xl relative mb-6 md:mb-0">
@@ -41,7 +48,7 @@ export default function Product() {
           </div>
           <div className="md:w-1/2 flex flex-col gap-8">
             <div>
-              <p className="text-xl mb-2">{product.brand}</p>
+              <p className="text-xl mb-2">{product.brand?.name}</p>
               <h1 className="font-bold text-3xl mb-2 text-[#96A7AF]">{product.name}</h1>
               <p className="text-2xl font-bold mb-4">€{product.price?.toFixed(2)}</p>
               <h4 className="font-bold">Description:</h4>

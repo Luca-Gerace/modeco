@@ -9,10 +9,11 @@ import passport from './config/passportConfig.js';
 import {
   authRoutes,
   cartRoutes,
+  brandRoutes,
   couponRoutes,
+  licenseRoutes,
   orderRoutes,
   productRoutes,
-  reviewRoutes,
   userRoutes,
   wishlistRoutes
 } from './routes/index.js';
@@ -77,11 +78,12 @@ mongoose
 
 // App - Routes 
 app.use('/api/auth', authRoutes);
+app.use('/api/brands', brandRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/coupons', couponRoutes);
+app.use('/api/licenses', licenseRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/products', productRoutes);
-app.use('/api/reviews', reviewRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/wishlist', wishlistRoutes);
 

@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Dialog, DialogHeader, DialogBody, Button, Input, Select, Option } from '@material-tailwind/react';
-import { createProduct } from '../../services/api';
+import { createProduct, getBrands } from '../../services/api';
 import Alert from '../../../../frontend/src/components/Alert';
 import { IconButton, Typography } from '@mui/material';
 import { XMarkIcon } from '@heroicons/react/24/solid';
@@ -15,14 +15,27 @@ function NewProductModal({ open, handleOpen, setAllProducts }) {
         name: "",
         price: 0,
         category: "clothes",
+        type: "",
         description: "",
         quantity: 0,
-        color: "",
-        ingredients: "",
-        nutritionFacts: ""
+        color: ""
+
     });
+    const [brands, setBrands] = useState([]);
     const [category, setCategory] = useState("clothes");
     const [alert, setAlert] = useState(null);
+
+    useEffect(() => {
+        const fetchBrands = async () => {
+            try {
+                const brandsData = await getBrands();
+                setBrands(brandsData);
+            } catch (error) {
+                console.error('Errore nel recupero dei brand:', error);
+            }
+        };
+        fetchBrands();
+    }, []);
 
     const handleAddSize = () => {
         if (newSize && !sizes.includes(newSize)) {
@@ -35,8 +48,7 @@ function NewProductModal({ open, handleOpen, setAllProducts }) {
         setSizes(sizes.filter(size => size !== sizeToRemove));
     };
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
+    const handleChange = (value, name) => {
         setNewProduct({ ...newProduct, [name]: value });
     };
 
@@ -73,6 +85,9 @@ function NewProductModal({ open, handleOpen, setAllProducts }) {
 
             handleOpen();
             setAlert({ message: 'Product created successfully!', type: 'success' });
+            setTimeout(() => {
+                window.location.reload();
+            }, 1500);
 
         } catch (error) {
             console.error("Error creating the product:", error.response.data);
@@ -101,13 +116,16 @@ function NewProductModal({ open, handleOpen, setAllProducts }) {
                     <form className="create-post-form">
                         {step === 1 && (
                             <>
-                                <Input
-                                    type="text"
-                                    label="Brand Name"
+                                <Select
+                                    label="Brand"
                                     name="brand"
                                     value={newProduct.brand}
-                                    onChange={handleChange}
-                                />
+                                    onChange={(value) => handleChange(value, 'brand')}
+                                >
+                                    {brands.map((brand) => (
+                                        <Option key={brand._id} value={brand._id}>{brand.name}</Option>
+                                    ))}
+                                </Select>
                                 <Select
                                     label="Category"
                                     value={category}
@@ -123,10 +141,17 @@ function NewProductModal({ open, handleOpen, setAllProducts }) {
                                 </Select>
                                 <Input
                                     type="text"
+                                    label="Product Type"
+                                    name="type"
+                                    value={newProduct.type}
+                                    onChange={(e) => handleChange(e.target.value, 'type')}
+                                />
+                                <Input
+                                    type="text"
                                     label="Product Name"
                                     name="name"
                                     value={newProduct.name}
-                                    onChange={handleChange}
+                                    onChange={(e) => handleChange(e.target.value, 'name')}
                                 />
                             </>
                         )}
@@ -142,21 +167,21 @@ function NewProductModal({ open, handleOpen, setAllProducts }) {
                                     label="Description"
                                     name="description"
                                     value={newProduct.description}
-                                    onChange={handleChange}
+                                    onChange={(e) => handleChange(e.target.value, 'description')}
                                 />
                                 <Input
                                     type="number"
                                     label="Price"
                                     name="price"
                                     value={newProduct.price}
-                                    onChange={handleChange}
+                                    onChange={(e) => handleChange(e.target.value, 'price')}
                                 />
                                 <Input
                                     type="number"
                                     label="Quantity"
                                     name="quantity"
                                     value={newProduct.quantity}
-                                    onChange={handleChange}
+                                    onChange={(e) => handleChange(e.target.value, 'quantity')}
                                 />
                                 {category === "clothes" || category === "second hand" ? (
                                     <>
@@ -165,7 +190,7 @@ function NewProductModal({ open, handleOpen, setAllProducts }) {
                                             label="Color"
                                             name="color"
                                             value={newProduct.color}
-                                            onChange={handleChange}
+                                            onChange={(e) => handleChange(e.target.value, 'color')}
                                         />
                                         <div className="my-4">
                                             <Input
@@ -196,24 +221,6 @@ function NewProductModal({ open, handleOpen, setAllProducts }) {
                                             </div>
                                         )}
                                     </>
-                                ) : null}
-                                {category === "cosmetics" ? (
-                                    <Input
-                                        type="text"
-                                        label="Ingredients"
-                                        name="ingredients"
-                                        value={newProduct.ingredients || ""}
-                                        onChange={handleChange}
-                                    />
-                                ) : null}
-                                {category === "food and beverage" ? (
-                                    <Input
-                                        type="text"
-                                        label="Nutrition Facts"
-                                        name="nutritionFacts"
-                                        value={newProduct.nutritionFacts || ""}
-                                        onChange={handleChange}
-                                    />
                                 ) : null}
                             </>
                         )}

@@ -140,6 +140,122 @@ export const updateProductImage = async (productId, imageFile) => {
   }
 };
 
+// Brand
+export const getBrands = async () => {
+  try {
+    const response = await api.get('/brands');
+    return response.data;
+  } catch (err) {
+    console.error('Errore nel recupero dei brand:', err);
+    throw err;
+  }
+};
+
+export const getBrand = async (brandId) => {
+  try {
+    const response = await api.get(`/brands/${brandId}`);
+    return response.data;
+  } catch (err) {
+    console.error('Errore nel recupero del brand:', err);
+    throw err;
+  }
+};
+
+export const createBrand = (brandData) => api.post("/brands", brandData, {headers: {'Content-Type': 'multipart/form-data'},});
+
+export const updateBrand = async (brandId, brandData) => {
+  api.patch(`/brands/${brandId}`, brandData);
+  try {
+    const response = await api.patch(`/brands/${brandId}`, brandData);
+    return response.data;
+  } catch (err) {
+    console.error('Errore nell\'aggiornamento del brand:', err);
+    throw err;
+  }
+}
+
+export const deleteBrand = async (brandId) => {
+  try {
+    const response = await api.delete(`/brands/${brandId}`);
+    return response.data;
+  } catch (err) {
+    console.error('Errore nell\'eliminazione del brand:', err);
+    throw err;
+  }
+};
+
+export const updateBrandImage = async (brandId, imageFile) => {
+  try {
+    const formData = new FormData();
+    formData.append('image', imageFile);
+    const response = await api.patch(`/brands/${brandId}/image`, formData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    });
+    return response.data;
+  } catch (err) {
+    console.error('Errore nell\'aggiornamento dell\'immagine del brand:', err);
+    throw err;
+  }
+};
+
+// License
+export const getLicenses = async () => {
+  try {
+    const response = await api.get('/licenses');
+    return response.data;
+  } catch (err) {
+    console.error('Errore nel recupero dei license:', err);
+    throw err;
+  }
+};
+
+export const getLicense = async (licenseId) => {
+  try {
+    const response = await api.get(`/licenses/${licenseId}`);
+    return response.data;
+  } catch (err) {
+    console.error('Errore nel recupero del license:', err);
+    throw err;
+  }
+};
+
+export const createLicense = (licenseData) => api.post("/licenses", licenseData, {headers: {'Content-Type': 'multipart/form-data'},});
+
+export const updateLicense = async (licenseId, licenseData) => {
+  api.patch(`/licenses/${licenseId}`, licenseData);
+  try {
+    const response = await api.patch(`/licenses/${licenseId}`, licenseData);
+    return response.data;
+  } catch (err) {
+    console.error('Errore nell\'aggiornamento del license:', err);
+    throw err;
+  }
+}
+
+export const deleteLicense = async (licenseId) => {
+  try {
+    const response = await api.delete(`/licenses/${licenseId}`);
+    return response.data;
+  } catch (err) {
+    console.error('Errore nell\'eliminazione del license:', err);
+    throw err;
+  }
+};
+
+export const updateLicenseImage = async (licenseId, imageFile) => {
+  try {
+    const formData = new FormData();
+    formData.append('image', imageFile);
+    const response = await api.patch(`/licenses/${licenseId}/image`, formData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    });
+    return response.data;
+  } catch (err) {
+    console.error('Errore nell\'aggiornamento dell\'immagine del license:', err);
+    throw err;
+  }
+};
+
 // Order
 export const getOrders = async () => {
   try {
