@@ -17,13 +17,20 @@ export default function TableBody({
           <thead>
             <tr>
               {theads.map((header, index) => (
-                <td key={index} className="p-4">{header}</td>
+                <td key={index} className={`${index === theads.length - 1 ? 'py-4 ps-8' : 'p-4'}`}>{header}</td>
               ))}
             </tr>
           </thead>
           <tbody>
             {loading ? (
-              <SkeletonRow count={6} />
+              <>
+                <SkeletonRow />
+                <SkeletonRow />
+                <SkeletonRow />
+                <SkeletonRow />
+                <SkeletonRow />
+                <SkeletonRow />
+              </>
             ) : rows.length === 0 ? (
               <tr>
                 <td colSpan={theads.length} className="text-center p-4">

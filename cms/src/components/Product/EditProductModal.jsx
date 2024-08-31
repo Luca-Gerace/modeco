@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Dialog, DialogHeader, DialogBody, Button, Input, Select, Option } from '@material-tailwind/react';
-import { getBrands, updateProduct } from '../../services/api';
+import { getBrands, updateProduct, getLicenses } from '../../services/api';
 import Alert from '../../../../frontend/src/components/Alert';
 import { IconButton, Typography } from '@mui/material';
 import { XMarkIcon } from '@heroicons/react/24/solid';
@@ -9,7 +9,9 @@ function EditProductModal({ open, handleOpen, productData = {}, setProduct }) {
     const [step, setStep] = useState(1);
     const [sizes, setSizes] = useState(productData.size || []);
     const [newSize, setNewSize] = useState('');
-    
+    const [selectedLicenses, setSelectedLicenses] = useState([]);
+    const [newLicense, setNewLicense] = useState('');
+
     const [editedProduct, setEditedProduct] = useState({
         brand: productData.brand || "",
         name: productData.name || "",
@@ -19,11 +21,10 @@ function EditProductModal({ open, handleOpen, productData = {}, setProduct }) {
         description: productData.description || "",
         quantity: productData.quantity || 0,
         color: productData.color || "",
-        ingredients: productData.ingredients || "",
-        nutritionFacts: productData.nutritionFacts || ""
     });
 
     const [brands, setBrands] = useState([]);
+    const [licenses, setLicenses] = useState([]);
     const [category, setCategory] = useState(productData.category || "clothes");
     const [alert, setAlert] = useState(null);
 
@@ -37,6 +38,18 @@ function EditProductModal({ open, handleOpen, productData = {}, setProduct }) {
             }
         };
         fetchBrands();
+    }, []);
+
+    useEffect(() => {
+        const fetchLicenses = async () => {
+            try {
+                const licensesData = await getLicenses();
+                setLicenses(licensesData);
+            } catch (error) {
+                console.error('Errore nel recupero delle licenze:', error);
+            }
+        };
+        fetchLicenses();
     }, []);
 
     useEffect(() => {
@@ -54,6 +67,7 @@ function EditProductModal({ open, handleOpen, productData = {}, setProduct }) {
                 nutritionFacts: productData.nutritionFacts || ""
             });
             setSizes(productData.size || []);
+            setSelectedLicenses(productData.licenses || []);
         }
     }, [productData]);
 
@@ -68,6 +82,17 @@ function EditProductModal({ open, handleOpen, productData = {}, setProduct }) {
         setSizes(sizes.filter(size => size !== sizeToRemove));
     };
 
+    const handleAddLicense = () => {
+        if (newLicense && !selectedLicenses.includes(newLicense)) {
+            setSelectedLicenses([...selectedLicenses, newLicense]);
+            setNewLicense('');
+        }
+    };
+
+    const handleRemoveLicense = (licenseToRemove) => {
+        setSelectedLicenses(selectedLicenses.filter(license => license !== licenseToRemove));
+    };
+
     const handleChange = (value, name) => {
         setEditedProduct({ ...editedProduct, [name]: value });
     };
@@ -78,7 +103,8 @@ function EditProductModal({ open, handleOpen, productData = {}, setProduct }) {
         try {
             const updatedProduct = {
                 ...editedProduct,
-                size: sizes
+                size: sizes,
+                licenses: selectedLicenses
             };
 
             const response = await updateProduct(productData._id, updatedProduct);
@@ -102,7 +128,7 @@ function EditProductModal({ open, handleOpen, productData = {}, setProduct }) {
 
     return (
         <>
-            <Dialog open={open} handler={handleOpen}>
+            <Dialog open={open} handler={handleOpen} dismissible={false}>
                 <DialogHeader onClick={handleOpen}>
                     <Typography variant="h5" color="blue-gray">
                         Edit Product
@@ -123,7 +149,7 @@ function EditProductModal({ open, handleOpen, productData = {}, setProduct }) {
                                 <Select
                                     label="Brand"
                                     name="brand"
-                                    value={editedProduct.brand?._id}
+                                    value={editedProduct.brand}
                                     onChange={(value) => handleChange(value, 'brand')}
                                 >
                                     {brands.map((brand) => (
@@ -155,6 +181,44 @@ function EditProductModal({ open, handleOpen, productData = {}, setProduct }) {
                                     value={editedProduct.name}
                                     onChange={(e) => handleChange(e.target.value, 'name')}
                                 />
+                                <div className="my-4">
+                                    <Select
+                                        label="Licenses"
+                                        value={newLicense}
+                                        onChange={(value) => setNewLicense(value)}
+                                    >
+                                        {licenses.map((license) => (
+                                            <Option key={license._id} value={license._id}>{license.name}</Option>
+                                        ))}
+                                    </Select>
+                                    <Button color="blue" onClick={handleAddLicense}>
+                                        Add License
+                                    </Button>
+                                    {selectedLicenses.length > 0 && (
+    <div className="my-4 flex gap-2 items-center">
+        <h4>Licenses:</h4>
+        <ul className="list-disc flex gap-2">
+            {selectedLicenses.map((licenseId, index) => {
+                // Trova la licenza corrispondente all'ID
+                const license = licenses.find(l => l._id === licenseId);
+                
+                return (
+                    <li key={index} className="flex justify-between items-center bg-[#333] hover:bg-[#242424] rounded-full px-4 py-1 my-1">
+                        <span className="font-bold text-white">
+                            {license ? license.name : 'Unknown License'}
+                        </span>
+                        <button onClick={() => handleRemoveLicense(licenseId)} className="ml-2 text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </li>
+                );
+            })}
+        </ul>
+    </div>
+)}
+                                </div>
                             </>
                         )}
                         {step === 2 && (
@@ -179,7 +243,7 @@ function EditProductModal({ open, handleOpen, productData = {}, setProduct }) {
                                     value={editedProduct.quantity}
                                     onChange={(e) => handleChange(e.target.value, 'quantity')}
                                 />
-                                {editedProduct.category === 'clothes' && (
+                                {(editedProduct.category === 'clothes' || editedProduct.category === 'second hand') && (
                                     <>
                                         <Input
                                             label="Color"

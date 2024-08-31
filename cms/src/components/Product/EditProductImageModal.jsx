@@ -36,7 +36,7 @@ function EditProductImageModal({ open, handleOpen, productId, setProduct }) {
   return (
     <>
       {alert && <Alert message={alert.message} type={alert.type} onClose={() => setAlert(null)} />}
-      <Dialog open={open} handler={handleOpen}>
+      <Dialog open={open} handler={handleOpen} dismissible={false}>
         <DialogHeader>
           <Typography variant="h5" color="blue-gray">
             Edit Product Image

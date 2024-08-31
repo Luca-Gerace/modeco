@@ -21,7 +21,8 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const product = await Product.findById(req.params.id)
-      .populate('brand', 'name')  // Popola il campo brand con il nome
+      .populate('brand', 'name')
+      .populate('licenses', 'name')
       .exec();
     if (!product) {
       return res.status(404).json({ message: 'Prodotto non trovato' });

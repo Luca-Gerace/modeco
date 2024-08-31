@@ -23,7 +23,7 @@ function ConfirmDeleteModal({ open, handleOpen, productId, navigate }) {
   return (
     <>
       {alert && <Alert message={alert.message} type={alert.type} onClose={() => setAlert(null)} />}
-      <Dialog open={open} handler={handleOpen}>
+      <Dialog open={open} handler={handleOpen} dismissible={false}>
         <DialogHeader>
           <Typography variant="h5" color="red">
             Confirm Deletion
