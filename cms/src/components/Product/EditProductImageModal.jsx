@@ -5,7 +5,8 @@ import Alert from '../../../../frontend/src/components/Alert';
 import { IconButton, Typography } from '@mui/material';
 import { XMarkIcon } from '@heroicons/react/24/solid';
 
-function EditProductImageModal({ open, handleOpen, productId, setProduct }) {
+function EditProductImageModal({ open, handleOpen, product, productId, setProduct }) {
+
   const [productImage, setProductImage] = useState(null);
   const [alert, setAlert] = useState(null);
 
@@ -13,8 +14,10 @@ function EditProductImageModal({ open, handleOpen, productId, setProduct }) {
     setProductImage(e.target.files[0]);
   };
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       if (!productImage) {
         setAlert({ message: 'Please select an image', type: 'error' });
@@ -50,15 +53,18 @@ function EditProductImageModal({ open, handleOpen, productId, setProduct }) {
             <XMarkIcon className="h-4 w-4 stroke-2" />
           </IconButton>
         </DialogHeader>
-        <DialogBody>
+        <DialogBody className='border-t'>
           <form onSubmit={handleSubmit}>
-            <Input
-              type="file"
-              label="Product Image"
-              onChange={handleFileChange}
-            />
+            <div className='flex items-center gap-4 py-4'>
+              <img className="w-16" src={product.image} alt={product.name} />
+              <Input
+                type="file"
+                label="Product Image"
+                onChange={handleFileChange}
+              />
+            </div>
             <DialogFooter>
-              <Button color="blue" onClick={handleSubmit}>Save</Button>
+              <Button className='bg-green-500 rounded-full px-12 m-auto' onClick={handleSubmit}>Save</Button>
             </DialogFooter>
           </form>
         </DialogBody>

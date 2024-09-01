@@ -37,7 +37,7 @@ function ConfirmDeleteModal({ open, handleOpen, productId, navigate }) {
             <XMarkIcon className="h-4 w-4 stroke-2" />
           </IconButton>
         </DialogHeader>
-        <DialogBody divider>
+        <DialogBody className='border-t'>
           Are you sure you want to delete this product? This action cannot be undone.
         </DialogBody>
         <DialogFooter>

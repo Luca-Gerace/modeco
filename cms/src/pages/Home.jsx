@@ -52,11 +52,11 @@ export default function Home() {
 
   const SECTIONS = [
     { icon: ShoppingCartIcon, title: 'Products', link: '/products' },
-    { icon: TruckIcon, title: 'Orders', link: '/orders' },
+    { icon: SparklesIcon, title: 'Brands', link: '/brands' },
+    { icon: CheckBadgeIcon, title: 'Green licenses', link: '/licenses' },
     { icon: NewspaperIcon, title: 'Blog posts', link: '/blog' },
     { icon: UsersIcon, title: 'Users', link: '/users' },
-    { icon: SparklesIcon, title: 'Brands', link: '/brands' },
-    { icon: CheckBadgeIcon, title: 'Green licenses', link: '/licenses' }
+    { icon: TruckIcon, title: 'Orders', link: '/orders' },
   ];
 
   return (

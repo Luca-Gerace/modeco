@@ -17,7 +17,7 @@ export default function BrandRow({ rowData }) {
             </td>
             <td className="p-4">
                 <Typography variant="small" color="blue-gray" className="font-normal">
-                    {rowData.description}
+                    {rowData.description.length > 40 ? `${rowData.description.slice(0, 40)}...` : rowData.description}
                 </Typography>
             </td>
             <td className="p-4">

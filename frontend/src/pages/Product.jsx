@@ -113,3 +113,36 @@ export default function Product({isInWishlist = false}) {
     </div>
   );
 }
+
+
+
+function Icon({ id, openAccordion }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={2}
+      stroke="currentColor"
+      className={`${id === openAccordion ? "rotate-180" : ""} h-5 w-5 transition-transform`}
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+    </svg>
+  );
+}
+
+
+  // Accordion
+  const [openAccordion, setOpenAccordion] = useState(0);
+
+  const handleOpenAccordion = (value) => {
+    setOpenAccordion(openAccordion === value ? 0 : value);
+  };
+
+<Accordion open={openAccordion === 1} icon={<Icon id={1} openAccordion={openAccordion} />}>
+<AccordionHeader onClick={() => handleOpenAccordion(1)}>Description</AccordionHeader>
+<AccordionBody>
+  <h3>{product.name}</h3>
+  <p>{product.description}</p>
+</AccordionBody>
+</Accordion>

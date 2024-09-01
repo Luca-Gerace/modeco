@@ -56,7 +56,7 @@ export default function Navbar() {
     <>
       <nav className="w-full px-4 py-6 border-b-2	border-[#000]">
         <div className="w-full lg:w-[1024px] flex justify-between items-center m-auto">
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-4">
             <SidebarWithBurgerMenu />
             <Link to="/">
               <img 

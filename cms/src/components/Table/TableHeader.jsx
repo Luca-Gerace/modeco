@@ -13,7 +13,7 @@ export default function TableHeader({
   return (
     <Card className="mb-6 border-2">
       <CardBody>
-        <div className="mb-8 flex items-center justify-between gap-8">
+        <div className="mb-8 flex flex-col md:flex-row items-center justify-between gap-8">
           <Typography variant="h2" color="blue-gray">
             {title}
           </Typography>

@@ -142,7 +142,7 @@ function EditProductModal({ open, handleOpen, productData = {}, setProduct }) {
                         <XMarkIcon className="h-5 w-5" strokeWidth={2} />
                     </IconButton>
                 </DialogHeader>
-                <DialogBody divider>
+                <DialogBody className='border-t'>
                     <form>
                         {step === 1 && (
                             <>

@@ -12,12 +12,13 @@ import Order from "./pages/orders/Order";
 import Products from "./pages/Products/Products";
 import Product from "./pages/Products/Product";
 import Brands from "./pages/brands/Brands";
+import Brand from "./pages/brands/Brand";
 
 function App() {
   return (
     <Router>
       <Navbar />
-      <main className="w-full lg:w-[1024px] px-4 py-8 m-auto">
+      <main className="w-full lg:w-[1024px] py-8 m-auto">
         <Routes>
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
@@ -31,7 +32,7 @@ function App() {
           <Route path="/users" element={<Users />} />
           <Route path="/users/:id" element={<User />} />
           <Route path="/brands" element={<Brands />} />
-          {/* <Route path="/brands/:id" element={<Brand />} /> */}
+          <Route path="/brands/:id" element={<Brand />} />
         </Routes>
       </main>
     </Router>

@@ -42,7 +42,7 @@ export default function Brands() {
   const tableHeaders = ["Image", "Name", "Description", "Website", "Email", "Brand details"];
 
   return (
-    <>
+    <div className="px-4">
       <TableHeader
         title="Brands List"
         searchTerm={searchTerm}
@@ -60,6 +60,6 @@ export default function Brands() {
         RowComponent={BrandRow}
         modal={<CreateProductModal open={open} handleOpen={handleOpen} setAllBrands={setAllBrands} />}
       />
-    </>
+    </div>
   );
 }

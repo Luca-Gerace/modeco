@@ -5,7 +5,7 @@ import Alert from '../../../../frontend/src/components/Alert';
 import { IconButton, Typography } from '@mui/material';
 import { ArrowLeftIcon, ArrowRightIcon, CheckIcon, PlusIcon, XMarkIcon } from '@heroicons/react/24/solid';
 
-export default function CreateProductModal({ open, handleOpen, setAllProducts }) {
+export default function NewProductModal({ open, handleOpen, setAllProducts }) {
     const [step, setStep] = useState(1);
     const [isStep1Valid, setIsStep1Valid] = useState(false);
     const [isStep2Valid, setIsStep2Valid] = useState(false);

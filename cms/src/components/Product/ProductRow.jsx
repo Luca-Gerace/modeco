@@ -12,12 +12,21 @@ export default function ProductRow({ rowData }) {
             </td>
             <td className="p-4">
                 <Typography variant="small" color="blue-gray" className="font-normal">
-                    {rowData.type}
+                    {rowData.name.length > 30 ? `${rowData.name.slice(0, 30)}...` : rowData.name}
+                </Typography>
+            </td>
+            <td className="p-4">
+                <Typography 
+                    variant="small" 
+                    color="blue-gray" 
+                    className={rowData.brand.name ? 'font-normal' : 'animate-pulse bg-gray-300 rounded-full h-9 w-12'}
+                    >
+                    {rowData.brand.name}
                 </Typography>
             </td>
             <td className="p-4">
                 <Typography variant="small" color="blue-gray" className="font-normal">
-                    {rowData.brand.name}
+                    {rowData.category}
                 </Typography>
             </td>
             <td className="p-4">
