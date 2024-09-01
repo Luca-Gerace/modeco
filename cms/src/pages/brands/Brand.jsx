@@ -7,6 +7,7 @@ import ConfirmDeleteModal from "../../components/Product/DeleteProductModal";
 import { PencilIcon, TrashIcon, PhotoIcon, ArrowLeftIcon } from "@heroicons/react/24/solid";
 import { Button } from "@material-tailwind/react";
 import SkeletonPage from "../../components/Skeleton/SkeletonPage";
+import EditBrandModal from "../../components/Brand/EditBrandModal";
 
 export default function Brand() {
   const { id } = useParams();
@@ -55,7 +56,7 @@ export default function Brand() {
             <>
                 <div className="flex flex-col md:flex-row md:space-x-8 pb-8">
                     <div className="w-full md:w-1/2 bg-[#EDF1FA] rounded-xl relative mb-6 md:mb-0 h-[350px]">
-                        <Button onClick={handleImageModalOpen} className="bg-gray-900 p-4 rounded-full absolute top-4 left-4 z-10">
+                        <Button onClick={handleImageModalOpen} className="bg-gray-900 p-4 rounded-full !absolute top-4 left-4 z-10">
                             <PhotoIcon strokeWidth={2} className="h-6 w-6" />
                         </Button>
                         <img className="w-full relative top-4" src={brand.image} alt={brand.name} />
@@ -75,17 +76,18 @@ export default function Brand() {
                 <div className="w-screen p-6 bg-white fixed bottom-0 left-0 border-t-2 shadow-2xl">
                     <div className="w-full lg:w-[1024px] m-auto px-0 md:px-4 flex justify-between items-center">
                         <Button onClick={handleEditModalOpen} className="flex items-center px-4 gap-2 rounded-full">
-                            <PencilIcon strokeWidth={2} className="h-4 w-4" /> Edit Product
+                            <PencilIcon strokeWidth={2} className="h-4 w-4" /> Edit Brand
                         </Button>
                         <Button onClick={handleDeleteModalOpen} className="bg-red-500 flex items-center px-4 gap-2 rounded-full">
-                            <TrashIcon strokeWidth={2} className="h-4 w-4" /> Delete Product
+                            <TrashIcon strokeWidth={2} className="h-4 w-4" /> Delete Brand
                         </Button>
                     </div>
                 </div>    
             </>
         )}
         </div>
-      {/* <EditProductModal open={openEditModal} handleOpen={handleEditModalOpen} brandData={brand} setBrand={setBrand} />
+        <EditBrandModal open={openEditModal} handleOpen={handleEditModalOpen} brandData={brand} setBrand={setBrand} />
+      {/* 
       <EditProductImageModal open={openImageModal} handleOpen={handleImageModalOpen} brandId={id} brand={brand} setBrand={setBrand} />
       <ConfirmDeleteModal open={openDeleteModal} handleOpen={handleDeleteModalOpen} brandId={id} navigate={navigate} /> */}
     </>

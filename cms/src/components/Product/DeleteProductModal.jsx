@@ -1,4 +1,4 @@
-import { Dialog, DialogHeader, DialogBody, DialogFooter, Button } from '@material-tailwind/react';
+import { Dialog, DialogHeader, DialogBody, Button } from '@material-tailwind/react';
 import { deleteProduct } from '../../services/api';
 import { useState } from 'react';
 import Alert from '../../../../frontend/src/components/Alert';
@@ -25,8 +25,8 @@ function ConfirmDeleteModal({ open, handleOpen, productId, navigate }) {
       {alert && <Alert message={alert.message} type={alert.type} onClose={() => setAlert(null)} />}
       <Dialog open={open} handler={handleOpen} dismissible={false}>
         <DialogHeader>
-          <Typography variant="h5" color="red">
-            Confirm Deletion
+          <Typography variant="h5" color="blue-gray">
+              Confirm deletion
           </Typography>
           <IconButton
             size="sm"
@@ -38,12 +38,18 @@ function ConfirmDeleteModal({ open, handleOpen, productId, navigate }) {
           </IconButton>
         </DialogHeader>
         <DialogBody className='border-t'>
-          Are you sure you want to delete this product? This action cannot be undone.
+          <div className='flex flex-col gap-4 py-4'>
+            <p className='text-black'>Are you sure you want to delete this product? This action cannot be undone.</p>
+          </div>
+          <div className="flex justify-between mt-6">
+            <Button type="button" onClick={handleOpen} variant='outlined' className='rounded-full px-12'>
+                Cancel
+            </Button>
+            <Button type="button" onClick={handleDelete} className='bg-red-500 rounded-full px-6'>
+                Delete Product
+            </Button>
+          </div>
         </DialogBody>
-        <DialogFooter>
-          <Button color="red" onClick={handleDelete}>Delete</Button>
-          <Button color="blue-gray" onClick={handleOpen}>Cancel</Button>
-        </DialogFooter>
       </Dialog>
     </>
   );

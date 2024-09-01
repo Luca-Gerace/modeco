@@ -10,6 +10,8 @@ export default function TableBody({
   RowComponent,
   modal
 }) {
+  const hasRows = rows.length > 0;
+
   return (
     <Card className="h-full w-full border-2 p-6">
       <CardBody className="p-0 overflow-scroll">
@@ -31,7 +33,11 @@ export default function TableBody({
                 <SkeletonRow />
                 <SkeletonRow />
               </>
-            ) : rows.length === 0 ? (
+            ) : hasRows ? (
+              rows.map((row) => (
+                <RowComponent key={row._id} rowData={row} />
+              ))
+            ) : (
               <tr>
                 <td colSpan={theads.length} className="text-center p-4">
                   <div className="flex flex-col items-center gap-6 py-12">
@@ -40,10 +46,6 @@ export default function TableBody({
                   </div>
                 </td>
               </tr>
-            ) : (
-              rows.map((row) => (
-                <RowComponent key={row._id} rowData={row} />
-              ))
             )}
           </tbody>
         </table>

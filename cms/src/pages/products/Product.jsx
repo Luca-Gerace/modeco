@@ -45,7 +45,7 @@ export default function Product() {
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col md:flex-row md:space-x-8 pb-8">
           <div className="w-full md:w-1/2 bg-[#EDF1FA] rounded-xl relative mb-6 md:mb-0">
-            <Button onClick={handleImageModalOpen} className="bg-gray-900 p-4 rounded-full absolute top-4 left-4 z-10">
+            <Button onClick={handleImageModalOpen} className="bg-gray-900 p-4 rounded-full !absolute top-4 left-4 z-10">
               <PhotoIcon strokeWidth={2} className="h-6 w-6" />
             </Button>
             <img className="w-full relative top-4" src={product.image} alt={product.name} />

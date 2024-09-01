@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Dialog, DialogHeader, DialogBody, Button, Input, Select, Option } from '@material-tailwind/react';
+import { Dialog, DialogHeader, DialogBody, Button, Input, Select, Option, Textarea } from '@material-tailwind/react';
 import { createProduct, getBrands, getLicenses } from '../../services/api';
 import Alert from '../../../../frontend/src/components/Alert';
 import { IconButton, Typography } from '@mui/material';
@@ -264,7 +264,7 @@ export default function CreateProductModal({ open, handleOpen, setAllProducts })
                                         onChange={handleFileChange}
                                         required
                                     />
-                                    <Input
+                                    <Textarea
                                         type="text"
                                         label="Description"
                                         name="description"

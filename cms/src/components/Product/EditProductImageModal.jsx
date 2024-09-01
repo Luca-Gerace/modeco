@@ -64,7 +64,7 @@ function EditProductImageModal({ open, handleOpen, product, productId, setProduc
               />
             </div>
             <DialogFooter>
-              <Button className='bg-green-500 rounded-full px-12 m-auto' onClick={handleSubmit}>Save</Button>
+              <Button className='bg-green-500 rounded-full px-12 m-auto' onClick={handleSubmit}>Update image</Button>
             </DialogFooter>
           </form>
         </DialogBody>

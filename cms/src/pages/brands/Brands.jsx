@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { getBrands } from "../../services/api";
 import { PlusIcon } from "@heroicons/react/24/solid";
 import { Button } from "@material-tailwind/react";
-import CreateProductModal from '../../components/Product/CreateProductModal';
 import TableHeader from "../../components/Table/TableHeader";
 import TableBody from "../../components/Table/TableBody";
 import BrandRow from "../../components/Brand/BrandRow";
+import CreateBrandModal from "../../components/Brand/CreateBrandModal";
 
 export default function Brands() {
   const [allBrands, setAllBrands] = useState([]);
@@ -58,7 +58,7 @@ export default function Brands() {
         loading={loading}
         emptyText="No brands found"
         RowComponent={BrandRow}
-        modal={<CreateProductModal open={open} handleOpen={handleOpen} setAllBrands={setAllBrands} />}
+        modal={<CreateBrandModal open={open} handleOpen={handleOpen} setAllBrands={setAllBrands} />}
       />
     </div>
   );
