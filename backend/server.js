@@ -36,8 +36,9 @@ const corsOptions = {
     const whiteList = [
       'http://localhost:5173', // development - frontend
       'http://localhost:5174', // development - cms
-      // 'https://mern-blog-eight-pearl.vercel.app', // vercel
-      // 'https://mern-blog-b8ed.onrender.com' // render
+      // 'https://mern-blog-eight-pearl.vercel.app', // production - Frontend (vercel)
+      // 'https://mern-blog-eight-pearl.vercel.app', // production - CMS (vercel)
+      // 'https://mern-blog-b8ed.onrender.com' // production - backend (Render)
     ];
 
     if (process.env.NODE_ENV === 'development') {
