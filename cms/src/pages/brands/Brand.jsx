@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getBrand } from "../../services/api";
-import EditProductModal from "../../components/Product/EditProductModal";
-import EditProductImageModal from "../../components/Product/EditProductImageModal";
-import ConfirmDeleteModal from "../../components/Product/DeleteProductModal";
 import { PencilIcon, TrashIcon, PhotoIcon, ArrowLeftIcon } from "@heroicons/react/24/solid";
 import { Button } from "@material-tailwind/react";
 import SkeletonPage from "../../components/Skeleton/SkeletonPage";
 import EditBrandModal from "../../components/Brand/EditBrandModal";
+import EditBrandImageModal from "../../components/Brand/EditBrandImageModal";
+import DeleteBrandModal from "../../components/Brand/DeleteBrandModal";
 
 export default function Brand() {
   const { id } = useParams();
@@ -87,9 +86,8 @@ export default function Brand() {
         )}
         </div>
         <EditBrandModal open={openEditModal} handleOpen={handleEditModalOpen} brandData={brand} setBrand={setBrand} />
-      {/* 
-      <EditProductImageModal open={openImageModal} handleOpen={handleImageModalOpen} brandId={id} brand={brand} setBrand={setBrand} />
-      <ConfirmDeleteModal open={openDeleteModal} handleOpen={handleDeleteModalOpen} brandId={id} navigate={navigate} /> */}
+        <EditBrandImageModal open={openImageModal} handleOpen={handleImageModalOpen} brandId={id} brand={brand} setBrand={setBrand} />
+        <DeleteBrandModal open={openDeleteModal} handleOpen={handleDeleteModalOpen} brandId={id} navigate={navigate} />
     </>
   );
 }

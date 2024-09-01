@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { getProduct } from "../../services/api";
 import EditProductModal from "../../components/Product/EditProductModal";
 import EditProductImageModal from "../../components/Product/EditProductImageModal";
-import ConfirmDeleteModal from "../../components/Product/DeleteProductModal";
+import DeleteProductModal from "../../components/Product/DeleteProductModal";
 import { PencilIcon, TrashIcon, PhotoIcon, ArrowLeftIcon } from "@heroicons/react/24/solid";
 import { Button } from "@material-tailwind/react";
 
@@ -104,7 +104,7 @@ export default function Product() {
       </div>
       <EditProductModal open={openEditModal} handleOpen={handleEditModalOpen} productData={product} setProduct={setProduct} />
       <EditProductImageModal open={openImageModal} handleOpen={handleImageModalOpen} productId={id} product={product} setProduct={setProduct} />
-      <ConfirmDeleteModal open={openDeleteModal} handleOpen={handleDeleteModalOpen} productId={id} navigate={navigate} />
+      <DeleteProductModal open={openDeleteModal} handleOpen={handleDeleteModalOpen} productId={id} navigate={navigate} />
     </>
   );
 }
