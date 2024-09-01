@@ -1,49 +1,85 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   IconButton,
-  Typography,
   List,
   ListItem,
   ListItemPrefix,
-  ListItemSuffix,
-  Chip,
-  Accordion,
-  AccordionHeader,
-  AccordionBody,
-  Alert,
-  Input,
   Drawer,
   Card,
 } from "@material-tailwind/react";
 import {
-  PresentationChartBarIcon,
-  ShoppingBagIcon,
   UserCircleIcon,
-  Cog6ToothIcon,
-  InboxIcon,
   PowerIcon,
 } from "@heroicons/react/24/solid";
 import {
-  ChevronRightIcon,
-  ChevronDownIcon,
-  CubeTransparentIcon,
-  MagnifyingGlassIcon,
+  ShoppingCartIcon,
+  SparklesIcon,
+  UsersIcon,
+  TruckIcon,
+  CheckBadgeIcon,
+  NewspaperIcon,
   Bars3Icon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
- 
+import { Link } from "react-router-dom";
+import { getUserData } from "../services/api";
+
 export function SidebarWithBurgerMenu() {
-  const [open, setOpen] = useState(0);
-  const [openAlert, setOpenAlert] = useState(true);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
- 
-  const handleOpen = (value) => {
-    setOpen(open === value ? 0 : value);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        try {
+          const userData = await getUserData();
+          setUser(userData);
+          setIsLoggedIn(true);
+        } catch (err) {
+          console.error('Token not valid', err);
+          localStorage.removeItem('token');
+          setIsLoggedIn(false);
+          setUser(null);
+        }
+      } else {
+        setIsLoggedIn(false);
+        setUser(null);
+      }
+    };
+
+    checkLoginStatus();
+
+    const handleStorageChange = () => {
+      checkLoginStatus();
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    window.addEventListener("loginStateChange", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+      window.removeEventListener("loginStateChange", handleStorageChange);
+    };
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+    setUser(null);
+    window.location.reload()
   };
- 
+
+
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
   const openDrawer = () => setIsDrawerOpen(true);
   const closeDrawer = () => setIsDrawerOpen(false);
- 
+
+  const handleLinkClick = () => {
+    closeDrawer(); // Chiude il menu quando si clicca su un link
+  };
+
   return (
     <>
       <IconButton variant="text" size="lg" onClick={openDrawer}>
@@ -60,178 +96,104 @@ export function SidebarWithBurgerMenu() {
           className="h-[calc(100vh-2rem)] w-full p-4"
         >
           <div className="mb-2 flex items-center gap-4 p-4">
-            <img
-              src="https://docs.material-tailwind.com/img/logo-ct-dark.png"
-              alt="brand"
-              className="h-8 w-8"
-            />
-            <Typography variant="h5" color="blue-gray">
-              Sidebar
-            </Typography>
-          </div>
-          <div className="p-2">
-            <Input
-              icon={<MagnifyingGlassIcon className="h-5 w-5" />}
-              label="Search"
-            />
+            <Link to="/" onClick={handleLinkClick}>
+              <img 
+                src='https://res.cloudinary.com/dicfymkdl/image/upload/v1722538420/modeco-logo-light_qfngkh.svg' 
+                alt='Modeco logo' 
+                className="w-[150px]" 
+              />
+            </Link>
           </div>
           <List>
-            <Accordion
-              open={open === 1}
-              icon={
-                <ChevronDownIcon
-                  strokeWidth={2.5}
-                  className={`mx-auto h-4 w-4 transition-transform ${
-                    open === 1 ? "rotate-180" : ""
-                  }`}
-                />
-              }
-            >
-              <ListItem className="p-0" selected={open === 1}>
-                <AccordionHeader
-                  onClick={() => handleOpen(1)}
-                  className="border-b-0 p-3"
-                >
-                  <ListItemPrefix>
-                    <PresentationChartBarIcon className="h-5 w-5" />
-                  </ListItemPrefix>
-                  <Typography color="blue-gray" className="mr-auto font-normal">
-                    Dashboard
-                  </Typography>
-                </AccordionHeader>
+            <Link to="/products" onClick={handleLinkClick}>
+              <ListItem>
+                <ListItemPrefix>
+                  <ShoppingCartIcon className="h-5 w-5" />
+                </ListItemPrefix>
+                Products
               </ListItem>
-              <AccordionBody className="py-1">
-                <List className="p-0">
-                  <ListItem>
-                    <ListItemPrefix>
-                      <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                    </ListItemPrefix>
-                    Analytics
-                  </ListItem>
-                  <ListItem>
-                    <ListItemPrefix>
-                      <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                    </ListItemPrefix>
-                    Reporting
-                  </ListItem>
-                  <ListItem>
-                    <ListItemPrefix>
-                      <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                    </ListItemPrefix>
-                    Projects
-                  </ListItem>
-                </List>
-              </AccordionBody>
-            </Accordion>
-            <Accordion
-              open={open === 2}
-              icon={
-                <ChevronDownIcon
-                  strokeWidth={2.5}
-                  className={`mx-auto h-4 w-4 transition-transform ${
-                    open === 2 ? "rotate-180" : ""
-                  }`}
-                />
-              }
-            >
-              <ListItem className="p-0" selected={open === 2}>
-                <AccordionHeader
-                  onClick={() => handleOpen(2)}
-                  className="border-b-0 p-3"
-                >
-                  <ListItemPrefix>
-                    <ShoppingBagIcon className="h-5 w-5" />
-                  </ListItemPrefix>
-                  <Typography color="blue-gray" className="mr-auto font-normal">
-                    E-Commerce
-                  </Typography>
-                </AccordionHeader>
+            </Link>
+            <Link to="/brands" onClick={handleLinkClick}>
+              <ListItem>
+                <ListItemPrefix>
+                  <SparklesIcon className="h-5 w-5" />
+                </ListItemPrefix>
+                Brands
               </ListItem>
-              <AccordionBody className="py-1">
-                <List className="p-0">
+            </Link>
+            <Link to="/licenses" onClick={handleLinkClick}>
+              <ListItem>
+                <ListItemPrefix>
+                  <CheckBadgeIcon className="h-5 w-5" />
+                </ListItemPrefix>
+                Green licenses
+              </ListItem>
+            </Link>
+            <Link to="/blog-posts" onClick={handleLinkClick}>
+              <ListItem>
+                <ListItemPrefix>
+                  <NewspaperIcon className="h-5 w-5" />
+                </ListItemPrefix>
+                Blog posts
+              </ListItem>
+            </Link>
+            <Link to="/users" onClick={handleLinkClick}>
+              <ListItem>
+                <ListItemPrefix>
+                  <UsersIcon className="h-5 w-5" />
+                </ListItemPrefix>
+                Users
+              </ListItem>
+            </Link>
+            <Link to="/orders" onClick={handleLinkClick}>
+              <ListItem>
+                <ListItemPrefix>
+                  <TruckIcon className="h-5 w-5" />
+                </ListItemPrefix>
+                Orders
+              </ListItem>
+            </Link>
+            <hr className="my-4" />
+            {isLoggedIn && user ? (
+              <>
+                <Link to="/profile" onClick={handleLinkClick}>
                   <ListItem>
                     <ListItemPrefix>
-                      <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                      <UserCircleIcon className="h-5 w-5" />
                     </ListItemPrefix>
-                    Orders
+                    Profile
                   </ListItem>
+                </Link>
+                <a onClick={() => { handleLogout(); handleLinkClick(); }}>
                   <ListItem>
                     <ListItemPrefix>
-                      <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                      <PowerIcon className="h-5 w-5" />
                     </ListItemPrefix>
-                    Products
+                    Log Out
                   </ListItem>
-                </List>
-              </AccordionBody>
-            </Accordion>
-            <hr className="my-2 border-blue-gray-50" />
-            <ListItem>
-              <ListItemPrefix>
-                <InboxIcon className="h-5 w-5" />
-              </ListItemPrefix>
-              Inbox
-              <ListItemSuffix>
-                <Chip
-                  value="14"
-                  size="sm"
-                  variant="ghost"
-                  color="blue-gray"
-                  className="rounded-full"
-                />
-              </ListItemSuffix>
-            </ListItem>
-            <ListItem>
-              <ListItemPrefix>
-                <UserCircleIcon className="h-5 w-5" />
-              </ListItemPrefix>
-              Profile
-            </ListItem>
-            <ListItem>
-              <ListItemPrefix>
-                <Cog6ToothIcon className="h-5 w-5" />
-              </ListItemPrefix>
-              Settings
-            </ListItem>
-            <ListItem>
-              <ListItemPrefix>
-                <PowerIcon className="h-5 w-5" />
-              </ListItemPrefix>
-              Log Out
-            </ListItem>
+                </a>
+              </>
+            ) : (
+              <>
+                <Link to="/login" onClick={handleLinkClick}>
+                  <ListItem>
+                    <ListItemPrefix>
+                      <UserCircleIcon className="h-5 w-5" />
+                    </ListItemPrefix>
+                    Login
+                  </ListItem>
+                </Link>
+                <Link to="/register" onClick={handleLinkClick}>
+                    <ListItem>
+                      <ListItemPrefix>
+                        <UserCircleIcon className="h-5 w-5" />
+                      </ListItemPrefix>
+                      Register
+                    </ListItem>
+                </Link>
+              </>
+            )}
           </List>
-          <Alert
-            open={openAlert}
-            className="mt-auto"
-            onClose={() => setOpenAlert(false)}
-          >
-            <CubeTransparentIcon className="mb-4 h-12 w-12" />
-            <Typography variant="h6" className="mb-1">
-              Upgrade to PRO
-            </Typography>
-            <Typography variant="small" className="font-normal opacity-80">
-              Upgrade to Material Tailwind PRO and get even more components,
-              plugins, advanced features and premium.
-            </Typography>
-            <div className="mt-4 flex gap-3">
-              <Typography
-                as="a"
-                href="#"
-                variant="small"
-                className="font-medium opacity-80"
-                onClick={() => setOpenAlert(false)}
-              >
-                Dismiss
-              </Typography>
-              <Typography
-                as="a"
-                href="#"
-                variant="small"
-                className="font-medium"
-              >
-                Upgrade Now
-              </Typography>
-            </div>
-          </Alert>
         </Card>
       </Drawer>
     </>

@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getBrand } from "../../services/api";
+import { getLicense } from "../../services/api";
 import { PencilIcon, TrashIcon, PhotoIcon, ArrowLeftIcon } from "@heroicons/react/24/solid";
 import { Button } from "@material-tailwind/react";
 import SkeletonPage from "../../components/Skeleton/SkeletonPage";
-import EditBrandModal from "../../components/Brand/EditBrandModal";
-import EditBrandImageModal from "../../components/Brand/EditBrandImageModal";
-import DeleteBrandModal from "../../components/Brand/DeleteBrandModal";
+import EditLicenseModal from "../../components/License/EditLicenseModal";
+import EditLicenseImageModal from "../../components/License/EditLicenseImageModal";
+import DeleteLicenseModal from "../../components/License/DeleteLicenseModal";
 
-export default function Brand() {
+export default function License() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [brand, setBrand] = useState({});
+  const [license, setLicense] = useState({});
   const [loading, setLoading] = useState(true);
   
   // Modals
@@ -23,18 +23,18 @@ export default function Brand() {
   const handleDeleteModalOpen = () => setOpenDeleteModal(!openDeleteModal);
 
   useEffect(() => {
-    const fetchBrand = async () => {
+    const fetchLicense = async () => {
       try {
-        const data = await getBrand(id);
-        setBrand(data);
+        const data = await getLicense(id);
+        setLicense(data);
         setLoading(false);
       } catch (error) {
-        console.error('Errore nel recupero del brand:', error);
+        console.error('Errore nel recupero del license:', error);
         setLoading(false);
       }
     };
 
-    fetchBrand();
+    fetchLicense();
   }, [id]);
 
   const handleBack = () => {
@@ -58,36 +58,36 @@ export default function Brand() {
                         <Button onClick={handleImageModalOpen} className="bg-gray-900 p-4 rounded-full !absolute top-4 left-4 z-10">
                             <PhotoIcon strokeWidth={2} className="h-6 w-6" />
                         </Button>
-                        <img className="w-full h-[350px] object-contain p-8 border-2 border-green-500 rounded-xl" src={brand.image} alt={brand.name} />
+                        <img className="w-full h-[350px] object-contain p-8 border-2 border-green-500 rounded-xl" src={license.image} alt={license.name} />
                     </div>
                     <div className="md:w-1/2 flex flex-col gap-8">
                         <div>
-                            <h1 className="font-bold text-3xl mb-4 text-[#96A7AF]">{brand.name}</h1>
+                            <h1 className="font-bold text-3xl mb-4 text-[#96A7AF]">{license.name}</h1>
                             <h4 className="font-bold">Description:</h4>
-                            <p className="mb-4">{brand.description}</p>
+                            <p className="mb-4">{license.description}</p>
                             <h4 className="font-bold">Website:</h4>
-                            <p className="mb-4">{brand.website}</p>
+                            <p className="mb-4">{license.website}</p>
                             <h4 className="font-bold">Email:</h4>
-                            <p className="mb-4">{brand.email}</p>
+                            <p className="mb-4">{license.email}</p>
                         </div>
                     </div>
                 </div>
                 <div className="w-screen p-6 bg-white fixed bottom-0 left-0 border-t-2 shadow-2xl">
                     <div className="w-full lg:w-[1024px] m-auto px-0 md:px-4 flex justify-between items-center">
                         <Button onClick={handleEditModalOpen} className="flex items-center px-4 gap-2 rounded-full">
-                            <PencilIcon strokeWidth={2} className="h-4 w-4" /> Edit Brand
+                            <PencilIcon strokeWidth={2} className="h-4 w-4" /> Edit License
                         </Button>
                         <Button onClick={handleDeleteModalOpen} className="bg-red-500 flex items-center px-4 gap-2 rounded-full">
-                            <TrashIcon strokeWidth={2} className="h-4 w-4" /> Delete Brand
+                            <TrashIcon strokeWidth={2} className="h-4 w-4" /> Delete License
                         </Button>
                     </div>
                 </div>    
             </>
         )}
         </div>
-        <EditBrandModal open={openEditModal} handleOpen={handleEditModalOpen} brandData={brand} setBrand={setBrand} />
-        <EditBrandImageModal open={openImageModal} handleOpen={handleImageModalOpen} brandId={id} brand={brand} setBrand={setBrand} />
-        <DeleteBrandModal open={openDeleteModal} handleOpen={handleDeleteModalOpen} brandId={id} navigate={navigate} />
+        <EditLicenseModal open={openEditModal} handleOpen={handleEditModalOpen} licenseData={license} setLicense={setLicense} />
+        <EditLicenseImageModal open={openImageModal} handleOpen={handleImageModalOpen} licenseId={id} license={license} setLicense={setLicense} />
+        <DeleteLicenseModal open={openDeleteModal} handleOpen={handleDeleteModalOpen} licenseId={id} navigate={navigate} />
     </>
   );
 }

@@ -1,12 +1,12 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { getUserData } from "../services/api";
 import { useState, useEffect } from "react";
 import { SidebarWithBurgerMenu } from "./SidebarWithBurgerMenu";
+import { Button } from "@material-tailwind/react";
 
 export default function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const checkLoginStatus = async () => {
@@ -43,13 +43,6 @@ export default function Navbar() {
     };
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    setIsLoggedIn(false);
-    setUser(null);
-    navigate("/");
-  };
-
   const fallbackAvatar = "https://res.cloudinary.com/dicfymkdl/image/upload/v1721642624/avatar_rsyffw.png";
 
   return (
@@ -66,18 +59,14 @@ export default function Navbar() {
               />
             </Link>
           </div>
-          <ul className="flex items-center gap-12">
+          <ul className="flex items-center gap-6">
             {isLoggedIn ? (
               <>
                 <li>
                   {user ? (
-                    <div className="flex items-center gap-4">
+                    <Link to="/profile">
                       <img src={user.avatar ? user.avatar : fallbackAvatar} alt='user image' className="w-[50px] h-[50px] rounded-full" />
-                      <div className="flex flex-col text-left">
-                        <span>{user.name} {user.surname}</span>
-                        <a className="text-[12px] underline cursor-pointer" onClick={handleLogout}>Logout</a>
-                      </div>
-                    </div>
+                    </Link>
                   ) : null}
                 </li>
               </>
@@ -85,12 +74,16 @@ export default function Navbar() {
               <>
                 <li className="nav-item">
                   <Link to="/login" className="nav-link">
-                    Login
+                    <Button className="rounded-full">
+                      Login
+                    </Button>
                   </Link>
                 </li>
                 <li className="nav-item">
                   <Link to="/register" className="nav-link">
-                    Registrati
+                    <Button className="rounded-full" variant="outlined">
+                      Sign up
+                    </Button>
                   </Link>
                 </li>
               </>
