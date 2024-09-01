@@ -3,8 +3,8 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Blogs from "./pages/blogs/Blogs";
-import Blog from "./pages/blogs/Blog";
+import Posts from "./pages/posts/Posts";
+import Post from "./pages/posts/Post";
 import Users from "./pages/users/Users";
 import User from "./pages/users/User";
 import Orders from "./pages/orders/Orders";
@@ -33,8 +33,8 @@ function App() {
           <Route path="/licenses/:id" element={<License />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/orders/:id" element={<Order />} />
-          <Route path="/blogs" element={<Blogs />} />
-          <Route path="/blogs/:id" element={<Blog />} />
+          <Route path="/posts" element={<Posts />} />
+          <Route path="/posts/:id" element={<Post />} />
           <Route path="/users" element={<Users />} />
           <Route path="/users/:id" element={<User />} />
         </Routes>

@@ -105,57 +105,57 @@ export function SidebarWithBurgerMenu() {
             </Link>
           </div>
           <List>
-            <Link to="/products" onClick={handleLinkClick}>
-              <ListItem>
-                <ListItemPrefix>
-                  <ShoppingCartIcon className="h-5 w-5" />
-                </ListItemPrefix>
-                Products
-              </ListItem>
-            </Link>
-            <Link to="/brands" onClick={handleLinkClick}>
-              <ListItem>
-                <ListItemPrefix>
-                  <SparklesIcon className="h-5 w-5" />
-                </ListItemPrefix>
-                Brands
-              </ListItem>
-            </Link>
-            <Link to="/licenses" onClick={handleLinkClick}>
-              <ListItem>
-                <ListItemPrefix>
-                  <CheckBadgeIcon className="h-5 w-5" />
-                </ListItemPrefix>
-                Green licenses
-              </ListItem>
-            </Link>
-            <Link to="/blog-posts" onClick={handleLinkClick}>
-              <ListItem>
-                <ListItemPrefix>
-                  <NewspaperIcon className="h-5 w-5" />
-                </ListItemPrefix>
-                Blog posts
-              </ListItem>
-            </Link>
-            <Link to="/users" onClick={handleLinkClick}>
-              <ListItem>
-                <ListItemPrefix>
-                  <UsersIcon className="h-5 w-5" />
-                </ListItemPrefix>
-                Users
-              </ListItem>
-            </Link>
-            <Link to="/orders" onClick={handleLinkClick}>
-              <ListItem>
-                <ListItemPrefix>
-                  <TruckIcon className="h-5 w-5" />
-                </ListItemPrefix>
-                Orders
-              </ListItem>
-            </Link>
-            <hr className="my-4" />
             {isLoggedIn && user ? (
               <>
+                <Link to="/products" onClick={handleLinkClick}>
+                  <ListItem>
+                    <ListItemPrefix>
+                      <ShoppingCartIcon className="h-5 w-5" />
+                    </ListItemPrefix>
+                    Products
+                  </ListItem>
+                </Link>
+                <Link to="/brands" onClick={handleLinkClick}>
+                  <ListItem>
+                    <ListItemPrefix>
+                      <SparklesIcon className="h-5 w-5" />
+                    </ListItemPrefix>
+                    Brands
+                  </ListItem>
+                </Link>
+                <Link to="/licenses" onClick={handleLinkClick}>
+                  <ListItem>
+                    <ListItemPrefix>
+                      <CheckBadgeIcon className="h-5 w-5" />
+                    </ListItemPrefix>
+                    Green licenses
+                  </ListItem>
+                </Link>
+                <Link to="/posts" onClick={handleLinkClick}>
+                  <ListItem>
+                    <ListItemPrefix>
+                      <NewspaperIcon className="h-5 w-5" />
+                    </ListItemPrefix>
+                    Blog posts
+                  </ListItem>
+                </Link>
+                <Link to="/users" onClick={handleLinkClick}>
+                  <ListItem>
+                    <ListItemPrefix>
+                      <UsersIcon className="h-5 w-5" />
+                    </ListItemPrefix>
+                    Users
+                  </ListItem>
+                </Link>
+                <Link to="/orders" onClick={handleLinkClick}>
+                  <ListItem>
+                    <ListItemPrefix>
+                      <TruckIcon className="h-5 w-5" />
+                    </ListItemPrefix>
+                    Orders
+                  </ListItem>
+                </Link>
+                <hr className="my-4" />
                 <Link to="/profile" onClick={handleLinkClick}>
                   <ListItem>
                     <ListItemPrefix>

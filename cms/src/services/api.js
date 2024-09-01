@@ -256,6 +256,65 @@ export const updateLicenseImage = async (licenseId, imageFile) => {
   }
 };
 
+// Post
+export const getPosts = async () => {
+  try {
+    const response = await api.get('/posts');
+    return response.data;
+  } catch (err) {
+    console.error('Errore nel recupero dei post:', err);
+    throw err;
+  }
+};
+
+export const getPost = async (postId) => {
+  try {
+    const response = await api.get(`/posts/${postId}`);
+    return response.data;
+  } catch (err) {
+    console.error('Errore nel recupero del post:', err);
+    throw err;
+  }
+};
+
+export const createPost = (postData) => api.post("/posts", postData, {headers: {'Content-Type': 'multipart/form-data'},});
+
+export const updatePost = async (postId, postData) => {
+  api.patch(`/posts/${postId}`, postData);
+  try {
+    const response = await api.patch(`/posts/${postId}`, postData);
+    return response.data;
+  } catch (err) {
+    console.error('Errore nell\'aggiornamento del post:', err);
+    throw err;
+  }
+}
+
+export const deletePost = async (postId) => {
+  try {
+    const response = await api.delete(`/posts/${postId}`);
+    return response.data;
+  } catch (err) {
+    console.error('Errore nell\'eliminazione del post:', err);
+    throw err;
+  }
+};
+
+export const updatePostImage = async (postId, imageFile) => {
+  try {
+    const formData = new FormData();
+    formData.append('image', imageFile);
+    const response = await api.patch(`/posts/${postId}/image`, formData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    });
+    return response.data;
+  } catch (err) {
+    console.error('Errore nell\'aggiornamento dell\'immagine del post:', err);
+    throw err;
+  }
+};
+
+
 // Order
 export const getOrders = async () => {
   try {

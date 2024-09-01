@@ -7,7 +7,6 @@ import { XMarkIcon } from '@heroicons/react/24/solid';
 
 function EditLicenseModal({ open, handleOpen, licenseData, setLicense }) {
     const [editedLicense, setEditedLicense] = useState({
-        license: licenseData.license || "",
         name: licenseData.name || "",
         description: licenseData.description || "",
         website: licenseData.website || "",
@@ -19,7 +18,6 @@ function EditLicenseModal({ open, handleOpen, licenseData, setLicense }) {
     useEffect(() => {
         if (licenseData) {
             setEditedLicense({
-                license: licenseData.license || "",
                 name: licenseData.name || "",
                 description: licenseData.description || "",
                 website: licenseData.website || "",

@@ -54,7 +54,7 @@ export default function Home() {
     { icon: ShoppingCartIcon, title: 'Products', link: '/products' },
     { icon: SparklesIcon, title: 'Brands', link: '/brands' },
     { icon: CheckBadgeIcon, title: 'Green licenses', link: '/licenses' },
-    { icon: NewspaperIcon, title: 'Blog posts', link: '/blog' },
+    { icon: NewspaperIcon, title: 'Blog posts', link: '/posts' },
     { icon: UsersIcon, title: 'Users', link: '/users' },
     { icon: TruckIcon, title: 'Orders', link: '/orders' },
   ];

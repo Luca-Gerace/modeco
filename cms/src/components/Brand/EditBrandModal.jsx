@@ -7,7 +7,6 @@ import { XMarkIcon } from '@heroicons/react/24/solid';
 
 function EditBrandModal({ open, handleOpen, brandData, setBrand }) {
     const [editedBrand, setEditedBrand] = useState({
-        brand: brandData.brand || "",
         name: brandData.name || "",
         description: brandData.description || "",
         website: brandData.website || "",
@@ -19,7 +18,6 @@ function EditBrandModal({ open, handleOpen, brandData, setBrand }) {
     useEffect(() => {
         if (brandData) {
             setEditedBrand({
-                brand: brandData.brand || "",
                 name: brandData.name || "",
                 description: brandData.description || "",
                 website: brandData.website || "",
@@ -44,8 +42,8 @@ function EditBrandModal({ open, handleOpen, brandData, setBrand }) {
                 ...response
             }));
 
-            handleOpen();
             setAlert({ message: 'Brand updated successfully!', type: 'success' });
+            handleOpen();
 
         } catch (error) {
             console.error("Error updating the brand:", error);
@@ -55,6 +53,7 @@ function EditBrandModal({ open, handleOpen, brandData, setBrand }) {
 
     return (
         <>
+            {alert && <Alert message={alert.message} type={alert.type} onClose={() => setAlert(null)} />}
             <Dialog open={open} handler={handleOpen} dismissible={false}>
                 <DialogHeader onClick={handleOpen}>
                     <Typography variant="h5" color="blue-gray">
@@ -106,7 +105,6 @@ function EditBrandModal({ open, handleOpen, brandData, setBrand }) {
                     </form>
                 </DialogBody>
             </Dialog>
-            {alert && <Alert message={alert.message} type={alert.type} onClose={() => setAlert(null)} />}
         </>
     );
 }
