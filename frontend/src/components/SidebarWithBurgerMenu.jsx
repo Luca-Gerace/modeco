@@ -1,48 +1,94 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import {
   IconButton,
   Typography,
   List,
   ListItem,
   ListItemPrefix,
-  ListItemSuffix,
-  Chip,
   Accordion,
   AccordionHeader,
   AccordionBody,
   Alert,
-  Input,
   Drawer,
   Card,
 } from "@material-tailwind/react";
 import {
-  PresentationChartBarIcon,
   ShoppingBagIcon,
   UserCircleIcon,
-  Cog6ToothIcon,
-  InboxIcon,
   PowerIcon,
 } from "@heroicons/react/24/solid";
 import {
-  ChevronRightIcon,
   ChevronDownIcon,
   CubeTransparentIcon,
-  MagnifyingGlassIcon,
   Bars3Icon,
   XMarkIcon,
+  NewspaperIcon,
+  CheckBadgeIcon,
 } from "@heroicons/react/24/outline";
+import { getUserData } from "../services/api";
  
 export function SidebarWithBurgerMenu() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState(null);
   const [open, setOpen] = useState(0);
   const [openAlert, setOpenAlert] = useState(true);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
- 
+
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        try {
+          const userData = await getUserData();
+          setUser(userData);
+          setIsLoggedIn(true);
+        } catch (err) {
+          console.error('Token not valid', err);
+          localStorage.removeItem('token');
+          setIsLoggedIn(false);
+          setUser(null);
+        }
+      } else {
+        setIsLoggedIn(false);
+        setUser(null);
+      }
+    };
+
+    checkLoginStatus();
+
+    const handleStorageChange = () => {
+      checkLoginStatus();
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    window.addEventListener("loginStateChange", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+      window.removeEventListener("loginStateChange", handleStorageChange);
+    };
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+    setUser(null);
+    window.location.reload()
+  };
+
   const handleOpen = (value) => {
     setOpen(open === value ? 0 : value);
   };
- 
+
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
   const openDrawer = () => setIsDrawerOpen(true);
   const closeDrawer = () => setIsDrawerOpen(false);
+
+  const handleLinkClick = () => {
+    closeDrawer();
+  };
+
  
   return (
     <>
@@ -51,7 +97,7 @@ export function SidebarWithBurgerMenu() {
           <XMarkIcon className="h-8 w-8 stroke-2" />
         ) : (
           <Bars3Icon className="h-8 w-8 stroke-2" />
-        )}
+        )} 
       </IconButton>
       <Drawer open={isDrawerOpen} onClose={closeDrawer}>
         <Card
@@ -60,20 +106,13 @@ export function SidebarWithBurgerMenu() {
           className="h-[calc(100vh-2rem)] w-full p-4"
         >
           <div className="mb-2 flex items-center gap-4 p-4">
-            <img
-              src="https://docs.material-tailwind.com/img/logo-ct-dark.png"
-              alt="brand"
-              className="h-8 w-8"
-            />
-            <Typography variant="h5" color="blue-gray">
-              Sidebar
-            </Typography>
-          </div>
-          <div className="p-2">
-            <Input
-              icon={<MagnifyingGlassIcon className="h-5 w-5" />}
-              label="Search"
-            />
+            <Link to="/" onClick={handleLinkClick}>
+              <img 
+                src='https://res.cloudinary.com/dicfymkdl/image/upload/v1722538420/modeco-logo-light_qfngkh.svg' 
+                alt='Modeco logo' 
+                className="w-[150px]" 
+              />
+            </Link>
           </div>
           <List>
             <Accordion
@@ -93,111 +132,94 @@ export function SidebarWithBurgerMenu() {
                   className="border-b-0 p-3"
                 >
                   <ListItemPrefix>
-                    <PresentationChartBarIcon className="h-5 w-5" />
-                  </ListItemPrefix>
-                  <Typography color="blue-gray" className="mr-auto font-normal">
-                    Dashboard
-                  </Typography>
-                </AccordionHeader>
-              </ListItem>
-              <AccordionBody className="py-1">
-                <List className="p-0">
-                  <ListItem>
-                    <ListItemPrefix>
-                      <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                    </ListItemPrefix>
-                    Analytics
-                  </ListItem>
-                  <ListItem>
-                    <ListItemPrefix>
-                      <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                    </ListItemPrefix>
-                    Reporting
-                  </ListItem>
-                  <ListItem>
-                    <ListItemPrefix>
-                      <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                    </ListItemPrefix>
-                    Projects
-                  </ListItem>
-                </List>
-              </AccordionBody>
-            </Accordion>
-            <Accordion
-              open={open === 2}
-              icon={
-                <ChevronDownIcon
-                  strokeWidth={2.5}
-                  className={`mx-auto h-4 w-4 transition-transform ${
-                    open === 2 ? "rotate-180" : ""
-                  }`}
-                />
-              }
-            >
-              <ListItem className="p-0" selected={open === 2}>
-                <AccordionHeader
-                  onClick={() => handleOpen(2)}
-                  className="border-b-0 p-3"
-                >
-                  <ListItemPrefix>
                     <ShoppingBagIcon className="h-5 w-5" />
                   </ListItemPrefix>
                   <Typography color="blue-gray" className="mr-auto font-normal">
-                    E-Commerce
+                    Shop
                   </Typography>
                 </AccordionHeader>
               </ListItem>
               <AccordionBody className="py-1">
                 <List className="p-0">
-                  <ListItem>
-                    <ListItemPrefix>
-                      <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                    </ListItemPrefix>
-                    Orders
-                  </ListItem>
-                  <ListItem>
-                    <ListItemPrefix>
-                      <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                    </ListItemPrefix>
-                    Products
-                  </ListItem>
+                  <Link to="/clothes" onClick={handleLinkClick}>
+                    <ListItem>
+                      Clothes
+                    </ListItem>
+                  </Link>
+                  <Link to="/food-and-beverage" onClick={handleLinkClick}>
+                    <ListItem>
+                      Food and Beverage
+                    </ListItem>
+                  </Link>
+                  <Link to="/cosmetics" onClick={handleLinkClick}>
+                    <ListItem>
+                      Cosmetics
+                    </ListItem>
+                  </Link>
+                  <Link to="/second-hand" onClick={handleLinkClick}>
+                    <ListItem>
+                      Second hand
+                    </ListItem>
+                  </Link>
                 </List>
               </AccordionBody>
             </Accordion>
-            <hr className="my-2 border-blue-gray-50" />
-            <ListItem>
-              <ListItemPrefix>
-                <InboxIcon className="h-5 w-5" />
-              </ListItemPrefix>
-              Inbox
-              <ListItemSuffix>
-                <Chip
-                  value="14"
-                  size="sm"
-                  variant="ghost"
-                  color="blue-gray"
-                  className="rounded-full"
-                />
-              </ListItemSuffix>
-            </ListItem>
-            <ListItem>
-              <ListItemPrefix>
-                <UserCircleIcon className="h-5 w-5" />
-              </ListItemPrefix>
-              Profile
-            </ListItem>
-            <ListItem>
-              <ListItemPrefix>
-                <Cog6ToothIcon className="h-5 w-5" />
-              </ListItemPrefix>
-              Settings
-            </ListItem>
-            <ListItem>
-              <ListItemPrefix>
-                <PowerIcon className="h-5 w-5" />
-              </ListItemPrefix>
-              Log Out
-            </ListItem>
+            <Link to="/posts" onClick={handleLinkClick}>
+              <ListItem>
+                <ListItemPrefix>
+                  <NewspaperIcon className="h-5 w-5" />
+                </ListItemPrefix>
+                Blog posts
+              </ListItem>
+            </Link>
+            <Link to="/licenses" onClick={handleLinkClick}>
+              <ListItem>
+                <ListItemPrefix>
+                  <CheckBadgeIcon className="h-5 w-5" />
+                </ListItemPrefix>
+                Green licenses
+              </ListItem>
+            </Link>
+            {isLoggedIn && user ? (
+              <>
+                <hr className="my-4" />
+                <Link to="/profile" onClick={handleLinkClick}>
+                  <ListItem>
+                    <ListItemPrefix>
+                      <UserCircleIcon className="h-5 w-5" />
+                    </ListItemPrefix>
+                    Profile
+                  </ListItem>
+                </Link>
+                <a onClick={() => { handleLogout(); handleLinkClick(); }}>
+                  <ListItem>
+                    <ListItemPrefix>
+                      <PowerIcon className="h-5 w-5" />
+                    </ListItemPrefix>
+                    Log Out
+                  </ListItem>
+                </a>
+              </>
+            ) : (
+              <>
+                <Link to="/login" onClick={handleLinkClick}>
+                  <ListItem>
+                    <ListItemPrefix>
+                      <UserCircleIcon className="h-5 w-5" />
+                    </ListItemPrefix>
+                    Login
+                  </ListItem>
+                </Link>
+                <Link to="/register" onClick={handleLinkClick}>
+                    <ListItem>
+                      <ListItemPrefix>
+                        <UserCircleIcon className="h-5 w-5" />
+                      </ListItemPrefix>
+                      Register
+                    </ListItem>
+                </Link>
+              </>
+            )}
           </List>
           <Alert
             open={openAlert}

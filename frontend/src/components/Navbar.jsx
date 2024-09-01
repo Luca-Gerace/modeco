@@ -1,19 +1,17 @@
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { getUserData } from "../services/api";
 import { useState, useEffect } from "react";
 import { SidebarWithBurgerMenu } from "./SidebarWithBurgerMenu";
+import { Button } from "@material-tailwind/react";
 import { SidebarCart } from "./Cart/SidebarCart";
 
 export default function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const checkLoginStatus = async () => {
       const token = localStorage.getItem('token');
-      // TODO: Remove this
-      console.log(token);
       if (token) {
         try {
           const userData = await getUserData();
@@ -46,20 +44,13 @@ export default function Navbar() {
     };
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    setIsLoggedIn(false);
-    setUser(null);
-    navigate("/");
-  };
-
   const fallbackAvatar = "https://res.cloudinary.com/dicfymkdl/image/upload/v1721642624/avatar_rsyffw.png";
 
   return (
     <>
-      <nav className="w-full px-4 py-6">
+      <nav className="w-full px-4 py-6 border-b-2	border-[#000]">
         <div className="w-full lg:w-[1024px] flex justify-between items-center m-auto">
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-4">
             <SidebarWithBurgerMenu />
             <Link to="/">
               <img 
@@ -69,7 +60,7 @@ export default function Navbar() {
               />
             </Link>
           </div>
-          <ul className="flex items-center gap-12">
+          <ul className="flex items-center gap-6">
             {isLoggedIn ? (
               <>
                 <li>
@@ -82,13 +73,9 @@ export default function Navbar() {
                 </li>
                 <li>
                   {user ? (
-                    <div className="flex items-center gap-4">
+                    <Link to="/profile">
                       <img src={user.avatar ? user.avatar : fallbackAvatar} alt='user image' className="w-[50px] h-[50px] rounded-full" />
-                      <div className="flex flex-col text-left">
-                        <span>{user.name} {user.surname}</span>
-                        <a className="text-[12px] underline cursor-pointer" onClick={handleLogout}>Logout</a>
-                      </div>
-                    </div>
+                    </Link>
                   ) : null}
                 </li>
               </>
@@ -96,12 +83,16 @@ export default function Navbar() {
               <>
                 <li className="nav-item">
                   <Link to="/login" className="nav-link">
-                    Login
+                    <Button className="rounded-full">
+                      Login
+                    </Button>
                   </Link>
                 </li>
                 <li className="nav-item">
                   <Link to="/register" className="nav-link">
-                    Registrati
+                    <Button className="rounded-full" variant="outlined">
+                      Sign up
+                    </Button>
                   </Link>
                 </li>
               </>
@@ -109,44 +100,6 @@ export default function Navbar() {
           </ul>
         </div>
       </nav>
-      <div className="w-full px-4 py-6 border-t border-[#000] shadow-md">
-        <div className="w-full lg:w-[1024px] flex m-auto">
-          <div className="flex items-center justify-between gap-6">
-            <NavLink 
-              to="/clothes" 
-              className={({ isActive }) => 
-                `font-bold hover:underline transition-all ${isActive ? 'text-green-500 underline' : ''}`
-              }
-            >
-              Abbigliamento
-            </NavLink>
-            <NavLink 
-              to="/cosmetics" 
-              className={({ isActive }) => 
-                `font-bold hover:underline transition-all ${isActive ? 'text-green-500 underline' : ''}`
-              }
-            >
-              Cosmetici
-            </NavLink>
-            <NavLink 
-              to="/food-and-beverage" 
-              className={({ isActive }) => 
-                `font-bold hover:underline transition-all ${isActive ? 'text-green-500 underline' : ''}`
-              }
-            >
-              Healthy food
-            </NavLink>
-            <NavLink 
-              to="/second-hand" 
-              className={({ isActive }) => 
-                `font-bold hover:underline transition-all ${isActive ? 'text-green-500 underline' : ''}`
-              }
-            >
-              Second hand
-            </NavLink>
-          </div>
-        </div>
-      </div>
     </>
   );
 }

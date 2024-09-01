@@ -34,8 +34,8 @@ export default function ProductCard({ product, isInWishlist = false }) {
           </button>
         </div>
         <div className="py-4">
-          <p className="text-c mb-2">{product.brand}</p>
-          <h3 className="font-bold text-base mb-2 text-[#96A7AF]">{product.name}</h3>
+          <p className="text-c mb-2">{product.brand.name}</p>
+          <h3 className="font-bold text-base mb-2 text-[#96A7AF]">{product.type}</h3>
           <p className="font-bold">{product.price.toFixed(2)} €</p>
         </div>
       </div>

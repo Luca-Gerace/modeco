@@ -16,7 +16,7 @@ function App() {
   return (
     <Router>
       <Navbar />
-      <main className="w-full lg:w-[1024px] px-4 py-8 m-auto">
+      <main className="w-full lg:w-[1024px] py-8 m-auto">
         <Routes>
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
