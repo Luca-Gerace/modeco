@@ -5,8 +5,7 @@ import GoogleIcon from '@mui/icons-material/Google';
 import Alert from '../components/Alert';
 import { Input } from "@material-tailwind/react";
 
-// const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";
-const API_URL = "http://localhost:5003";
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5003";
 
 export default function Login() {
     // Hook - form data
