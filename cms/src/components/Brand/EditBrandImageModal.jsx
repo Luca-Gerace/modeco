@@ -1,17 +1,17 @@
 import { useState } from 'react';
 import { Dialog, DialogHeader, DialogBody, DialogFooter, Button, Input } from '@material-tailwind/react';
-import { updateProductImage } from '../../services/api';
+import { updateBrandImage } from '../../services/api';
 import Alert from '../../../../frontend/src/components/Alert';
 import { IconButton, Typography } from '@mui/material';
 import { XMarkIcon } from '@heroicons/react/24/solid';
 
-export default function EditProductImageModal({ open, handleOpen, product, productId, setProduct }) {
+export default function EditBrandImageModal({ open, handleOpen, brand, brandId, setBrand }) {
 
-  const [productImage, setProductImage] = useState(null);
+  const [brandImage, setBrandImage] = useState(null);
   const [alert, setAlert] = useState(null);
 
   const handleFileChange = (e) => {
-    setProductImage(e.target.files[0]);
+    setBrandImage(e.target.files[0]);
   };
 
 
@@ -19,19 +19,19 @@ export default function EditProductImageModal({ open, handleOpen, product, produ
     e.preventDefault();
 
     try {
-      if (!productImage) {
+      if (!brandImage) {
         setAlert({ message: 'Please select an image', type: 'error' });
         return;
       }
 
-      const updatedProduct = await updateProductImage(productId, productImage);
+      const updatedBrand = await updateBrandImage(brandId, brandImage);
       
-      setProduct(prev => ({ ...prev, image: updatedProduct.image }));
+      setBrand(prev => ({ ...prev, image: updatedBrand.image }));
 
       handleOpen(); // Close modal after successful update
       setAlert({ message: 'Image updated successfully!', type: 'success' });
     } catch (error) {
-      console.error("Error updating product image:", error);
+      console.error("Error updating brand image:", error);
       setAlert({ message: 'Error updating image. Retry.', type: 'error' });
     }
   };
@@ -42,7 +42,7 @@ export default function EditProductImageModal({ open, handleOpen, product, produ
       <Dialog open={open} handler={handleOpen} dismissible={false}>
         <DialogHeader>
           <Typography variant="h5" color="blue-gray">
-            Edit Product Image
+            Edit Brand Image
           </Typography>
           <IconButton
             size="sm"
@@ -56,10 +56,10 @@ export default function EditProductImageModal({ open, handleOpen, product, produ
         <DialogBody className='border-t'>
           <form onSubmit={handleSubmit}>
             <div className='flex items-center gap-4 py-4'>
-              <img className="w-16" src={product.image} alt={product.name} />
+              <img className="w-16" src={brand.image} alt={brand.name} />
               <Input
                 type="file"
-                label="Product Image"
+                label="Brand Image"
                 onChange={handleFileChange}
               />
             </div>

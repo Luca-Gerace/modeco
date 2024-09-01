@@ -147,7 +147,7 @@ function EditProductModal({ open, handleOpen, productData = {}, setProduct }) {
                                     <Select
                                         label="Brand"
                                         name="brand"
-                                        value={editedProduct.brand}
+                                        value={editedProduct.brand._id || ''}
                                         onChange={(value) => handleChange(value, 'brand')}
                                     >
                                         {brands.map((brand) => (
@@ -183,7 +183,7 @@ function EditProductModal({ open, handleOpen, productData = {}, setProduct }) {
                                         <Select
                                             label="Licenses"
                                             name="licenses"
-                                            value={newLicense}
+                                            value={newLicense || ''}
                                             onChange={(value) => setNewLicense(value)}
                                         >
                                             {licenses.map((license) => (
