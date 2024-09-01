@@ -23,6 +23,10 @@ router.get('/:id', async (req, res) => {
     const product = await Product.findById(req.params.id)
       .populate('brand', 'name')
       .populate('licenses', 'name')
+      .populate({
+        path: 'licenses',
+        select: 'image name description'
+      })
       .exec();
     if (!product) {
       return res.status(404).json({ message: 'Prodotto non trovato' });

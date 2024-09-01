@@ -81,8 +81,10 @@ function EditProductModal({ open, handleOpen, productData = {}, setProduct }) {
     };
 
     const handleAddLicense = () => {
-        if (newLicense && !selectedLicenses.includes(newLicense)) {
-            setSelectedLicenses([...selectedLicenses, newLicense]);
+        const licenseToAdd = licenses.find(license => license._id === newLicense);
+
+        if (licenseToAdd && !selectedLicenses.some(license => license._id === licenseToAdd._id)) {
+            setSelectedLicenses([...selectedLicenses, licenseToAdd]);
             setNewLicense('');
         }
     };
