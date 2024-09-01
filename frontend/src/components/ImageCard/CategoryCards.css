@@ -1,0 +1,43 @@
+.categoryCard {
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size: contain;
+    position: absolute;
+    z-index: 2;
+}
+
+.clothes {
+    background-image: url('https://res.cloudinary.com/dicfymkdl/image/upload/v1725226644/clothes_nixhnh.png');
+}
+
+.cosmetics {
+    background-image: url('https://res.cloudinary.com/dicfymkdl/image/upload/v1725226644/cosmetics_ukoetv.png');
+}
+
+.food_and_beverage {
+    background-image: url('https://res.cloudinary.com/dicfymkdl/image/upload/v1725226643/food-beverage_r89km2.png');
+}
+
+.second_hand {
+    background-image: url('https://res.cloudinary.com/dicfymkdl/image/upload/v1725226644/second-hand_nkor2o.png');
+}
+
+.shape {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.201);
+    z-index: 1;
+}
+.circle {
+    border-radius: 200px;
+    top: 20px;
+    left: 20px;
+    height: 100px;
+    width: 100px;
+}
+.cube {
+    border-radius: 50px;
+    bottom: -30px;
+    right: -30px;
+    height: 200px;
+    width: 200px;
+}

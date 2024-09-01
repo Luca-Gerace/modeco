@@ -1,0 +1,6 @@
+.hero {
+    background-image: url('https://res.cloudinary.com/dicfymkdl/image/upload/v1725223319/hero-home-3_yjqvqs.jpg');
+    background-repeat: no-repeat;
+    background-position-x: 10%;
+    background-size: cover;
+}
