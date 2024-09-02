@@ -22,16 +22,16 @@ function App() {
         <Navbar />
         <main className="w-full lg:w-[1024px] py-8 m-auto">
           <Routes>
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
             <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
+            <Route path="/wishlist" element={<PrivateRoute><Wishlist /></PrivateRoute>} />
             <Route path="/clothes" element={<ShopClothes />} />
             <Route path="/cosmetics" element={<ShopCosmetics />} />
             <Route path="/food-and-beverage" element={<ShopFoodAndBaverage />} />
             <Route path="/second-hand" element={<ShopSecondHand />} />
             <Route path="/product/:id" element={<Product />} />
-            <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
-            <Route path="/wishlist" element={<PrivateRoute><Wishlist /></PrivateRoute>} />
             <Route path="/checkout" element={<PrivateRoute><Checkout /></PrivateRoute>} />
             <Route path="/thank-you" element={<PrivateRoute><ThankYou /></PrivateRoute>} />
           </Routes>
