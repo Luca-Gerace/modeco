@@ -46,7 +46,7 @@ export default function BlogSection() {
                         <p>Loading...</p> 
                     )}
                 </div>
-                <Link to='/licenze' className='flex gap-2 items-center flex-end text-black font-bold hover:underline justify-end'>
+                <Link to='/blog' className='flex gap-2 items-center flex-end text-black font-bold hover:underline justify-end'>
                     <span>Scopri di più</span> <ArrowRightIcon className='w-6' />
                 </Link>
                 <div className='licenseShape'></div>
