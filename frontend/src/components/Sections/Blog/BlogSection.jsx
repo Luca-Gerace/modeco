@@ -33,7 +33,7 @@ export default function BlogSection() {
                     <br />
                     Noi contribuiamo rendendo la tua esperienza di acquisto 100% rispettosa dell’ambiente, dal packaging fino al trasporto al tuo indirizzo.
                 </p>
-                <div className="flex flex-wrap gap-6 mx-4 lg:mx-0">
+                <div className="flex flex-wrap gap-6 ml-4 mr-0 lg:mx-0">
 
                     <div className="hidden md:flex md:overflow-hidden md:gap-6 pb-6">
                         {loading ? (
