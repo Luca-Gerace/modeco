@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   IconButton,
@@ -26,55 +26,13 @@ import {
   NewspaperIcon,
   CheckBadgeIcon,
 } from "@heroicons/react/24/outline";
-import { getUserData } from "../services/api";
+import { useUser } from "../modules/UserContext";
  
 export function SidebarWithBurgerMenu() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [user, setUser] = useState(null);
+  const { user, logout } = useUser();
+
   const [open, setOpen] = useState(0);
   const [openAlert, setOpenAlert] = useState(true);
-
-  useEffect(() => {
-    const checkLoginStatus = async () => {
-      const token = localStorage.getItem('token');
-      if (token) {
-        try {
-          const userData = await getUserData();
-          setUser(userData);
-          setIsLoggedIn(true);
-        } catch (err) {
-          console.error('Token not valid', err);
-          localStorage.removeItem('token');
-          setIsLoggedIn(false);
-          setUser(null);
-        }
-      } else {
-        setIsLoggedIn(false);
-        setUser(null);
-      }
-    };
-
-    checkLoginStatus();
-
-    const handleStorageChange = () => {
-      checkLoginStatus();
-    };
-
-    window.addEventListener("storage", handleStorageChange);
-    window.addEventListener("loginStateChange", handleStorageChange);
-
-    return () => {
-      window.removeEventListener("storage", handleStorageChange);
-      window.removeEventListener("loginStateChange", handleStorageChange);
-    };
-  }, []);
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    setIsLoggedIn(false);
-    setUser(null);
-    window.location.reload()
-  };
 
   const handleOpen = (value) => {
     setOpen(open === value ? 0 : value);
@@ -180,7 +138,7 @@ export function SidebarWithBurgerMenu() {
                 Green licenses
               </ListItem>
             </Link>
-            {isLoggedIn && user ? (
+            {user ? (
               <>
                 <hr className="my-4" />
                 <Link to="/profile" onClick={handleLinkClick}>
@@ -191,7 +149,7 @@ export function SidebarWithBurgerMenu() {
                     Profile
                   </ListItem>
                 </Link>
-                <a onClick={() => { handleLogout(); handleLinkClick(); }}>
+                <a onClick={() => { logout(); handleLinkClick(); }}>
                   <ListItem>
                     <ListItemPrefix>
                       <PowerIcon className="h-5 w-5" />
