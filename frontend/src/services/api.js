@@ -265,57 +265,6 @@ export const deleteOrder = async (orderId) => {
   }
 };
 
-// Review
-export const getReviews = async () => {
-  try {
-    const response = await api.get('/reviews');
-    return response.data;
-  } catch (err) {
-    console.error('Error retrieving reviews:', err);
-    throw err;
-  }
-};
-
-export const getReview = async (reviewId) => {
-  try {
-    const response = await api.get(`/reviews/${reviewId}`);
-    return response.data;
-  } catch (err) {
-    console.error('Error retrieving review:', err);
-    throw err;
-  }
-};
-
-export const createReview = async (reviewData) => {
-  try {
-    const response = await api.post('/reviews', reviewData);
-    return response.data;
-  } catch (err) {
-    console.error('Error creating review:', err);
-    throw err;
-  }
-};
-
-export const updateReview = async (reviewId, reviewData) => {
-  try {
-    const response = await api.put(`/reviews/${reviewId}`, reviewData);
-    return response.data;
-  } catch (err) {
-    console.error('Error updating review:', err);
-    throw err;
-  }
-};
-
-export const deleteReview = async (reviewId) => {
-  try {
-    const response = await api.delete(`/reviews/${reviewId}`);
-    return response.data;
-  } catch (err) {
-    console.error('Error deleting review:', err);
-    throw err;
-  }
-};
-
 // Wishlist
 export const getWishlist = async () => {
   try {
@@ -357,53 +306,44 @@ export const deleteWishlist = async (wishlistId) => {
   }
 };
 
-// Coupon
-export const getCoupons = async () => {
+// License
+export const getLicenses = async () => {
   try {
-    const response = await api.get('/coupons');
+    const response = await api.get('/licenses');
     return response.data;
   } catch (err) {
-    console.error('Error retrieving coupons:', err);
+    console.error('Errore nel recupero dei license:', err);
     throw err;
   }
 };
 
-export const getCoupon = async (couponId) => {
+export const getLicense = async (licenseId) => {
   try {
-    const response = await api.get(`/coupons/${couponId}`);
+    const response = await api.get(`/licenses/${licenseId}`);
     return response.data;
   } catch (err) {
-    console.error('Error retrieving coupon:', err);
+    console.error('Errore nel recupero del license:', err);
     throw err;
   }
 };
 
-export const createCoupon = async (couponData) => {
+// Post
+export const getPosts = async () => {
   try {
-    const response = await api.post('/coupons', couponData);
+    const response = await api.get('/posts');
     return response.data;
   } catch (err) {
-    console.error('Error creating coupon:', err);
+    console.error('Errore nel recupero dei post:', err);
     throw err;
   }
 };
 
-export const updateCoupon = async (couponId, couponData) => {
+export const getPost = async (postId) => {
   try {
-    const response = await api.put(`/coupons/${couponId}`, couponData);
+    const response = await api.get(`/posts/${postId}`);
     return response.data;
   } catch (err) {
-    console.error('Error updating coupon:', err);
-    throw err;
-  }
-};
-
-export const deleteCoupon = async (couponId) => {
-  try {
-    const response = await api.delete(`/coupons/${couponId}`);
-    return response.data;
-  } catch (err) {
-    console.error('Error deleting coupon:', err);
+    console.error('Errore nel recupero del post:', err);
     throw err;
   }
 };

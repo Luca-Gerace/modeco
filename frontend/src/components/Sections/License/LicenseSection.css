@@ -1,0 +1,10 @@
+.licenseShape {
+    position: absolute;
+    background-color: #00000024;
+    z-index: -1;
+    border-radius: 500px;
+    top: 100px;
+    left: -100px;
+    height: 500px;
+    width: 500px;
+}

@@ -48,7 +48,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="w-full px-4 py-6 border-b-2	border-[#000]">
+      <nav className="w-full px-4 py-6 shadow-lg bg-white">
         <div className="w-full lg:w-[1024px] flex justify-between items-center m-auto">
           <div className="flex items-center gap-4">
             <SidebarWithBurgerMenu />

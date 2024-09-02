@@ -24,7 +24,7 @@
 
 .shape {
     position: absolute;
-    background-color: rgba(0, 0, 0, 0.201);
+    background-color: #00000024;
     z-index: 1;
 }
 .circle {
