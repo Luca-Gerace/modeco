@@ -1,22 +1,7 @@
 import { Link } from 'react-router-dom';
-import { HeartIcon } from '@heroicons/react/24/outline';
-import { useState } from 'react';
-import { updateWishlist } from '../../services/api';
 import Badge from '../Badge';
 
-export default function ProductCard({ product, isInWishlist = false }) {
-  const [inWishlist, setInWishlist] = useState(isInWishlist);
-
-  const handleWishlist = async (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    try {
-      await updateWishlist(product._id);
-      setInWishlist(!inWishlist);
-    } catch (error) {
-      console.error('Errore nell\'aggiornamento della wishlist:', error);
-    }
-  };
+export default function ProductCard({ product }) {
 
   return (
     <Link to={`/product/${product._id}`} className="block relative">
@@ -26,12 +11,6 @@ export default function ProductCard({ product, isInWishlist = false }) {
             {product.quantity <= 0 && (
               <Badge color="gray">Esaurito</Badge>
             )}
-            <button 
-              onClick={handleWishlist}
-              className="absolute top-2 right-2 bg-white rounded-full p-1 shadow-md hover:bg-gray-100 transition-colors"
-            >
-              <HeartIcon className={`h-5 w-5 ${isInWishlist ? 'text-red-500 fill-current' : 'text-gray-400'}`} />
-          </button>
         </div>
         <div className="py-4">
           <p className="text-c mb-2">{product.brand.name}</p>

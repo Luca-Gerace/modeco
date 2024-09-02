@@ -2,15 +2,14 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getProduct, addToCart, getProducts } from "../services/api";
 import Alert from '../components/Alert';
-import { updateWishlist } from '../services/api';
-import { HeartIcon, PlusIcon } from '@heroicons/react/24/outline';
+import { PlusIcon } from '@heroicons/react/24/outline';
 import { ArrowLeftIcon } from '@heroicons/react/24/solid';
 import { Button, Input, Select } from "@material-tailwind/react";
 import SelectOption from "@material-tailwind/react/components/Select/SelectOption";
 import Badge from "../components/Badge";
 import ProductCard from "../components/Product/ProductCard";
 
-export default function Product({isInWishlist = false}) {
+export default function Product() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [product, setProduct] = useState({});
@@ -18,7 +17,6 @@ export default function Product({isInWishlist = false}) {
   const [quantity, setQuantity] = useState(1);
   const [size, setSize] = useState("");
   const [alert, setAlert] = useState(null);
-  const [inWishlist, setInWishlist] = useState(isInWishlist);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -58,17 +56,6 @@ export default function Product({isInWishlist = false}) {
     }
   }
 
-  const handleWishlist = async (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    try {
-      await updateWishlist(product._id);
-      setInWishlist(!inWishlist);
-    } catch (error) {
-      console.error('Errore nell\'aggiornamento della wishlist:', error);
-    }
-  };
-
   const handleBack = () => {
     navigate(-1);
   };
@@ -85,14 +72,6 @@ export default function Product({isInWishlist = false}) {
             {product.quantity <= 0 && (
                 <Badge color="gray">Esaurito</Badge>
               )}
-            <button 
-              onClick={handleWishlist}
-              className="absolute top-2 right-2 bg-white rounded-full p-1 shadow-md hover:bg-gray-100 transition-colors"
-            >
-              <HeartIcon 
-                className={`h-5 w-5 ${isInWishlist ? 'text-red-500 fill-current' : 'text-gray-400'}`} 
-              />
-            </button>
           </div>
           <div className="md:w-1/2 flex flex-col gap-8">
             <div className="mb-4">
@@ -136,7 +115,7 @@ export default function Product({isInWishlist = false}) {
             {alert && <Alert message={alert.message} type={alert.type} onClose={() => setAlert(null)} />}
           </div>
         </div>
-        <div className="flex flex-col gap-4 pb-16">
+        <div className="flex flex-col gap-4 pt-8 pb-16">
             <h2 className="text-[20px] font-bold pb-4 border-b">Descrizione</h2>
             <p className="text-black">{product.description}</p>
         </div>

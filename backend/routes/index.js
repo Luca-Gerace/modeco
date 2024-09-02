@@ -6,7 +6,6 @@ import orderRoutes from './orderRoutes.js';
 import postRoutes from './postRoutes.js';
 import productRoutes from './productRoutes.js';
 import userRoutes from './userRoutes.js';
-import wishlistRoutes from './wishlistRoutes.js';
 
 export {
   authRoutes,
@@ -17,5 +16,4 @@ export {
   postRoutes,
   productRoutes,
   userRoutes,
-  wishlistRoutes,
 };

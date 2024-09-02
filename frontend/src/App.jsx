@@ -11,9 +11,9 @@ import ShopClothes from "./pages/ShopClothes";
 import ShopCosmetics from "./pages/ShopCosmetics";
 import ShopFoodAndBaverage from "./pages/ShopFoodAndBaverage";
 import ShopSecondHand from "./pages/ShopSecondHand";
-import Wishlist from "./pages/Wishlist";
 import ThankYou from "./pages/Thankyou";
 import Profile from "./pages/Profile";
+import Post from "./pages/Post";
 
 function App() {
   return (
@@ -26,7 +26,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
-            <Route path="/wishlist" element={<PrivateRoute><Wishlist /></PrivateRoute>} />
+            <Route path="/blog/:id" element={<Post />} />
             <Route path="/clothes" element={<ShopClothes />} />
             <Route path="/cosmetics" element={<ShopCosmetics />} />
             <Route path="/food-and-beverage" element={<ShopFoodAndBaverage />} />

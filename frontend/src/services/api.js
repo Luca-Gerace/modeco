@@ -263,48 +263,7 @@ export const deleteOrder = async (orderId) => {
     console.error('Error deleting order:', err);
     throw err;
   }
-};
-
-// Wishlist
-export const getWishlist = async () => {
-  try {
-    const response = await api.get('/wishlist');
-    return response.data;
-  } catch (err) {
-    console.error('Errore nel recupero della wishlist:', err);
-    throw err;
-  }
-};
-
-export const createWishlist = async (wishlistData) => {
-  try {
-    const response = await api.post('/wishlist', wishlistData);
-    return response.data;
-  } catch (err) {
-    console.error('Error creating wishlist:', err);
-    throw err;
-  }
-};
-
-export const updateWishlist = async (productId) => {
-  try {
-    const response = await api.post('/wishlist', { productId });
-    return response.data;
-  } catch (err) {
-    console.error('Errore nell\'aggiornamento della wishlist:', err);
-    throw err;
-  }
-};
-
-export const deleteWishlist = async (wishlistId) => {
-  try {
-    const response = await api.delete(`/wishlist/${wishlistId}`);
-    return response.data;
-  } catch (err) {
-    console.error('Error deleting wishlist:', err);
-    throw err;
-  }
-};
+}
 
 // License
 export const getLicenses = async () => {

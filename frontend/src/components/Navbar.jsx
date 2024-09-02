@@ -22,14 +22,9 @@ export default function Navbar() {
             />
           </Link>
         </div>
-        <ul className="flex items-center gap-6">
+        <ul className="flex items-center gap-8">
           {user ? (
             <>
-              <li>
-                <Link to="/wishlist" className="nav-link">
-                  Wishlist
-                </Link>
-              </li>
               <li>
                 <SidebarCart />
               </li>

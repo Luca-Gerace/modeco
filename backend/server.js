@@ -14,8 +14,7 @@ import {
   orderRoutes,
   postRoutes,
   productRoutes,
-  userRoutes,
-  wishlistRoutes
+  userRoutes
 } from './routes/index.js';
 // Middlewares
 import {
@@ -86,7 +85,6 @@ app.use('/api/orders', orderRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
-app.use('/api/wishlist', wishlistRoutes);
 
 // PORT
 const PORT = process.env.PORT || 3000;
