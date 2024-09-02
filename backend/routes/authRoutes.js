@@ -4,8 +4,6 @@ import { generateJWT } from '../utils/jwt.js';
 import { authMiddleware } from '../middlewares/authMiddleware.js';
 import passport from '../config/passportConfig.js';
 
-
-// TODO: Gestire doppio endpoint (frontend e cms)
 const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173';
 const CMS_URL = process.env.CMS_URL || 'http://localhost:5174';
 
@@ -21,14 +19,14 @@ router.post('/login', async (req, res) => {
         const user = await User.findOne({ email });
 
         if (!user) {
-            return res.status(401).json({ message: 'Not valid credentials' })
+            return res.status(401).json({ message: 'Utente non trovato con questa email' })
         }
 
         // Compare password with hashed password
         const isMatch = await user.comparePassword(password);
 
         if (!isMatch) {
-            return res.status(401).json({ message: 'Not valid credentials' })
+            return res.status(401).json({ message: 'Password errata, riprova' })
         }
 
         // generate token

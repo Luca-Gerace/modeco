@@ -2,10 +2,10 @@ import { Link } from "react-router-dom";
 import { SidebarWithBurgerMenu } from "./SidebarWithBurgerMenu";
 import { Button } from "@material-tailwind/react";
 import { SidebarCart } from "./Cart/SidebarCart";
-import { useUser } from "../modules/UserContext"; // Importiamo il nostro UserContext
+import { useUser } from "../modules/UserContext";
 
 export default function Navbar() {
-  const { user } = useUser(); // Prendiamo user e logout dal contesto
+  const { user } = useUser();
 
   const fallbackAvatar = "https://res.cloudinary.com/dicfymkdl/image/upload/v1721642624/avatar_rsyffw.png";
 
