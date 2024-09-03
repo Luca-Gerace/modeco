@@ -27,10 +27,10 @@ export default function CategoryCards() {
             <div className='w-full bg-[#88caca88] p-6 lg:p-8 flex flex-col gap-8 relative overflow-hidden'>
                 <h2 className="text-[26px] md:text-[34px] text-black font-bold leading-8 md:leading-[40px]">La <span className='text-green-500'>sostenibilità</span> è la nostra forza</h2>
                 <p className='text-[18px] lg:text-[20px]'>
-                    Tutti i nostri brand partner hanno certificati di produzione sostenibile.
+                    Tutti i nostri brand partner hanno <strong>certificati di produzione sostenibile</strong>.
                     <br />
                     <br />
-                    Noi contribuiamo rendendo la tua esperienza di acquisto 100% rispettosa dell’ambiente, dal packaging fino al trasporto al tuo indirizzo.
+                    Noi contribuiamo rendendo la tua esperienza di acquisto <strong>100% rispettosa dell’ambiente</strong>, dal packaging fino al trasporto al tuo indirizzo.
                 </p>
                 <div className="grid grid-cols-4 md:grid-cols-8 gap-6">
                     {loading ? (

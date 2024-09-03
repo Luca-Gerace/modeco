@@ -198,14 +198,11 @@ function EditProductModal({ open, handleOpen, productData = {}, setProduct }) {
                                     </div>
                                     {selectedLicenses.length > 0 && (
                                         <ul className="list-disc flex gap-2">
-                                            {selectedLicenses.map((licenseId, index) => {
-                                                // Trova la licenza corrispondente all'ID
-                                                const license = licenses.find(l => l._id === licenseId);
-                                                
+                                            {selectedLicenses.map((licenseId, index) => {                                                
                                                 return (
                                                     <li key={index} className="flex justify-between items-center bg-[#333] hover:bg-[#242424] rounded-full px-4 py-1 my-1">
                                                         <span className="font-bold text-white text-[12px]">
-                                                            {license ? license.name : 'Unknown License'}
+                                                            {licenseId.name}
                                                         </span>
                                                         <button onClick={() => handleRemoveLicense(licenseId)} className="ml-2 text-white">
                                                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

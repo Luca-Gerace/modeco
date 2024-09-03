@@ -27,11 +27,8 @@ export default function Register() {
     // form handler
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
-        console.log(formData); // Added this to log the formData for debugging
 
         try {
-            // register user function with form data
             await registerUser(formData);
 
             setAlert({ message: 'Registration successful!', type: 'success' });

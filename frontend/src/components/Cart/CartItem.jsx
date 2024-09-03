@@ -9,14 +9,14 @@ export default function CartItem({ item, fetchCartData }) {
 
   const handleUpdateQuantity = async (newQuantity) => {
     try {
-      const cart = await getCart(); // Assicurati di avere l'ultimo stato del carrello
+      const cart = await getCart(); 
       const updatedItems = cart.items.map(item =>
         item.productId._id === item.productId._id ? { ...item, quantity: newQuantity } : item
       );
       const updatedTotalPrice = updatedItems.reduce((total, item) => total + (item.productId.price * item.quantity), 0);
 
       await updateCartItem(cart._id, updatedItems, updatedTotalPrice);
-      fetchCartData(); // Chiamata per aggiornare il carrello
+      fetchCartData(); 
     } catch (error) {
       console.error('Errore nell\'aggiornamento della quantità:', error);
     }
@@ -24,10 +24,8 @@ export default function CartItem({ item, fetchCartData }) {
     
   const handleRemoveItem = async () => {
     try {
-      console.log("Rimuovendo l'articolo con ID:", item.productId._id); // Verifica l'ID
-      const response = await removeFromCart(item.productId._id); // Passa l'ID del prodotto da rimuovere
-      console.log("Risposta dalla rimozione:", response); // Stampa la risposta
-      fetchCartData(); // Chiamata per aggiornare il carrello
+      await removeFromCart(item.productId._id);
+      fetchCartData();
     } catch (error) {
       console.error('Errore nella rimozione dell\'articolo:', error);
     }

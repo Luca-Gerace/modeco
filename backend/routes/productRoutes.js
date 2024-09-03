@@ -22,7 +22,6 @@ router.get('/:id', async (req, res) => {
   try {
     const product = await Product.findById(req.params.id)
       .populate('brand', 'name')
-      .populate('licenses', 'name')
       .populate({
         path: 'licenses',
         select: 'image name description'

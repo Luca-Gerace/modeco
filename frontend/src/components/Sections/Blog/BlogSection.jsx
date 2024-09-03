@@ -28,10 +28,7 @@ export default function BlogSection() {
                     Il Blog <span className='text-green-500'>Green</span> di mod<span className='text-green-500'>eco</span>
                 </h2>
                 <p className='text-[18px] lg:text-[20px] px-4 lg:px-0'>
-                    Tutti i nostri brand partner hanno certificati di produzione sostenibile.
-                    <br />
-                    <br />
-                    Noi contribuiamo rendendo la tua esperienza di acquisto 100% rispettosa dell’ambiente, dal packaging fino al trasporto al tuo indirizzo.
+                    Esplora articoli e approfondimenti su <strong>moda sostenibile</strong>, pratiche <strong>eco-friendly</strong> e consigli per uno <strong>stile di vita più consapevole</strong>, in armonia con il pianeta.
                 </p>
                 <div className="flex flex-wrap gap-6 ml-4 mr-0 lg:mx-0">
 
@@ -58,14 +55,14 @@ export default function BlogSection() {
                         )}
                     </div>
 
-                    <div className="flex md:hidden overflow-x-auto gap-6 pb-4 scrollbar-hide pb-12">
+                    <div className="flex md:hidden overflow-x-auto gap-6 scrollbar-hide pb-12">
                         {loading ? (
                             <p>Loading...</p>
                         ) : (
                             allPosts
                             .slice(0, 4)
                             .map((post) => (
-                                <Link to={`/blog/${post._id}`} key={post._id} className='flex-shrink-0 w-1/2 sm:w-1/3 md:w-1/4 bg-white rounded-xl shadow-lg hover:shadow-xl'>
+                                <Link to={`/blog/${post._id}`} key={post._id} className='flex-shrink-0 w-1/2 sm:w-1/3 md:w-1/4 bg-white rounded-xl shadow-lg hover:shadow-xl last:mr-4'>
                                     <img
                                         className="w-full h-36 object-cover border-green-500 border-b-4 rounded-t-xl"
                                         src={post.image}

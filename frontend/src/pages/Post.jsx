@@ -48,7 +48,7 @@ export default function Post() {
                     <div className="flex flex-col gap-6">
                         <p className="my-4 font-bold">by {post.author.name} {post.author.surname}</p>
                         <h1 className="font-bold text-3xl mb-4 text-[#96A7AF]">{post.title}</h1>
-                        <p>{post.content}</p>
+                        <article>{post.content}</article>
                         { post.tags.length > 0 && (
                           <>
                             <hr className="my-2" />

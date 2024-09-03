@@ -6,10 +6,11 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Product from "./pages/Product";
+import Products from "./pages/Products";
 import Checkout from "./pages/Checkout";
 import ShopClothes from "./pages/ShopClothes";
 import ShopCosmetics from "./pages/ShopCosmetics";
-import ShopFoodAndBaverage from "./pages/ShopFoodAndBaverage";
+import ShopFoodAndBeverage from "./pages/ShopFoodAndBeverage";
 import ShopSecondHand from "./pages/ShopSecondHand";
 import ThankYou from "./pages/Thankyou";
 import Profile from "./pages/Profile";
@@ -29,9 +30,10 @@ function App() {
             <Route path="/blog/:id" element={<Post />} />
             <Route path="/clothes" element={<ShopClothes />} />
             <Route path="/cosmetics" element={<ShopCosmetics />} />
-            <Route path="/food-and-beverage" element={<ShopFoodAndBaverage />} />
+            <Route path="/food-and-beverage" element={<ShopFoodAndBeverage />} />
             <Route path="/second-hand" element={<ShopSecondHand />} />
-            <Route path="/product/:id" element={<Product />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/products/:id" element={<Product />} />
             <Route path="/checkout" element={<PrivateRoute><Checkout /></PrivateRoute>} />
             <Route path="/thank-you" element={<PrivateRoute><ThankYou /></PrivateRoute>} />
           </Routes>

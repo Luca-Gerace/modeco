@@ -74,13 +74,9 @@ export default function Checkout() {
       paymentMethod: paymentInfo,
     };
 
-    console.log('Dati dell\'ordine:', orderData);
-
     try {
-      const response = await createOrder(orderData);
-      console.log('Ordine confermato:', response);
+      await createOrder(orderData);
 
-      // Aggiorna le quantità dei prodotti acquistati
       await Promise.all(cartItems.map(async (item) => {
         const productDetails = await getProduct(item.productId._id);
         const currentQuantity = productDetails.quantity;
@@ -92,18 +88,15 @@ export default function Checkout() {
           throw new Error('Quantità non valida');
         }
 
-        console.log(`Aggiornando prodotto ${item.productId._id} con nuova quantità: ${newQuantity}`);
         await updateProduct(item.productId._id, { quantity: newQuantity });
       }));
 
       // Svuota il carrello
       const cart = await getCart();
+      
       if (cart) {
-        console.log(`Svuotando il carrello con ID: ${cart._id}`);
         await updateCartItem(cart._id, [], 0);
-      } else {
-        console.log('Nessun articolo nel carrello da svuotare.');
-      }
+      } 
 
       // Go to thank you page
       setTimeout(() => {
