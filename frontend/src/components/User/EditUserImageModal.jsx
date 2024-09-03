@@ -45,7 +45,7 @@ export default function EditUserImageModal({ open, handleOpen, user, setUser }) 
       <Dialog open={open} handler={handleOpen} dismissible={false}>
         <DialogHeader onClick={handleOpen}>
           <Typography variant="h5" color="blue-gray">
-            Edit Profile Image
+            Aggiorna immagine del profilo
           </Typography>
           <IconButton
             size="sm"
@@ -67,7 +67,7 @@ export default function EditUserImageModal({ open, handleOpen, user, setUser }) 
             </div>
             <div className="mt-6">
               <Button type="submit" className='flex items-center gap-3 bg-green-500 rounded-full px-6 m-auto'>
-                Update Profile Image
+                Aggiorna immagine
               </Button>
             </div>
           </form>

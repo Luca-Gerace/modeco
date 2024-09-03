@@ -10,7 +10,12 @@ router.use(authMiddleware);
 // GET /orders
 router.get('/', async (req, res) => {
   try {
-    const orders = await Order.find();
+    const orders = await Order.find()
+      .populate({
+        path: 'userId',
+        select: 'name surname email'
+      })
+      .exec();
     res.json(orders);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -20,7 +25,17 @@ router.get('/', async (req, res) => {
 // GET /orders/:id
 router.get('/:id', async (req, res) => {
   try {
-    const order = await Order.findById(req.params.id);
+    const order = await Order.findById(req.params.id)
+      .populate({
+        path: 'userId',
+        select: 'name surname email'
+      })
+      .populate({
+        path: 'items.productId',
+        select: 'category type name image'
+      })
+      .exec();
+
     if (!order) {
       return res.status(404).json({ message: 'Order not found' });
     }

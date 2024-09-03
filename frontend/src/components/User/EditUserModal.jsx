@@ -9,7 +9,6 @@ export default function EditUserModal({ open, handleOpen, userData, setUser }) {
     const [editedUser, setEditedUser] = useState({
         name: userData.name || "",
         surname: userData.surname || "",
-        email: userData.email || "",
     });
 
     const [alert, setAlert] = useState(null);
@@ -19,7 +18,6 @@ export default function EditUserModal({ open, handleOpen, userData, setUser }) {
             setEditedUser({
                 name: userData.name || "",
                 surname: userData.surname || "",
-                email: userData.email || "",
             });
         }
     }, [userData]);
@@ -69,28 +67,21 @@ export default function EditUserModal({ open, handleOpen, userData, setUser }) {
                     <form>
                         <div className='flex flex-col gap-4 py-4'>
                             <Input
-                                label="Name"
+                                label="Nome"
                                 name="name"
                                 value={editedUser.name}
                                 onChange={(e) => handleChange(e.target.value, 'name')}
                             />
                             <Input
-                                label="Surname"
+                                label="Cognome"
                                 name="surname"
                                 value={editedUser.surname}
                                 onChange={(e) => handleChange(e.target.value, 'surname')}
                             />
-                            <Input
-                                label="Email"
-                                name="email"
-                                type='email'
-                                value={editedUser.email}
-                                onChange={(e) => handleChange(e.target.value, 'email')}
-                            />
                         </div>
                         <div className="mt-6">
                             <Button type="button" onClick={handleSubmit} className='flex items-center gap-3 bg-green-500 rounded-full px-6 m-auto'>
-                                Update Profile
+                                Aggiorna profilo
                             </Button>
                         </div>
                     </form>
