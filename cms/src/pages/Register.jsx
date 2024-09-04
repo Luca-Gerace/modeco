@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { registerUser } from '../services/api';
+import { useUser } from '../modules/UserContext';
 import Alert from '../../../frontend/src/components/Alert';
 import { Input, Button } from "@material-tailwind/react";
 
@@ -10,12 +11,20 @@ export default function Register() {
         surname: '',
         email: '',
         password: '',
+        avatar: 'https://res.cloudinary.com/dicfymkdl/image/upload/v1721642624/avatar_rsyffw.png',
         role: 'admin',
     });
 
+    const { user } = useUser();
     const navigate = useNavigate();
 
     const [alert, setAlert] = useState(null);
+
+    useEffect(() => {
+        if (user) {
+            navigate('/');
+        }
+    }, [user, navigate]);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });

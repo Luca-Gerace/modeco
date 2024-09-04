@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { userLogin } from '../services/api';
+import { useUser } from '../modules/UserContext';
 import GoogleIcon from '@mui/icons-material/Google';
 import Alert from '../components/Alert';
 import { Input, Button } from "@material-tailwind/react";
@@ -13,10 +14,17 @@ export default function Login() {
         password: '',
     });
 
+    const { user } = useUser();
     const navigate = useNavigate();
     const location = useLocation();
 
     const [alert, setAlert] = useState(null);
+
+    useEffect(() => {
+        if (user) {
+            navigate('/');
+        }
+    }, [user, navigate]);
 
     useEffect(() => {
         const params = new URLSearchParams(location.search);

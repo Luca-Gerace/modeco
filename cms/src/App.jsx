@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { UserProvider } from './modules/UserContext';
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -16,32 +17,35 @@ import Brand from "./pages/brands/Brand";
 import Licenses from "./pages/licenses/Licenses";
 import License from "./pages/licenses/License";
 import Footer from "./components/Footer";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   return (
-    <Router>
-      <Navbar />
-      <main className="w-full lg:w-[1024px] py-8 m-auto">
-        <Routes>
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/" element={<Home />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/products/:id" element={<Product />} />
-          <Route path="/brands" element={<Brands />} />
-          <Route path="/brands/:id" element={<Brand />} />
-          <Route path="/licenses" element={<Licenses />} />
-          <Route path="/licenses/:id" element={<License />} />
-          <Route path="/orders" element={<Orders />} />
-          <Route path="/orders/:id" element={<Order />} />
-          <Route path="/posts" element={<Posts />} />
-          <Route path="/posts/:id" element={<Post />} />
-          <Route path="/users" element={<Users />} />
-          <Route path="/users/:id" element={<User />} />
-        </Routes>
-        <Footer />
-      </main>
-    </Router>
+    <UserProvider>
+      <Router>
+        <Navbar />
+        <main className="w-full lg:w-[1024px] py-8 m-auto">
+          <Routes>
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
+            <Route path="/products" element={<PrivateRoute><Products /></PrivateRoute>} />
+            <Route path="/products/:id" element={<PrivateRoute><Product /></PrivateRoute>} />
+            <Route path="/brands" element={<PrivateRoute><Brands /></PrivateRoute>} />
+            <Route path="/brands/:id" element={<PrivateRoute><Brand /></PrivateRoute>} />
+            <Route path="/licenses" element={<PrivateRoute><Licenses /></PrivateRoute>} />
+            <Route path="/licenses/:id" element={<PrivateRoute><License /></PrivateRoute>} />
+            <Route path="/orders" element={<PrivateRoute><Orders /></PrivateRoute>} />
+            <Route path="/orders/:id" element={<PrivateRoute><Order /></PrivateRoute>} />
+            <Route path="/posts" element={<PrivateRoute><Posts /></PrivateRoute>} />
+            <Route path="/posts/:id" element={<PrivateRoute><Post /></PrivateRoute>} />
+            <Route path="/users" element={<PrivateRoute><Users /></PrivateRoute>} />
+            <Route path="/users/:id" element={<PrivateRoute><User /></PrivateRoute>} />
+          </Routes>
+          <PrivateRoute><Footer /></PrivateRoute>
+        </main>
+      </Router>
+    </UserProvider>
   );
 }
 
