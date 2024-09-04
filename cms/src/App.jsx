@@ -15,6 +15,7 @@ import Brands from "./pages/brands/Brands";
 import Brand from "./pages/brands/Brand";
 import Licenses from "./pages/licenses/Licenses";
 import License from "./pages/licenses/License";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
           <Route path="/users" element={<Users />} />
           <Route path="/users/:id" element={<User />} />
         </Routes>
+        <Footer />
       </main>
     </Router>
   );

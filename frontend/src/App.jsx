@@ -15,6 +15,7 @@ import ShopSecondHand from "./pages/ShopSecondHand";
 import ThankYou from "./pages/Thankyou";
 import Profile from "./pages/Profile";
 import Post from "./pages/Post";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
             <Route path="/checkout" element={<PrivateRoute><Checkout /></PrivateRoute>} />
             <Route path="/thank-you" element={<PrivateRoute><ThankYou /></PrivateRoute>} />
           </Routes>
+        <Footer />
         </main>
       </Router>
     </UserProvider>

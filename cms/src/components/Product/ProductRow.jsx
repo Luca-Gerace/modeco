@@ -12,7 +12,7 @@ export default function ProductRow({ rowData }) {
             </td>
             <td className="p-4">
                 <Typography variant="small" color="blue-gray" className="font-normal">
-                    {rowData.name.length > 30 ? `${rowData.name.slice(0, 30)}...` : rowData.name}
+                    {rowData.name.length > 28 ? `${rowData.name.slice(0, 28)}...` : rowData.name}
                 </Typography>
             </td>
             <td className="p-4">
