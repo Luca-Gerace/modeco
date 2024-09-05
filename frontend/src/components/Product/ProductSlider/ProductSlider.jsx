@@ -4,6 +4,7 @@ import { getProducts } from '../../../services/api';
 import ProductCard from '../ProductCard';
 import { Link } from 'react-router-dom';
 import { ArrowRightIcon } from '@heroicons/react/24/solid';
+import SkeletonProductCard from '../../Skeleton/SkeletonProductCard';
 
 export default function ProductSlider({ filteredCategory, bgColor, title, altColor, subtitle, textColor, link, anchor }) {
   const [products, setProducts] = useState([]);
@@ -31,9 +32,14 @@ export default function ProductSlider({ filteredCategory, bgColor, title, altCol
         {title} <span className={altColor}>{subtitle}</span>
       </h2>
       <div className="flex flex-wrap gap-6 ml-4 mr-0 lg:mx-0 z-20">
-        <div className="hidden md:flex md:overflow-hidden md:gap-6 pb-6 px-6">
+        <div className="hidden md:flex md:overflow-hidden md:gap-6 pb-6 px-6 w-full">
           {loading ? (
-            <p>Loading...</p>
+            <>
+              <SkeletonProductCard />
+              <SkeletonProductCard />
+              <SkeletonProductCard />
+              <SkeletonProductCard />
+            </>
           ) : (
             products
               .slice(0, 4)
@@ -42,9 +48,22 @@ export default function ProductSlider({ filteredCategory, bgColor, title, altCol
               ))
           )}
         </div>
-        <div className="flex md:hidden overflow-x-auto gap-6 scrollbar-hide pb-12">
+        <div className="flex md:hidden w-full overflow-x-auto gap-6 scrollbar-hide pb-12">
           {loading ? (
-            <p>Loading...</p>
+            <>
+              <div className="flex-shrink-0 w-1/2 sm:w-1/3 md:w-1/4 last:mr-4">
+                <SkeletonProductCard />
+              </div>
+              <div className="flex-shrink-0 w-1/2 sm:w-1/3 md:w-1/4 last:mr-4">
+                <SkeletonProductCard />
+              </div>
+              <div className="flex-shrink-0 w-1/2 sm:w-1/3 md:w-1/4 last:mr-4">
+                <SkeletonProductCard />
+              </div>
+              <div className="flex-shrink-0 w-1/2 sm:w-1/3 md:w-1/4 last:mr-4">
+                <SkeletonProductCard />
+              </div>
+            </>
           ) : (
             products
               .slice(0, 4)

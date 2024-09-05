@@ -10,8 +10,8 @@ export default function ProductCard({ product, textColor, altColor }) {
   return (
     <Link to={`/products/${product._id}`} className="block relative">
       <div className="max-w-sm overflow-hidden">
-        <div className="w-full h-[250px] bg-[#EDF1FA] rounded-xl relative">
-          <img className="w-full relative top-4" src={product.image} alt={product.name} />
+        <div className="w-full py-4 bg-[#EDF1FA] rounded-xl relative">
+          <img className="w-full relative" src={product.image} alt={product.name} />
             {product.quantity <= 0 && (
               <Badge color="gray">Esaurito</Badge>
             )}

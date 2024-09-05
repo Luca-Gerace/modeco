@@ -4,7 +4,6 @@ import {
   Typography,
   IconButton,
   Card,
-  Badge,
   Button,
 } from "@material-tailwind/react";
 import { ShoppingBagIcon } from "@heroicons/react/24/outline";
@@ -49,13 +48,6 @@ export function SidebarCart() {
       <IconButton variant="text" size="lg" onClick={openDrawer}>
         <ShoppingBagIcon className="h-8 w-8 stroke-2" />
       </IconButton>
-      {
-        cartItems.length > 1 && (
-          <Badge overlap="circular" className="absolute -mt-8" color="red" content={cartItems.length}>
-            {' '}
-          </Badge>
-        )
-      }
       <Drawer open={isDrawerOpen} onClose={closeDrawer} placement="right">
         <Card
           color="transparent"

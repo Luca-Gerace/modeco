@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { getProduct, addToCart } from "../services/api";
+import { useUser } from "../modules/UserContext";
 import Alert from '../components/Alert';
 import { PlusIcon } from '@heroicons/react/24/outline';
 import { ArrowLeftIcon } from '@heroicons/react/24/solid';
@@ -11,6 +12,7 @@ import RelatedProducts from "../components/Product/RelatedProducts";
 export default function Product() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { user } = useUser();
   const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(1);
   const [size, setSize] = useState("");
@@ -120,9 +122,19 @@ export default function Product() {
                 className="w-full outline-1 focus:border-t-[#333]" 
               />
             </div>
-            <Button onClick={handleAddToCart} className="flex items-center justify-center gap-4 w-full bg-[#000] text-white py-4 rounded-full capitalize text-[16px] mb-6" color="black" disabled={quantity === 0 || product.quantity === 0}>
-              {product.quantity === 0 ? "Prodotto esaurito" : `Aggiungi al carrello`} {product.quantity > 0 && <PlusIcon className="h-5 w-5" />}
-            </Button>
+            {
+              user ? (
+                <Button onClick={handleAddToCart} className="flex items-center justify-center gap-4 w-full bg-[#000] text-white py-4 rounded-full capitalize text-[16px] mb-6" color="black" disabled={quantity === 0 || product.quantity === 0}>
+                  {product.quantity === 0 ? "Prodotto esaurito" : `Aggiungi al carrello`} {product.quantity > 0 && <PlusIcon className="h-5 w-5" />}
+                </Button>
+              ) : (
+                <Link to='/login'>
+                  <Button className="flex items-center justify-center gap-4 w-full bg-[#000] text-white py-4 rounded-full capitalize text-[16px] mb-6" color="black" disabled={quantity === 0 || product.quantity === 0}>
+                    Effettua la login per procedere
+                  </Button>
+                </Link>
+              )
+            }
             {alert && <Alert message={alert.message} type={alert.type} onClose={() => setAlert(null)} />}
           </div>
         </div>
