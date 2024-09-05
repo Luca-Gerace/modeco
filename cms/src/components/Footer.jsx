@@ -15,42 +15,42 @@ export default function Footer() {
                     <div className="grid justify-between grid-cols-2 gap-4">
                         <ul>
                             <li>
-                                <a href="/products"
+                                <Link to="/stats"
+                                className="block py-1.5 font-sans text-base font-normal leading-relaxed text-gray-700 antialiased transition-colors hover:text-blue-gray-900">
+                                Stats
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/products"
                                 className="block py-1.5 font-sans text-base font-normal leading-relaxed text-gray-700 antialiased transition-colors hover:text-blue-gray-900">
                                 Products
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href="/brands"
+                                <Link to="/orders"
                                 className="block py-1.5 font-sans text-base font-normal leading-relaxed text-gray-700 antialiased transition-colors hover:text-blue-gray-900">
-                               Brands
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/licenses"
-                                className="block py-1.5 font-sans text-base font-normal leading-relaxed text-gray-700 antialiased transition-colors hover:text-blue-gray-900">
-                                Green licenses
-                                </a>
+                                Orders
+                                </Link>
                             </li>
                         </ul>
                         <ul>
                             <li>
-                                <a href="/posts"
+                                <Link to="/brands"
+                                className="block py-1.5 font-sans text-base font-normal leading-relaxed text-gray-700 antialiased transition-colors hover:text-blue-gray-900">
+                               Brands
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/licenses"
+                                className="block py-1.5 font-sans text-base font-normal leading-relaxed text-gray-700 antialiased transition-colors hover:text-blue-gray-900">
+                                Green licenses
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/posts"
                                 className="block py-1.5 font-sans text-base font-normal leading-relaxed text-gray-700 antialiased transition-colors hover:text-blue-gray-900">
                                 Blog posts
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/users"
-                                className="block py-1.5 font-sans text-base font-normal leading-relaxed text-gray-700 antialiased transition-colors hover:text-blue-gray-900">
-                                Users
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/orders"
-                                className="block py-1.5 font-sans text-base font-normal leading-relaxed text-gray-700 antialiased transition-colors hover:text-blue-gray-900">
-                                Orders
-                                </a>
+                                </Link>
                             </li>
                         </ul>
                     </div>

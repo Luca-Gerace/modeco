@@ -6,8 +6,6 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Posts from "./pages/posts/Posts";
 import Post from "./pages/posts/Post";
-import Users from "./pages/users/Users";
-import User from "./pages/users/User";
 import Orders from "./pages/orders/Orders";
 import Order from "./pages/orders/Order";
 import Products from "./pages/Products/Products";
@@ -18,6 +16,7 @@ import Licenses from "./pages/licenses/Licenses";
 import License from "./pages/licenses/License";
 import Footer from "./components/Footer";
 import PrivateRoute from "./components/PrivateRoute";
+import Stats from "./pages/stats/Stats";
 
 function App() {
   return (
@@ -29,6 +28,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
+            <Route path="/stats" element={<PrivateRoute><Stats /></PrivateRoute>} />
             <Route path="/products" element={<PrivateRoute><Products /></PrivateRoute>} />
             <Route path="/products/:id" element={<PrivateRoute><Product /></PrivateRoute>} />
             <Route path="/brands" element={<PrivateRoute><Brands /></PrivateRoute>} />
@@ -39,8 +39,6 @@ function App() {
             <Route path="/orders/:id" element={<PrivateRoute><Order /></PrivateRoute>} />
             <Route path="/posts" element={<PrivateRoute><Posts /></PrivateRoute>} />
             <Route path="/posts/:id" element={<PrivateRoute><Post /></PrivateRoute>} />
-            <Route path="/users" element={<PrivateRoute><Users /></PrivateRoute>} />
-            <Route path="/users/:id" element={<PrivateRoute><User /></PrivateRoute>} />
           </Routes>
           <PrivateRoute><Footer /></PrivateRoute>
         </main>

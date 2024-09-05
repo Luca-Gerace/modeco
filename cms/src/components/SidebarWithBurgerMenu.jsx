@@ -14,7 +14,7 @@ import {
 import {
   ShoppingCartIcon,
   SparklesIcon,
-  UsersIcon,
+  ChartBarIcon,
   TruckIcon,
   CheckBadgeIcon,
   NewspaperIcon,
@@ -64,6 +64,14 @@ export function SidebarWithBurgerMenu() {
           <List>
             {user ? (
               <>
+                <Link to="/stats" onClick={handleLinkClick}>
+                  <ListItem>
+                    <ListItemPrefix>
+                      <ChartBarIcon className="h-5 w-5" />
+                    </ListItemPrefix>
+                    Stats
+                  </ListItem>
+                </Link>
                 <Link to="/products" onClick={handleLinkClick}>
                   <ListItem>
                     <ListItemPrefix>
@@ -94,14 +102,6 @@ export function SidebarWithBurgerMenu() {
                       <NewspaperIcon className="h-5 w-5" />
                     </ListItemPrefix>
                     Blog posts
-                  </ListItem>
-                </Link>
-                <Link to="/users" onClick={handleLinkClick}>
-                  <ListItem>
-                    <ListItemPrefix>
-                      <UsersIcon className="h-5 w-5" />
-                    </ListItemPrefix>
-                    Users
                   </ListItem>
                 </Link>
                 <Link to="/orders" onClick={handleLinkClick}>

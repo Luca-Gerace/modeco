@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import {
     Card,
     CardBody,
@@ -14,11 +15,11 @@ import {
             <Typography variant="h4" className="text-center">
                 {title}
             </Typography>
-            <a href={link} className="m-auto">
+            <Link to={link} className="m-auto">
                 <Button size="sm" className="rounded-full py-4 px-8">
                 Visit section
                 </Button>
-            </a>
+            </Link>
           </div>
         </CardBody>
       </Card>
