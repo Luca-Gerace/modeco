@@ -138,7 +138,7 @@ export default function Charts() {
         </div>
         {/** chart */}
         <AreaChart
-          colors={["#9146A1", "#4caf50"]}
+          colors={["#4caf50"]}
           options={{
             xaxis: {
               categories: [
