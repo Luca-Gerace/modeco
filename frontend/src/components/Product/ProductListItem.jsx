@@ -8,19 +8,19 @@ import {
   export default function ProductListItem({ item, fetchCartData }) {
   
     const handleUpdateQuantity = async (newQuantity) => {
-        try {
-          const cart = await getCart();
-          const updatedItems = cart.items.map(item =>
-            item.productId._id === item.productId._id ? { ...item, quantity: newQuantity } : item
-          );
-          const updatedTotalPrice = updatedItems.reduce((total, item) => total + (item.productId.price * item.quantity), 0);
-      
-          await updateCartItem(cart._id, updatedItems, updatedTotalPrice);
-          fetchCartData(); // Chiamata per aggiornare il carrello
-        } catch (error) {
-          console.error('Errore nell\'aggiornamento della quantità:', error);
-        }
-    };
+      try {
+        const cart = await getCart(); 
+        const updatedItems = cart.items.map(cartItem =>
+          cartItem.productId._id === item.productId._id ? { ...cartItem, quantity: newQuantity } : cartItem
+        );
+        const updatedTotalPrice = updatedItems.reduce((total, cartItem) => total + (cartItem.productId.price * cartItem.quantity), 0);
+  
+        await updateCartItem(cart._id, updatedItems, updatedTotalPrice);
+        fetchCartData(); 
+      } catch (error) {
+        console.error('Errore nell\'aggiornamento della quantità:', error);
+      }
+  };
       
     const handleRemoveItem = async () => {
       try {

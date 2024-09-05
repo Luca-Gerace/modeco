@@ -1,0 +1,95 @@
+.imageCard {
+    background-repeat: no-repeat;
+    background-position: bottom;
+    position: absolute;
+    z-index: 2;
+}
+
+/* Categories */
+.clothes {
+    background-image: url('https://res.cloudinary.com/dicfymkdl/image/upload/v1725226644/clothes_nixhnh.png');
+}
+
+.cosmetics {
+    background-image: url('https://res.cloudinary.com/dicfymkdl/image/upload/v1725552970/cosmetics_owk2tw.png');
+}
+
+.food_and_beverage {
+    background-image: url('https://res.cloudinary.com/dicfymkdl/image/upload/v1725554158/food-beverage_oy4h4o.png');
+}
+
+.second_hand {
+    background-image: url('https://res.cloudinary.com/dicfymkdl/image/upload/v1725226644/second-hand_nkor2o.png');
+}
+
+/* Types */
+
+.tshirt {
+    background-image: url('https://res.cloudinary.com/dicfymkdl/image/upload/v1725554157/maglietta_wkhq7z.png');
+}
+
+.longsleeve {
+    background-image: url('https://res.cloudinary.com/dicfymkdl/image/upload/v1725552969/felpe_u74vuu.png');
+}
+
+.jacket {
+    background-image: url('https://res.cloudinary.com/dicfymkdl/image/upload/v1725552969/giacche_wztf2y.png');
+}
+
+.pants {
+    background-image: url('https://res.cloudinary.com/dicfymkdl/image/upload/v1725552971/pantaloni_fvckiv.png');
+}
+
+.dishes {
+    background-image: url('https://res.cloudinary.com/dicfymkdl/image/upload/v1725552970/piatti-pronti_ds6w32.png');
+}
+
+.beverage {
+    background-image: url('https://res.cloudinary.com/dicfymkdl/image/upload/v1725552970/bevande_kmcbr1.png');
+}
+
+.apetizers {
+    background-image: url('https://res.cloudinary.com/dicfymkdl/image/upload/v1725552970/aperitivo_mnmwaq.png');
+}
+
+.desserts {
+    background-image: url('https://res.cloudinary.com/dicfymkdl/image/upload/v1725552970/dessert_xjijzp.png');
+}
+
+.parfums {
+    background-image: url('https://res.cloudinary.com/dicfymkdl/image/upload/v1725552970/profumi_jlnrca.png');
+}
+
+.lotions {
+    background-image: url('https://res.cloudinary.com/dicfymkdl/image/upload/v1725552970/corpo_samqn9.png');
+}
+
+.beauty {
+    background-image: url('https://res.cloudinary.com/dicfymkdl/image/upload/v1725552969/creme-viso_xcpip8.png');
+}
+
+.makeup {
+    background-image: url('https://res.cloudinary.com/dicfymkdl/image/upload/v1725552970/cosmetics_owk2tw.png');
+}
+
+.shape {
+    position: absolute;
+    background-color: #00000024;
+    z-index: 1;
+}
+
+.circle {
+    border-radius: 200px;
+    top: 20px;
+    left: 20px;
+    height: 100px;
+    width: 100px;
+}
+
+.cube {
+    border-radius: 200px;
+    bottom: -30px;
+    right: -30px;
+    height: 200px;
+    width: 200px;
+}
