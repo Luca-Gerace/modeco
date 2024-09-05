@@ -74,10 +74,10 @@ export default function Product() {
               {product.licenses && product.licenses.length > 0 && (
                 <>
                   <h4 className="mt-4 font-bold">Licenses:</h4>
-                  <ul className="list-disc flex gap-2">
+                  <ul className="list-disc flex flex-wrap gap-2">
                     {product.licenses.map((license) => (
-                      <li key={license._id} className="flex justify-between items-center bg-green-500 rounded-full px-4 py-1 my-1">
-                        <span className="font-bold text-white">{license.name}</span>
+                      <li key={license._id} className="flex bg-green-500 rounded-full px-4 py-1 my-1">
+                        <span className="font-bold text-white">{license?.name}</span>
                       </li>
                     ))}
                   </ul>

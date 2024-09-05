@@ -17,7 +17,7 @@ function EditProductModal({ open, handleOpen, productData = {}, setProduct }) {
         name: productData.name || "",
         type: productData.type || "",
         price: productData.price || 0,
-        category: productData.category || "clothes",
+        category: productData.category || "",
         description: productData.description || "",
         quantity: productData.quantity || 0,
         color: productData.color || "",
@@ -25,8 +25,8 @@ function EditProductModal({ open, handleOpen, productData = {}, setProduct }) {
 
     const [brands, setBrands] = useState([]);
     const [licenses, setLicenses] = useState([]);
-    const [category, setCategory] = useState(productData.category || "clothes");
-    const [alert, setAlert] = useState(null);
+    const [category, setCategory] = useState(productData.category || "");
+    const [alert, setAlert] = useState(null)
 
     useEffect(() => {
         const fetchBrands = async () => {
@@ -116,9 +116,7 @@ function EditProductModal({ open, handleOpen, productData = {}, setProduct }) {
 
             handleOpen();
             setAlert({ message: 'Product updated successfully!', type: 'success' });
-            setTimeout(() => {
-                window.location.reload();
-            }, 1500);
+
         } catch (error) {
             console.error("Error updating the product:", error.response?.data);
             setAlert({ message: 'Product update error. Retry.', type: 'error' });

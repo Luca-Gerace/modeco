@@ -46,6 +46,11 @@ export default function CreateBrandModal({ open, handleOpen, setAllBrands }) {
                 formData.append('image', brandImage);
             }
 
+            formData.append('name', newBrand.name);
+            formData.append('description', newBrand.description);
+            formData.append('website', newBrand.website);
+            formData.append('email', newBrand.email);
+
             const newBrandResponse = await createBrand(formData);
             setAllBrands(prevBrands => [...prevBrands, newBrandResponse.data]);
 

@@ -16,11 +16,13 @@ import ThankYou from "./pages/Thankyou";
 import Profile from "./pages/Profile";
 import Post from "./pages/Post";
 import Footer from "./components/Footer";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   return (
     <UserProvider>
       <Router>
+        <ScrollToTop />
         <Navbar />
         <main className="w-full lg:w-[1024px] py-8 m-auto">
           <Routes>

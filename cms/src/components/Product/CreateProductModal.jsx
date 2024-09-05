@@ -150,9 +150,6 @@ export default function CreateProductModal({ open, handleOpen, setAllProducts })
 
             handleOpen();
             setAlert({ message: 'Product created successfully!', type: 'success' });
-            setTimeout(() => {
-                window.location.reload();
-            }, 1500);
 
         } catch (error) {
             console.error("Error creating the product:", error.response.data);

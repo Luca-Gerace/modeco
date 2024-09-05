@@ -46,6 +46,11 @@ export default function CreateLicenseModal({ open, handleOpen, setAllLicenses })
                 formData.append('image', licenseImage);
             }
 
+            formData.append('name', newLicense.name);
+            formData.append('description', newLicense.description);
+            formData.append('website', newLicense.website);
+            formData.append('email', newLicense.email);
+
             const newLicenseResponse = await createLicense(formData);
             setAllLicenses(prevLicenses => [...prevLicenses, newLicenseResponse.data]);
 

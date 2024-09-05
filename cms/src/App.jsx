@@ -17,11 +17,13 @@ import License from "./pages/licenses/License";
 import Footer from "./components/Footer";
 import PrivateRoute from "./components/PrivateRoute";
 import Stats from "./pages/stats/Stats";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   return (
     <UserProvider>
       <Router>
+        <ScrollToTop />
         <Navbar />
         <main className="w-full lg:w-[1024px] py-8 m-auto">
           <Routes>
