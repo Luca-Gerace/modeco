@@ -25,7 +25,7 @@ export default function Blog() {
   return (
     <div className="flex flex-col gap-2 md:gap-10 py-4 px-4 lg:px-0">
         <div className="w-full relative mb-6 md:mb-0 h-[350px]">
-            <img className="w-full h-[350px] object-cover rounded-xl" src='https://res.cloudinary.com/dicfymkdl/image/upload/v1725620278/certificati-sostenibilita_smtqrm.jpg' alt='certificati di sostenibilità' />
+            <img className="w-full h-[350px] object-cover rounded-xl" src='https://res.cloudinary.com/dicfymkdl/image/upload/v1725623738/blog-sostenibilita_wdx2dx.jpg' alt='Blog' />
         </div>
         <div className="flex flex-col gap-6">
             <h1 className="text-[32px] md:text-[38px] text-black font-bold leading-10 md:leading-[50px]">
