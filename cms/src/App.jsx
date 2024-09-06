@@ -1,9 +1,10 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { UserProvider } from './modules/UserContext';
 import Navbar from "./components/Navbar";
-import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Home from "./pages/Home";
+import Profile from "./pages/Profile";
 import Posts from "./pages/posts/Posts";
 import Post from "./pages/posts/Post";
 import Orders from "./pages/orders/Orders";
@@ -18,7 +19,6 @@ import Footer from "./components/Footer";
 import PrivateRoute from "./components/PrivateRoute";
 import Stats from "./pages/stats/Stats";
 import ScrollToTop from "./components/ScrollToTop";
-import Profile from "./pages/Profile";
 
 function App() {
   return (

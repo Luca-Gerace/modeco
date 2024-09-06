@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { getProducts } from '../services/api';
-import ProductCard from '../components/Product/ProductCard';
+import { getProducts } from '../../services/api';
+import ProductCard from '../../components/Product/ProductCard';
 import { Input } from "@material-tailwind/react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
-import SkeletonProductCard from '../components/Skeleton/SkeletonProductCard';
+import SkeletonProductCard from '../../components/Skeleton/SkeletonProductCard';
 
 const TITLES = {
   clothes: 'Abbigliamento',

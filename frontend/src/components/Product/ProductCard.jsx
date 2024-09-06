@@ -4,7 +4,7 @@ import Badge from '../Badge';
 export default function ProductCard({ product, textColor, altColor }) {
 
   if (!product) {    
-    return null; // Non renderizzare nulla se il prodotto non esiste
+    return null;
   }
 
   return (

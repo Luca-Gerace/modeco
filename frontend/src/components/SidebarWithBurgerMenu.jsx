@@ -124,7 +124,7 @@ export function SidebarWithBurgerMenu() {
                 </List>
               </AccordionBody>
             </Accordion>
-            <Link to="/posts" onClick={handleLinkClick}>
+            <Link to="/blog" onClick={handleLinkClick}>
               <ListItem>
                 <ListItemPrefix>
                   <NewspaperIcon className="h-5 w-5" />

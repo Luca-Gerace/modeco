@@ -32,7 +32,7 @@ export default function Post() {
   return (
     <>
       <button onClick={handleBack} className="flex items-center gap-3 mb-4 px-4">
-        <ArrowLeftIcon className="h-5 w-5" /> Go back
+        <ArrowLeftIcon className="h-5 w-5" /> Torna indietro
       </button>
       <div className="container mx-auto px-4 py-8">
         {loading ? (

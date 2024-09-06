@@ -1,7 +1,7 @@
-import ImageCard from '../components/ImageCard/ImageCard';
-import ProductSlider from '../components/Product/ProductSlider/ProductSlider';
-import LicenseSection from "../components/Sections/License/LicenseSection"
-import BrandSection from "../components/Sections/Brand/BrandSection"
+import ImageCard from '../../components/ImageCard/ImageCard';
+import ProductSlider from '../../components/Product/ProductSlider/ProductSlider';
+import LicenseSection from "../../components/Sections/License/LicenseSection"
+import BrandSection from "../../components/Sections/Brand/BrandSection"
 
 export default function ShopSecondHand() {
 
