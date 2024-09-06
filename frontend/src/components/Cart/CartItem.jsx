@@ -13,7 +13,8 @@ export default function CartItem({ item, fetchCartData }) {
       const updatedItems = cart.items.map(cartItem =>
         cartItem.productId._id === item.productId._id ? { ...cartItem, quantity: newQuantity } : cartItem
       );
-      const updatedTotalPrice = updatedItems.reduce((total, cartItem) => total + (cartItem.productId.price * cartItem.quantity), 0);
+      const updatedTotalPrice = updatedItems
+        .reduce((total, cartItem) => total + ((cartItem.productId.onSale ? cartItem.productId.discountedPrice : cartItem.productId.price) * cartItem.quantity), 0);
 
       await updateCartItem(cart._id, updatedItems, updatedTotalPrice);
       fetchCartData(); 
@@ -51,7 +52,15 @@ export default function CartItem({ item, fetchCartData }) {
             <button onClick={() => handleUpdateQuantity(item.quantity + 1)}>+</button>
           </div>
           <Typography variant="h6" color="blue-gray">
-            €{(item.productId.price * item.quantity).toFixed(2)} 
+            {item.productId.onSale ? (
+              <>
+                <span className='line-through'>€{(item.productId.price * item.quantity).toFixed(2)}</span> <span className="font-semibold">€{(item.productId.discountedPrice * item.quantity).toFixed(2)}</span>
+              </>
+            ) : (
+              <>
+                €{(item.productId.price * item.quantity).toFixed(2)} 
+              </>
+            )}
           </Typography>
         </div>
       </div>

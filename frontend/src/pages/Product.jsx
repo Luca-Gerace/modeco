@@ -79,13 +79,22 @@ export default function Product({ setCartCount }) {
             <img className="w-full relative top-4" src={product.image} alt={product.name} />
             {product.quantity <= 0 && (
                 <Badge color="gray">Esaurito</Badge>
-              )}
+            )}
+            {product.onSale && (
+              <Badge color="pink">Saldo {product.discount}%</Badge>
+            )}
           </div>
           <div className="md:w-1/2 flex flex-col gap-8">
             <div className="mb-4">
               <p className="text-xl mb-2">{product.brand?.name}</p>
               <h1 className="font-bold text-3xl mb-2 text-[#96A7AF]">{product.name}</h1>
-              <p className="text-2xl font-bold mb-4">€{product.price?.toFixed(2)}</p>
+              {product.onSale ? (
+                <p className="mb-4 text-2xl">
+                  <span className='line-through'>{product.price.toFixed(2)}€</span> <strong>{product.discountedPrice.toFixed(2)}€</strong>
+                </p>
+              ) : (
+                <p className="text-2xl font-bold mb-4">€{product.price?.toFixed(2)}</p>
+              )}
             </div>
             {(product.category === 'clothes' || product.category === 'second_hand') && (
               <div>

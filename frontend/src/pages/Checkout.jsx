@@ -27,8 +27,14 @@ export default function Checkout() {
   const fetchCartData = async () => {
     try {
       const cartData = await getCart();
-      setCartItems(cartData.items);
-      setTotalPrice(cartData.totalPrice);
+      const cartItems = cartData.items;
+      const updatedTotalPrice = cartItems.reduce((total, item) => {
+        const price = item.productId.onSale ? item.productId.discountedPrice : item.productId.price;
+        return total + (price * item.quantity);
+      }, 0);
+
+      setCartItems(cartItems);
+      setTotalPrice(updatedTotalPrice);
     } catch (error) {
       console.error('Errore nel recupero dei dati del carrello:', error);
       setCartItems([]);
@@ -46,7 +52,7 @@ export default function Checkout() {
       })),
       totalPrice,
       shippingCost: totalPrice < 100 ? 9 : 0,
-      totalQuantity: cartItems.length > 0 ? cartItems.reduce((total, item) => total + item.quantity, 0) : 0,
+      totalQuantity: cartItems.length > 0 ? cartItems.reduce((total, item) => total + item.quantity, 0) : 0, 
       shippingAddress,
       paymentMethod: paymentInfo,
     };

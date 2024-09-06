@@ -35,9 +35,16 @@ export function SidebarCart({ cartCount, setCartCount }) {
   const fetchCartData = async () => {
     try {
       const cartData = await getCart();
-      setCartItems(cartData.items);
-      setTotalPrice(cartData.totalPrice);
-      setCartCount(cartData.items.reduce((total, item) => total + item.quantity, 0));
+      const updatedItems = cartData.items;
+      // calcolo del totale in base anche a prodotti scontati
+      const updatedTotalPrice = updatedItems.reduce((total, item) => {
+        const price = item.productId.onSale ? item.productId.discountedPrice : item.productId.price;
+        return total + (price * item.quantity);
+      }, 0);
+      
+      setCartItems(updatedItems);
+      setTotalPrice(updatedTotalPrice);
+      setCartCount(updatedItems.reduce((total, item) => total + item.quantity, 0));
     } catch (error) {
       console.error('Errore nel recupero dei dati del carrello:', error);
       setCartItems([]);

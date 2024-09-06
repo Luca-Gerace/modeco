@@ -9,7 +9,7 @@ router.get('/', authMiddleware, async (req, res) => {
   try {    
     let cart = await Cart.findOne({ userId: req.user._id }).populate({
       path: 'items.productId',
-      select: 'name price image'
+      select: 'name price image onSale discount discountedPrice'
     });
 
     // Se il carrello non esiste, creane uno vuoto

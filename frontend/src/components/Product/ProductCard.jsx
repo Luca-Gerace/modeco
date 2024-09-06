@@ -15,13 +15,22 @@ export default function ProductCard({ product, textColor, altColor }) {
             {product.quantity <= 0 && (
               <Badge color="gray">Esaurito</Badge>
             )}
+            {product.onSale && (
+              <Badge color="pink">Saldo {product.discount}%</Badge>
+            )}
         </div>
         <div className={`py-4 ${textColor}`}>
           <p className="text-c mb-2">{product.brand.name}</p>
           <h3 className={`font-bold text-base mb-2 min-h-12 ${altColor}`}>
             {product.name.length > 40 ? `${product.name.slice(0, 40)}...` : product.name}
           </h3>
-          <p className="font-bold">{product.price.toFixed(2)} €</p>
+          {product.onSale ? (
+            <p>
+              <span className='line-through'>{product.price.toFixed(2)}€</span> <strong>{product.discountedPrice.toFixed(2)}€</strong>
+            </p>
+          ) : (
+            <p className="font-bold">{product.price.toFixed(2)}€</p>
+          )}
         </div>
       </div>
     </Link>
