@@ -4,13 +4,14 @@ import { IconButton, Typography } from '@mui/material';
 import { XMarkIcon } from '@heroicons/react/24/solid';
 
 export default function ProductsFilter({ open, handleOpen, applyFilters, currentFilters, minPrice, maxPrice }) {
-    const [localFilters, setLocalFilters] = useState({ category: "", type: [], price: null }); // `type` as array
+    const [localFilters, setLocalFilters] = useState({ category: "", type: [], price: null, onSale: false }); // `type` as array
 
     useEffect(() => {
         setLocalFilters({
             category: currentFilters.category,
             type: currentFilters.type,
             price: currentFilters.price || minPrice
+            // onSale: currentFilters.onSale
         });
     }, [currentFilters, open, minPrice]);
 
@@ -57,6 +58,30 @@ export default function ProductsFilter({ open, handleOpen, applyFilters, current
                 <DialogBody className='border-t'>
                     <form>
                         <div className='flex flex-col gap-4 px-4 w-full'>
+                            {/* Filtra per prodotti in saldo */}
+                            <div className="flex flex-col gap-4 border-b pb-4">
+                                <strong>Filtra per prodotti in saldo:</strong>
+                                <div className='flex gap-4'>
+                                    <div className='border-2 rounded-full w-full'>
+                                    <Radio
+                                        name="onSale"
+                                        value={true}
+                                        checked={localFilters.onSale === true}
+                                        onChange={() => handleChange(true, "onSale")}
+                                        label="Prodotti In saldo"
+                                    />
+                                    </div>
+                                    <div className='border-2 rounded-full w-full'>
+                                        <Radio
+                                            name="onSale"
+                                            value={false}
+                                            checked={localFilters.onSale === false}
+                                            onChange={() => handleChange(false, "onSale")}
+                                            label="Tutti i prodotti"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
                             {/* Filtra per categoria */}
                             <div className="flex flex-col gap-4 border-b pb-4">
                                 <strong>Filtra per categoria prodotto:</strong>
@@ -139,56 +164,9 @@ export default function ProductsFilter({ open, handleOpen, applyFilters, current
                                         </div>
                                     </>
                                 ) : (
-                                    <div className='flex flex-col gap-4 pb-4 overflow-scroll h-[11rem]'>
-                                        <div className='flex gap-4'>
-                                            <div className='border-2 rounded-full w-full'>
-                                                <Checkbox name="type" value="T-shirt" checked={localFilters.type.includes("T-shirt")} onChange={(e) => handleCheckboxChange(e.target.value, "type")} label="T Shirt" />
-                                            </div>
-                                            <div className='border-2 rounded-full w-full'>
-                                                <Checkbox name="type" value="Sweatshirt" checked={localFilters.type.includes("Sweatshirt")} onChange={(e) => handleCheckboxChange(e.target.value, "type")} label="Felpe" />
-                                            </div>
-                                        </div>
-                                        <div className='flex gap-4'>
-                                            <div className='border-2 rounded-full w-full'>
-                                                <Checkbox name="type" value="Jacket" checked={localFilters.type.includes("Jacket")} onChange={(e) => handleCheckboxChange(e.target.value, "type")} label="Giacche" />
-                                            </div>
-                                            <div className='border-2 rounded-full w-full'>
-                                                <Checkbox name="type" value="Pants" checked={localFilters.type.includes("Pants")} onChange={(e) => handleCheckboxChange(e.target.value, "type")} label="Pantaloni" />
-                                            </div>
-                                        </div>
-                                        <div className='flex gap-4'>
-                                            <div className='border-2 rounded-full w-full'>
-                                                <Checkbox name="type" value="Dishes" checked={localFilters.type.includes("Dishes")} onChange={(e) => handleCheckboxChange(e.target.value, "type")} label="Piatti pronti" />
-                                            </div>
-                                            <div className='border-2 rounded-full w-full'>
-                                                <Checkbox name="type" value="Beverage" checked={localFilters.type.includes("Beverage")} onChange={(e) => handleCheckboxChange(e.target.value, "type")} label="Bevande" />
-                                            </div>
-                                        </div>
-                                        <div className='flex gap-4'>
-                                            <div className='border-2 rounded-full w-full'>
-                                                <Checkbox name="type" value="Appetizer" checked={localFilters.type.includes("Appetizer")} onChange={(e) => handleCheckboxChange(e.target.value, "type")} label="Stuzzichini" />
-                                            </div>
-                                            <div className='border-2 rounded-full w-full'>
-                                                <Checkbox name="type" value="Dessert" checked={localFilters.type.includes("Dessert")} onChange={(e) => handleCheckboxChange(e.target.value, "type")} label="Dessert" />
-                                            </div>
-                                        </div>
-                                        <div className='flex gap-4'>
-                                            <div className='border-2 rounded-full w-full'>
-                                                <Checkbox name="type" value="Parfum" checked={localFilters.type.includes("Parfum")} onChange={(e) => handleCheckboxChange(e.target.value, "type")} label="Profumi" />
-                                            </div>
-                                            <div className='border-2 rounded-full w-full'>
-                                                <Checkbox name="type" value="Lotion" checked={localFilters.type.includes("Lotion")} onChange={(e) => handleCheckboxChange(e.target.value, "type")} label="Prodotti corpo" />
-                                            </div>
-                                        </div>
-                                        <div className='flex gap-4'>
-                                            <div className='border-2 rounded-full w-full'>
-                                                <Checkbox name="type" value="Beauty" checked={localFilters.type.includes("Beauty")} onChange={(e) => handleCheckboxChange(e.target.value, "type")} label="Prodotti viso" />
-                                            </div>
-                                            <div className='border-2 rounded-full w-full'>
-                                                <Checkbox name="type" value="Makeup" checked={localFilters.type.includes("Makeup")} onChange={(e) => handleCheckboxChange(e.target.value, "type")} label="Trucchi" />
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <Typography variant="body1">
+                                        Seleziona una categoria per visualizzare le opzioni di tipo.
+                                    </Typography>
                                 )}
                             </div>
 

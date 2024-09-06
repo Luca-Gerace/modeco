@@ -36,6 +36,7 @@ export default function Products() {
         const category = searchParams.get('category');
         const type = searchParams.get('type');
         const price = searchParams.get('price');
+        const sale = searchParams.get('sale');
 
         if (category) {
           filteredProducts = filteredProducts.filter(product => product.category === category);
@@ -47,7 +48,11 @@ export default function Products() {
         }
 
         if (price) {
-          filteredProducts = filteredProducts.filter(product => product.price <= price);
+          filteredProducts = filteredProducts.filter(product => product.onSale ? product.discountedPrice <= price : product.price <= price);
+        }
+        
+        if (sale === 'true') {
+          filteredProducts = filteredProducts.filter(product => product.onSale === true);
         }
 
         // Filtraggio per termine di ricerca
@@ -96,6 +101,10 @@ export default function Products() {
       params.type = encodeURIComponent(newFilters.type.join(','));
     }
 
+    if (newFilters.onSale !== null) {
+      params.sale = newFilters.onSale;
+    }
+
     setSearchParams(params);
     setFilterModalOpen(false);
   };
@@ -106,15 +115,18 @@ export default function Products() {
 
   const handleOpenFilterModal = () => setFilterModalOpen(!filterModalOpen);
 
+  // contatore dei filtri applicati
   const getFilterCount = () => {
     const category = searchParams.get('category');
     const type = searchParams.get('type');
     const price = searchParams.get('price');
+    const sale = searchParams.get('sale');
     let count = 0;
 
     if (category) count += 1;
     if (type) count += decodeURIComponent(type).split(',').length;
     if (price) count += 1;
+    if (sale === 'true') count += 1;
 
     return count;
   };
@@ -191,7 +203,8 @@ export default function Products() {
         currentFilters={{
           category: searchParams.get('category') || "",
           type: (searchParams.get('type') ? decodeURIComponent(searchParams.get('type')).split(',') : []),
-          price: searchParams.get('price') || minPrice
+          price: searchParams.get('price') || minPrice,
+          onSale: searchParams.get('sale')
         }}
         minPrice={minPrice}
         maxPrice={maxPrice}

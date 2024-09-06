@@ -41,6 +41,7 @@ export default function ProductSlider({ filteredCategory, bgColor, title, altCol
             </>
           ) : (
             products
+              .filter(product => product.onSale === true)
               .slice(0, 4)
               .map((product) => (
                 <ProductCard key={product._id} product={product} textColor={textColor} altColor={altColor} />

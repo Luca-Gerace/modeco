@@ -16,7 +16,7 @@ export default function EditProductModal({ open, handleOpen, productData = {}, s
         category: productData.category,
         price: productData.price || 0,
         discount: productData.discount || 0,
-        discountedPrice: productData.discountedPrice || 0,
+        discountedPrice: productData.discount > 0 ? productData.discountedPrice : 0,
         description: productData.description || "",
         quantity: productData.quantity || 0,
         color: productData.color || "",
@@ -45,7 +45,7 @@ export default function EditProductModal({ open, handleOpen, productData = {}, s
                 category: productData.category,
                 price: productData.price || 0,
                 discount: productData.discount || 0,
-                discountedPrice: productData.discountedPrice || 0,
+                discountedPrice: productData.discount > 0 ? productData.discountedPrice : 0,
                 description: productData.description || "",
                 quantity: productData.quantity || 0,
                 color: productData.color || "",
@@ -60,7 +60,7 @@ export default function EditProductModal({ open, handleOpen, productData = {}, s
         if (editedProduct.price && editedProduct.discount) {
             setEditedProduct(prev => ({
                 ...prev,
-                discountedPrice: prev.price * (1 - prev.discount / 100),
+                discountedPrice: editedProduct.discount > 0 ? prev.price * (1 - prev.discount / 100) : 0,
                 onSale: editedProduct.discount > 0
             }));
         }
