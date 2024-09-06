@@ -5,7 +5,7 @@ import EditProductModal from "../../components/Product/EditProductModal";
 import EditProductImageModal from "../../components/Product/EditProductImageModal";
 import DeleteProductModal from "../../components/Product/DeleteProductModal";
 import { PencilIcon, TrashIcon, PhotoIcon, ArrowLeftIcon } from "@heroicons/react/24/solid";
-import { Button } from "@material-tailwind/react";
+import { Button, Badge } from "@material-tailwind/react";
 
 export default function Product() {
   const { id } = useParams();
@@ -48,13 +48,29 @@ export default function Product() {
             <Button onClick={handleImageModalOpen} className="bg-gray-900 p-4 rounded-full !absolute top-4 left-4 z-10">
               <PhotoIcon strokeWidth={2} className="h-6 w-6" />
             </Button>
-            <img className="w-full relative top-4" src={product.image} alt={product.name} />
+            { product?.onSale ? (
+              <Badge content={(`SALE ${product.discount}%`)} placement="top-end" className="py-4 px-6 right-16 top-12">
+                <img className="w-full relative top-4" src={product.image} alt={product.name} />
+              </Badge>
+            ) : (
+              <img className="w-full relative top-4" src={product.image} alt={product.name} />
+            )}
           </div>
           <div className="md:w-1/2 flex flex-col gap-8">
             <div>
               <p className="text-xl mb-2">{product.brand?.name}</p>
               <h1 className="font-bold text-3xl mb-2 text-[#96A7AF]">{product.type}</h1>
-              <p className="text-2xl font-bold mb-4">€{product.price?.toFixed(2)}</p>
+              <p className="text-2xl font-bold mb-4">
+                { product.onSale ? (
+                    <>
+                      <span className="font-normal line-through">€{product.price?.toFixed(2)}</span> <span>€{product.discountedPrice.toFixed(2)}</span>
+                    </>
+                  ) : (
+                    <>
+                      €{product.price?.toFixed(2)}
+                    </>
+                )}
+              </p>
               <h4 className="font-bold">Quantity:</h4>
               <p className="mb-4">{product.quantity}</p>
               {(product.category === 'clothes' || product.category === 'second_hand') && (

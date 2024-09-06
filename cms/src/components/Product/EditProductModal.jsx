@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Dialog, DialogHeader, DialogBody, Button, Input, Select, Option, Textarea } from '@material-tailwind/react';
+import { Dialog, DialogHeader, DialogBody, Button, Input, Select, Option, Textarea, Slider } from '@material-tailwind/react';
 import { updateProduct, getLicenses } from '../../services/api';
 import Alert from '../../../../frontend/src/components/Alert';
 import { IconButton, Typography } from '@mui/material';
 import { PlusIcon, XMarkIcon } from '@heroicons/react/24/solid';
 
-function EditProductModal({ open, handleOpen, productData = {}, setProduct }) {
+export default function EditProductModal({ open, handleOpen, productData = {}, setProduct }) {
     const [sizes, setSizes] = useState(productData.size || []);
     const [newSize, setNewSize] = useState('');
     const [selectedLicenses, setSelectedLicenses] = useState([]);
@@ -15,13 +15,16 @@ function EditProductModal({ open, handleOpen, productData = {}, setProduct }) {
         name: productData.name || "",
         category: productData.category,
         price: productData.price || 0,
+        discount: productData.discount || 0,
+        discountedPrice: productData.discountedPrice || 0,
         description: productData.description || "",
         quantity: productData.quantity || 0,
         color: productData.color || "",
+        onSale: productData.discount > 0
     });
 
     const [licenses, setLicenses] = useState([]);
-    const [alert, setAlert] = useState(null)
+    const [alert, setAlert] = useState(null);
 
     useEffect(() => {
         const fetchLicenses = async () => {
@@ -35,21 +38,33 @@ function EditProductModal({ open, handleOpen, productData = {}, setProduct }) {
         fetchLicenses();
     }, []);
 
-
     useEffect(() => {
         if (productData) {
             setEditedProduct({
                 name: productData.name || "",
                 category: productData.category,
                 price: productData.price || 0,
+                discount: productData.discount || 0,
+                discountedPrice: productData.discountedPrice || 0,
                 description: productData.description || "",
                 quantity: productData.quantity || 0,
                 color: productData.color || "",
+                onSale: productData.discount > 0
             });
             setSizes(productData.size || []);
             setSelectedLicenses(productData.licenses || []);
         }
     }, [productData]);
+
+    useEffect(() => {
+        if (editedProduct.price && editedProduct.discount) {
+            setEditedProduct(prev => ({
+                ...prev,
+                discountedPrice: prev.price * (1 - prev.discount / 100),
+                onSale: editedProduct.discount > 0
+            }));
+        }
+    }, [editedProduct.price, editedProduct.discount]);
 
     const handleAddSize = () => {
         if (newSize && !sizes.includes(newSize)) {
@@ -64,7 +79,6 @@ function EditProductModal({ open, handleOpen, productData = {}, setProduct }) {
 
     const handleAddLicense = () => {
         const licenseToAdd = licenses.find(license => license._id === newLicense);
-
         if (licenseToAdd && !selectedLicenses.some(license => license._id === licenseToAdd._id)) {
             setSelectedLicenses([...selectedLicenses, licenseToAdd]);
             setNewLicense('');
@@ -123,7 +137,7 @@ function EditProductModal({ open, handleOpen, productData = {}, setProduct }) {
                 </DialogHeader>
                 <DialogBody className='border-t'>
                     <form>
-                        <div className='flex flex-col gap-4 py-4'>
+                        <div className='flex flex-col gap-4 py-4 overflow-scroll h-[32rem]'>
                             <Input
                                 label="Name"
                                 name="name"
@@ -137,12 +151,30 @@ function EditProductModal({ open, handleOpen, productData = {}, setProduct }) {
                                 onChange={(e) => handleChange(e.target.value, 'description')}
                             />
                             <Input
+                                type="number"
                                 label="Price"
                                 name="price"
-                                type='number'
                                 value={editedProduct.price}
                                 onChange={(e) => handleChange(e.target.value, 'price')}
+                                required
                             />
+
+                            <div className='flex flex-col gap-4'>
+                                <div className='flex items-center justify-between'>
+                                    <span>Sale: <strong>{editedProduct.discount}%</strong></span>
+                                    <span>Discounted price: <strong>&euro;{editedProduct.discountedPrice.toFixed(2)}</strong></span>
+                                </div>
+                                <Slider
+                                    defaultValue={0}
+                                    // value={Number(newProduct.discount)}
+                                    barClassName='bg-green-500 relative'
+                                    min={0}
+                                    max={70}
+                                    step={10}
+                                    value={editedProduct.discount}
+                                    onChange={(e) => handleChange(e.target.value, 'discount')}
+                                />
+                            </div>
                             <Input
                                 label="Quantity"
                                 name="quantity"
@@ -202,20 +234,18 @@ function EditProductModal({ open, handleOpen, productData = {}, setProduct }) {
                             </div>
                             {selectedLicenses.length > 0 && (
                                 <ul className="list-disc flex gap-2">
-                                    {selectedLicenses.map((licenseId, index) => {                                                
-                                        return (
-                                            <li key={index} className="flex justify-between items-center bg-[#333] hover:bg-[#242424] rounded-full px-4 py-1 my-1">
-                                                <span className="font-bold text-white text-[12px]">
-                                                    {licenseId.name}
-                                                </span>
-                                                <button onClick={() => handleRemoveLicense(licenseId)} className="ml-2 text-white">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                                                    </svg>
-                                                </button>
-                                            </li>
-                                        );
-                                    })}
+                                    {selectedLicenses.map((license, index) => (
+                                        <li key={index} className="flex justify-between items-center bg-[#333] hover:bg-[#242424] rounded-full px-4 py-1 my-1">
+                                            <span className="font-bold text-white text-[12px]">
+                                                {license.name}
+                                            </span>
+                                            <button onClick={() => handleRemoveLicense(license)} className="ml-2 text-white">
+                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                                                </svg>
+                                            </button>
+                                        </li>
+                                    ))}
                                 </ul>
                             )}
                         </div>
@@ -231,5 +261,3 @@ function EditProductModal({ open, handleOpen, productData = {}, setProduct }) {
         </>
     );
 }
-
-export default EditProductModal;

@@ -1,22 +1,16 @@
 import mongoose from "mongoose";
 import User from './User.js';
 
-const reviewSchema = new mongoose.Schema({
-  comment: { type: String, required: true },
-  rate: { type: Number, required: true, min: 1, max: 5 },
-  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
-}, {
-  timestamps: true
-});
-
 const productSchema = new mongoose.Schema({
   brand: { type: mongoose.Schema.Types.ObjectId, ref: 'Brand', required: true },
   name: { type: String, required: true },
   description: { type: String, required: true },
   licenses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'License' }],
-  ecoPoints: { type: Number },
   quantity: { type: Number, required: true },
   price: { type: Number, required: true },
+  discountedPrice: { type: Number },
+  discount: { type: Number, default: 0 },
+  onSale: { type: Boolean, default: false },
   image: { type: String, required: true },
   category: { 
     type: String,
@@ -24,6 +18,7 @@ const productSchema = new mongoose.Schema({
     default: 'clothes',
     required: true
   },
+  type: { type: String, required: true },
   color: { 
     type: String, 
     required: function() { return this.category === 'clothes' || this.category === 'second_hand'; } 
@@ -32,12 +27,22 @@ const productSchema = new mongoose.Schema({
     type: [String], 
     required: function() { return this.category === 'clothes' || this.category === 'second_hand'; } 
   },
-  type: { type: String, required: true },
-  reviews: [reviewSchema],
-  averageRate: { type: Number, default: 0 }
 }, {
   timestamps: true,
   collection: "products"
 });
+
+productSchema.pre('save', function(next) {
+  this.onSale = this.discount > 0;
+  this.discountedPrice = this.getDiscountedPrice();
+  next();
+});
+
+productSchema.methods.getDiscountedPrice = function() {
+  if (this.discount > 0) {
+    return this.price * (1 - this.discount / 100);
+  }
+  return this.price;
+};
 
 export default mongoose.model("Product", productSchema);

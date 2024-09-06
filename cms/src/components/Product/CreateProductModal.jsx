@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Dialog, DialogHeader, DialogBody, Button, Input, Select, Option, Textarea } from '@material-tailwind/react';
+import { Dialog, DialogHeader, DialogBody, Button, Input, Select, Option, Textarea, Slider } from '@material-tailwind/react';
 import { createProduct, getBrands, getLicenses } from '../../services/api';
 import Alert from '../../../../frontend/src/components/Alert';
 import { IconButton, Typography } from '@mui/material';
@@ -19,6 +19,8 @@ export default function CreateProductModal({ open, handleOpen, setAllProducts })
         brand: "",
         name: "",
         price: 0,
+        discount: 0,
+        discountedPrice: 0,
         category: "",
         type: "",
         description: "",
@@ -28,6 +30,7 @@ export default function CreateProductModal({ open, handleOpen, setAllProducts })
     });
     const [brands, setBrands] = useState([]);
     const [category, setCategory] = useState("");
+    const [discountePrice, setDiscountePrice] = useState(0);
     const [type, setType] = useState("");
     const [alert, setAlert] = useState(null);
 
@@ -64,6 +67,12 @@ export default function CreateProductModal({ open, handleOpen, setAllProducts })
             type: ""
         }));
     }, [category]);
+
+    useEffect(() => {
+        if (newProduct.discount > 0) {
+            setDiscountePrice(newProduct.price * (1 - newProduct.discount / 100));
+        }
+    }, [newProduct.price, newProduct.discount]); 
 
     useEffect(() => {
         const validateStep1 = () => {
@@ -106,9 +115,9 @@ export default function CreateProductModal({ open, handleOpen, setAllProducts })
         if (newLicense && !newProduct.licenses.includes(newLicense)) {
             setNewProduct({
                 ...newProduct,
-                licenses: [...newProduct.licenses, newLicense]  // Aggiungi licenza come ID separato
+                licenses: [...newProduct.licenses, newLicense]
             });
-            setNewLicense('');  // Resetta la selezione
+            setNewLicense('');
         }
     };
 
@@ -134,9 +143,11 @@ export default function CreateProductModal({ open, handleOpen, setAllProducts })
             const formData = new FormData();
             formData.append('price', Number(newProduct.price));
             formData.append('quantity', Number(newProduct.quantity));
+            formData.append('discount', Number(newProduct.discount));
+            formData.append('discountedPrice', Number(newProduct.discountedPrice));
 
             Object.keys(newProduct).forEach((key) => {
-                if (key !== 'price' && key !== 'quantity') {
+                if (key !== 'price' && key !== 'quantity' && key !== 'discount' && key !== 'discountedPrice') { 
                     if (key === 'licenses') {
                         newProduct.licenses.forEach((license) => {
                             formData.append('licenses[]', license);
@@ -320,6 +331,21 @@ export default function CreateProductModal({ open, handleOpen, setAllProducts })
                                         onChange={(e) => handleChange(e.target.value, 'price')}
                                         required
                                     />
+                                    <div className='flex flex-col gap-4'>
+                                        <div className='flex items-center justify-between'>
+                                            <span>Sale: <strong>{newProduct.discount}%</strong></span>
+                                            <span>Discounted price: <strong>&euro;{discountePrice.toFixed(2)}</strong></span>
+                                        </div>
+                                        <Slider
+                                            defaultValue={0}
+                                            value={Number(newProduct.discount)}
+                                            barClassName='bg-green-500 relative'
+                                            min={0}
+                                            max={70}
+                                            step={10}
+                                            onChange={(e) => handleChange(e.target.value, "discount")}
+                                        />
+                                    </div>
                                     <Input
                                         type="number"
                                         label="Quantity"
