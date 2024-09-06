@@ -50,6 +50,20 @@ export default function Products() {
           filteredProducts = filteredProducts.filter(product => product.price <= price);
         }
 
+        // Filtraggio per termine di ricerca
+        if (searchTerm) {
+          filteredProducts = filteredProducts.filter(product => 
+            product.name.toLowerCase().includes(searchTerm.toLowerCase())
+          );
+        }
+
+        // Ordinamento dei prodotti
+        if (sortOrder === "lowToHigh") {
+          filteredProducts.sort((a, b) => a.price - b.price);
+        } else if (sortOrder === "highToLow") {
+          filteredProducts.sort((a, b) => b.price - a.price);
+        }
+
         setProducts(filteredProducts);
         setLoading(false);
       } catch (error) {
@@ -59,7 +73,7 @@ export default function Products() {
     };
 
     fetchProducts();
-  }, [searchParams]);
+  }, [searchParams, searchTerm, sortOrder]);
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
