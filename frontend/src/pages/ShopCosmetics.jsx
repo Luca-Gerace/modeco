@@ -1,3 +1,4 @@
+import ImageCard from '../components/ImageCard/ImageCard';
 import ProductSlider from '../components/Product/ProductSlider/ProductSlider';
 
 export default function ShopCosmetics() {
@@ -14,6 +15,37 @@ export default function ShopCosmetics() {
         link={`/products?category=${encodeURIComponent("cosmetics")}`}
         anchor="Vedi tutti i prodotti di cosmetica"
       />
+            <div className="flex flex-col gap-10 py-10 px-4 lg:px-0">
+        <h1 className="text-[32px] md:text-[38px] text-black font-bold leading-10 md:leading-[50px]">
+          Prodotti <span className='text-green-500'>biologici</span> selezionati per il tuo <span className='text-green-500'>benessere</span>
+        </h1>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <ImageCard 
+            title='Profumi' 
+            link={`/products?category=${encodeURIComponent("cosmetics")}&type=${encodeURIComponent("parfum")}`}
+            backgroundClass='bg-green-300' 
+            imageClass='w-full bg-contain parfums' 
+          />
+          <ImageCard 
+            title='Per il corpo' 
+            link={`/products?category=${encodeURIComponent("cosmetics")}&type=${encodeURIComponent("lotion")}`}
+            backgroundClass='bg-[#74c9c9]' 
+            imageClass='w-full bg-contain lotions' 
+          />
+          <ImageCard 
+            title='Per il viso' 
+            link={`/products?category=${encodeURIComponent("cosmetics")}&type=${encodeURIComponent("beauty")}`}
+            backgroundClass='bg-[#74c9c9] md:bg-green-300' 
+            imageClass='w-full bg-contain beauty' 
+          />
+          <ImageCard 
+            title='Trucchi' 
+            link={`/products?category=${encodeURIComponent("cosmetics")}&type=${encodeURIComponent("makeup")}`}
+            backgroundClass='bg-green-300 md:bg-[#74c9c9]' 
+            imageClass='w-full bg-contain makeup' 
+          />
+        </div>
+      </div>
     </>
   );
 }

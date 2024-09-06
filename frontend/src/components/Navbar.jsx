@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { SidebarWithBurgerMenu } from "./SidebarWithBurgerMenu";
 import { Button } from "@material-tailwind/react"; 
 import { SidebarCart } from "./Cart/SidebarCart";
@@ -6,6 +6,9 @@ import { useUser } from "../modules/UserContext";
 
 export default function Navbar() {
   const { user } = useUser();
+  const location = useLocation();
+
+  const hideSidebarCart = location.pathname === '/checkout' || location.pathname === '/thank-you';
 
   return (
     <nav className="w-full px-4 py-6 shadow-lg bg-white">
@@ -23,9 +26,11 @@ export default function Navbar() {
         <ul className="flex items-center gap-8">
           {user ? (
             <>
-              <li>
-                <SidebarCart />
-              </li>
+              {!hideSidebarCart && (
+                <li>
+                  <SidebarCart />
+                </li>
+              )}
               <li>
                 <Link to="/profile">
                   <img src={user.avatar} alt='user image' className="w-[50px] h-[50px] rounded-full" />

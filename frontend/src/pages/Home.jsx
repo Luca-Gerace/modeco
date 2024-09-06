@@ -3,6 +3,7 @@ import ImageCard from "../components/ImageCard/ImageCard"
 import LicenseSection from "../components/Sections/License/LicenseSection"
 import BlogSection from "../components/Sections/Blog/BlogSection"
 import TrustSection from "../components/Sections/Trust/TrustSection"
+import BrandSection from "../components/Sections/Brand/BrandSection"
 
 export default function Home() {
 
@@ -22,6 +23,7 @@ export default function Home() {
       <LicenseSection />
       <BlogSection />
       <TrustSection />
+      <BrandSection />
     </>
   )
 }

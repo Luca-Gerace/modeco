@@ -4,6 +4,7 @@ import { getProducts } from '../services/api';
 import ProductCard from '../components/Product/ProductCard';
 import { Input } from "@material-tailwind/react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
+import SkeletonProductCard from '../components/Skeleton/SkeletonProductCard';
 
 const TITLES = {
   clothes: 'Abbigliamento',
@@ -17,10 +18,11 @@ export default function Products() {
   const [allProducts, setAllProducts] = useState([]);
   const [searchParams] = useSearchParams();
   const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(true);
   const category = searchParams.get('category');
   const type = searchParams.get('type');
 
-  useEffect(() => { 
+  useEffect(() => {
     const fetchProducts = async () => {
       try {
         const data = await getProducts();
@@ -28,6 +30,7 @@ export default function Products() {
 
         let filteredProducts = data;
 
+        // Applicare il filtro per categoria e tipo
         if (category) {
           filteredProducts = filteredProducts.filter(product => product.category === category);
         }
@@ -36,10 +39,11 @@ export default function Products() {
           filteredProducts = filteredProducts.filter(product => product.type === type);
         }
 
-        setProducts(filteredProducts.length > 0 ? filteredProducts : data);
-
+        setProducts(filteredProducts);
+        setLoading(false);
       } catch (error) {
         console.error('Errore nel recupero dei prodotti:', error);
+        setLoading(false);
       }
     };
 
@@ -47,15 +51,17 @@ export default function Products() {
   }, [category, type]);
 
   useEffect(() => {
+    // Filtra i prodotti in base al termine di ricerca
     const filteredProducts = allProducts.filter(product => {
       const matchesCategory = !category || product.category === category;
+      const matchesType = !type || product.type === type;
       const matchesSearchTerm = (product.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-        product.brand.toLowerCase().includes(searchTerm.toLowerCase()));
-      return matchesCategory && matchesSearchTerm;
+        product.brand?.name.toLowerCase().includes(searchTerm.toLowerCase()));
+      return matchesCategory && matchesType && matchesSearchTerm;
     });
 
     setProducts(filteredProducts);
-  }, [searchTerm, category, allProducts]);
+  }, [searchTerm, category, type, allProducts]);
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -79,15 +85,32 @@ export default function Products() {
         </div>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-        {products.length > 0 ? (
-          products.map(product => (
-            <ProductCard key={product._id} product={product} textColor="text-black" altColor="text-[#96A7AF]" />
-          ))
-        ) : (
-          <div className="flex flex-col items-center gap-6 py-12 h-[500px]">
-            <h2 className="font-bold text-center">Nessun prodotto trovato.</h2>
-          </div>
-        )}
+        {
+          loading ? (
+            <>
+              <SkeletonProductCard />
+              <SkeletonProductCard />
+              <SkeletonProductCard />
+              <SkeletonProductCard />
+              <SkeletonProductCard />
+              <SkeletonProductCard />
+              <SkeletonProductCard />
+              <SkeletonProductCard />
+            </>
+          ) : (
+            <>
+              {products.length > 0 ? (
+                products.map(product => (
+                  <ProductCard key={product._id} product={product} textColor="text-black" altColor="text-[#96A7AF]" />
+                ))
+              ) : (
+                <div className="flex flex-col items-center gap-6 py-12 h-[500px]">
+                  <h2 className="font-bold text-center">Nessun prodotto trovato.</h2>
+                </div>
+              )}
+            </>
+          )
+        }
       </div>
     </div>
   );

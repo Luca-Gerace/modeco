@@ -103,46 +103,12 @@ export const getProduct = async (productId) => {
   }
 };
 
-export const createProduct = async (productData) => {
-  try {
-    const response = await api.post('/products', productData);
-    return response.data;
-  } catch (err) {
-    console.error('Errore nella creazione del prodotto:', err);
-    throw err;
-  }
-};
-
 export const updateProduct = async (productId, productData) => {
   try {
     const response = await api.patch(`/products/${productId}`, productData);
     return response.data;
   } catch (err) {
     console.error('Errore nell\'aggiornamento del prodotto:', err);
-    throw err;
-  }
-};
-
-export const deleteProduct = async (productId) => {
-  try {
-    const response = await api.delete(`/products/${productId}`);
-    return response.data;
-  } catch (err) {
-    console.error('Errore nell\'eliminazione del prodotto:', err);
-    throw err;
-  }
-};
-
-export const updateProductImage = async (productId, imageFile) => {
-  try {
-    const formData = new FormData();
-    formData.append('image', imageFile);
-    const response = await api.patch(`/products/${productId}/image`, formData, {
-      headers: { 'Content-Type': 'multipart/form-data' }
-    });
-    return response.data;
-  } catch (err) {
-    console.error('Errore nell\'aggiornamento dell\'immagine del prodotto:', err);
     throw err;
   }
 };
@@ -245,26 +211,6 @@ export const createOrder = async (orderData) => {
   }
 };
 
-export const updateOrder = async (orderId, orderData) => {
-  try {
-    const response = await api.put(`/orders/${orderId}`, orderData);
-    return response.data;
-  } catch (err) {
-    console.error('Error updating order:', err);
-    throw err;
-  }
-};
-
-export const deleteOrder = async (orderId) => {
-  try {
-    const response = await api.delete(`/orders/${orderId}`);
-    return response.data;
-  } catch (err) {
-    console.error('Error deleting order:', err);
-    throw err;
-  }
-}
-
 // License
 export const getLicenses = async () => {
   try {
@@ -303,6 +249,27 @@ export const getPost = async (postId) => {
     return response.data;
   } catch (err) {
     console.error('Errore nel recupero del post:', err);
+    throw err;
+  }
+};
+
+// Brand
+export const getBrands = async () => {
+  try {
+    const response = await api.get('/brands');
+    return response.data;
+  } catch (err) {
+    console.error('Errore nel recupero dei brand:', err);
+    throw err;
+  }
+};
+
+export const getBrand = async (brandId) => {
+  try {
+    const response = await api.get(`/brands/${brandId}`);
+    return response.data;
+  } catch (err) {
+    console.error('Errore nel recupero del brand:', err);
     throw err;
   }
 };

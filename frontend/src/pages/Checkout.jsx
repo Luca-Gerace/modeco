@@ -1,29 +1,9 @@
 import { useState, useEffect } from 'react';
 import { getUserData ,getCart, createOrder, updateProduct, updateCartItem, getProduct } from '../services/api';
 import { Button, Typography, Input } from '@material-tailwind/react';
-import {
-  Accordion,
-  AccordionHeader,
-  AccordionBody,
-} from "@material-tailwind/react";
 import { useNavigate } from 'react-router-dom';
 import Alert from '../components/Alert';
 import ProductListItem from '../components/Product/ProductListItem';
-
-function Icon({ id, open }) {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth={2}
-      stroke="currentColor"
-      className={`${id === open ? "rotate-180" : ""} h-5 w-5 transition-transform`}
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-    </svg>
-  );
-}
 
 export default function Checkout() {
   const [user, setUser] = useState(null);
@@ -31,12 +11,9 @@ export default function Checkout() {
   const [totalPrice, setTotalPrice] = useState(0);
   const [shippingAddress, setShippingAddress] = useState('');
   const [paymentInfo, setPaymentInfo] = useState('');
-  const [open, setOpen] = useState(0);
   const [alert, setAlert] = useState(null);
 
   const navigate = useNavigate();
-
-  const handleOpen = (value) => setOpen(open === value ? 0 : value);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -101,7 +78,7 @@ export default function Checkout() {
       // Go to thank you page
       setTimeout(() => {
         navigate('/thank-you');
-      }, 2000);
+      }, 1500);
 
       // Show success alert
       setAlert({ message: 'Ordine confermato con successo!', type: 'success' });
@@ -113,25 +90,20 @@ export default function Checkout() {
   };
 
   return (
-    <>
-      <Accordion open={true} icon={<Icon id={1} />}>
-        <AccordionHeader onClick={() => handleOpen(1)}>Riepilogo prodotti</AccordionHeader>
-        <AccordionBody>
+    <div className='w-full md:w-[500px] mx-auto px-4'>
+      <div className="flex flex-col gap-4 pt-2 pb-4">
+          <h1 className="text-[24px] font-bold pb-4 border-b">Riepilogo ordine</h1>
           <ul>
             {cartItems.map(item => (
               <ProductListItem key={item._id} item={item} fetchCartData={fetchCartData} />
             ))}
           </ul>
-          <Typography variant="h6" color="blue-gray" className="mt-4">
+          <Typography variant="h5" color="blue-gray" className="mt-4">
             Totale: €{totalPrice.toFixed(2)}
           </Typography>
-        </AccordionBody>
-      </Accordion>
-      <Accordion open={true} icon={<Icon id={2} />}>
-        <AccordionHeader onClick={() => handleOpen(2)}>
-          Dati di spedizione
-        </AccordionHeader>
-        <AccordionBody>
+      </div>
+      <div className="flex flex-col gap-2 py-4">
+          <h2 className="text-[20px] font-bold py-4 border-t">Dati di spedizione</h2>
           <Input
             label="Indirizzo di Spedizione"
             value={shippingAddress}
@@ -139,13 +111,9 @@ export default function Checkout() {
             className="mb-4"
             required
           />
-        </AccordionBody>
-      </Accordion>
-      <Accordion open={true} icon={<Icon id={3} />}>
-        <AccordionHeader onClick={() => handleOpen(3)}>
-          Dati di pagamento
-        </AccordionHeader>
-        <AccordionBody>
+      </div>
+      <div className="flex flex-col gap-2 py-4">
+          <h2 className="text-[20px] font-bold py-4 border-t">Dati di pagamento</h2>
           <Input
             label="Informazioni di Pagamento"
             value={paymentInfo}
@@ -153,16 +121,15 @@ export default function Checkout() {
             className="mb-4"
             required
           />
-        </AccordionBody>
-      </Accordion>
+      </div>
       <Button
         onClick={handleConfirmOrder}
-        className="w-full bg-[#000] text-white py-4 rounded-full capitalize text-[16px]"
+        className="w-full bg-[#000] text-white py-4 mt-6 rounded-full capitalize text-[16px]"
         disabled={!shippingAddress || !paymentInfo}
       >
         Conferma Ordine
       </Button>
       {alert && <Alert message={alert.message} type={alert.type} onClose={() => setAlert(null)} />}
-    </>
+    </div>
   );
 }
