@@ -4,8 +4,9 @@ import { useSearchParams } from 'react-router-dom';
 import { getProducts } from '../../services/api';
 import ProductCard from '../../components/Product/ProductCard';
 import { Input, Select, Option, Button } from "@material-tailwind/react";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
+import { AdjustmentsHorizontalIcon, MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import SkeletonProductCard from '../../components/Skeleton/SkeletonProductCard';
+import { XMarkIcon } from '@heroicons/react/24/solid';
 
 export default function Products() {
   const [products, setProducts] = useState([]);
@@ -15,46 +16,51 @@ export default function Products() {
   const [loading, setLoading] = useState(true);
   const [sortOrder, setSortOrder] = useState("");
   const [filterModalOpen, setFilterModalOpen] = useState(false);
-
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(0);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const data = await getProducts();
         setAllProducts(data);
-  
+
+        if (data.length > 0) {
+          const prices = data.map(product => product.price);
+          setMinPrice(Math.ceil(Math.min(...prices)));
+          setMaxPrice(Math.ceil(Math.max(...prices)));
+        }
+
         let filteredProducts = data;
-  
+
         const category = searchParams.get('category');
         const type = searchParams.get('type');
         const price = searchParams.get('price');
-  
+
         if (category) {
           filteredProducts = filteredProducts.filter(product => product.category === category);
         }
-  
+
         if (type) {
           const typesArray = decodeURIComponent(type).split(',');
-          console.log('Types Array:', typesArray); // Debug
           filteredProducts = filteredProducts.filter(product => typesArray.includes(product.type));
         }
 
         if (price) {
           filteredProducts = filteredProducts.filter(product => product.price <= price);
         }
-  
+
         setProducts(filteredProducts);
-        console.log('Filtered Products:', filteredProducts); // Debug
         setLoading(false);
       } catch (error) {
         console.error('Errore nel recupero dei prodotti:', error);
         setLoading(false);
       }
     };
-  
+
     fetchProducts();
   }, [searchParams]);
-  
+
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
@@ -79,12 +85,29 @@ export default function Products() {
     setFilterModalOpen(false);
   };
 
+  const clearFilters = () => {
+    setSearchParams({});
+  };
+
   const handleOpenFilterModal = () => setFilterModalOpen(!filterModalOpen);
+
+  const getFilterCount = () => {
+    const category = searchParams.get('category');
+    const type = searchParams.get('type');
+    const price = searchParams.get('price');
+    let count = 0;
+
+    if (category) count += 1;
+    if (type) count += decodeURIComponent(type).split(',').length;
+    if (price) count += 1;
+
+    return count;
+  };
 
   return (
     <div className="container mx-auto px-4">
       <div className='flex w-full flex-col md:flex-row gap-4 items-center justify-between mt-2 mb-8'>
-        <div className="flex gap-4 w-full md:w-auto">
+        <div className="flex gap-4 w-full md:w-auto items-center">
           <div className="w-full md:w-72">
             <Input
               label="Cerca un prodotto"
@@ -104,9 +127,19 @@ export default function Products() {
               <Option value="highToLow">dal più alto al più basso</Option>
             </Select>
           </div>
-          <Button onClick={handleOpenFilterModal} className="md:w-auto w-full">
-            Filtra
-          </Button>
+          <div className="relative">
+            <Button onClick={handleOpenFilterModal} className="flex gap-2 items-center ">
+              <AdjustmentsHorizontalIcon className='w-4 h-4' /> Filtra
+            </Button>
+            {getFilterCount() > 0 && (
+              <button
+                onClick={clearFilters}
+                className="flex gap-1 items-center absolute -top-2 -right-8 px-2 bg-red-500 rounded-full text-white border-2 border-white"
+              >
+                {getFilterCount()} <XMarkIcon className="h-4 w-4" />
+              </button>
+            )}
+          </div>
         </div>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -138,6 +171,13 @@ export default function Products() {
         handleOpen={handleOpenFilterModal} 
         applyFilters={applyFilters}
         allProducts={allProducts} 
+        currentFilters={{
+          category: searchParams.get('category') || "",
+          type: (searchParams.get('type') ? decodeURIComponent(searchParams.get('type')).split(',') : []),
+          price: searchParams.get('price') || minPrice
+        }}
+        minPrice={minPrice}
+        maxPrice={maxPrice}
       />
     </div>
   );

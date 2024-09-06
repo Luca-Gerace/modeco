@@ -3,21 +3,16 @@ import { Dialog, DialogHeader, DialogBody, Button, Radio, Slider, Checkbox } fro
 import { IconButton, Typography } from '@mui/material';
 import { CheckIcon, XMarkIcon } from '@heroicons/react/24/solid';
 
-export default function ProductsFilter({ open, handleOpen, applyFilters, allProducts }) {
+export default function ProductsFilter({ open, handleOpen, applyFilters, currentFilters, minPrice, maxPrice }) {
     const [localFilters, setLocalFilters] = useState({ category: "", type: [], price: null }); // `type` as array
-    const [minPrice, setMinPrice] = useState(0);
-    const [maxPrice, setMaxPrice] = useState(0);
 
     useEffect(() => {
-        if (allProducts && allProducts.length > 0) {
-            const prices = allProducts.map(product => product.price);
-            const minPriceValue = Math.ceil(Math.min(...prices))
-            setMinPrice(minPriceValue);
-            const maxPriceValue = Math.ceil(Math.max(...prices))
-            setMaxPrice(maxPriceValue);
-            setLocalFilters(prevFilters => ({ ...prevFilters, price: minPriceValue }));
-        }
-    }, [allProducts]);
+        setLocalFilters({
+            category: currentFilters.category,
+            type: currentFilters.type,
+            price: currentFilters.price || minPrice
+        });
+    }, [currentFilters, open, minPrice]);
 
     // Gestisce il cambiamento per valori di tipo array (checkbox multiple)
     const handleCheckboxChange = (value, name) => {
@@ -67,18 +62,18 @@ export default function ProductsFilter({ open, handleOpen, applyFilters, allProd
                                 <strong>Filtra per categoria prodotto:</strong>
                                 <div className='flex gap-4'>
                                     <div className='border-2 rounded-full w-full'>
-                                        <Radio name="category" value="clothes" onChange={(e) => handleChange(e.target.value, "category")} label="Abbigliamento" />
+                                        <Radio name="category" value="clothes" checked={localFilters.category === "clothes"} onChange={(e) => handleChange(e.target.value, "category")} label="Abbigliamento" />
                                     </div>
                                     <div className='border-2 rounded-full w-full'>
-                                        <Radio name="category" value="food_and_beverage" onChange={(e) => handleChange(e.target.value, "category")} label="Cibo e bevande" />
+                                        <Radio name="category" value="food_and_beverage" checked={localFilters.category === "food_and_beverage"} onChange={(e) => handleChange(e.target.value, "category")} label="Cibo e bevande" />
                                     </div>
                                 </div>
                                 <div className='flex gap-4'>
                                     <div className='border-2 rounded-full w-full'>
-                                        <Radio name="category" value="second_hand" onChange={(e) => handleChange(e.target.value, "category")} label="Second Hand" />
+                                        <Radio name="category" value="second_hand" checked={localFilters.category === "second_hand"} onChange={(e) => handleChange(e.target.value, "category")} label="Second Hand" />
                                     </div>
                                     <div className='border-2 rounded-full w-full'>
-                                        <Radio name="category" value="cosmetics" onChange={(e) => handleChange(e.target.value, "category")} label="Cosmetici" />
+                                        <Radio name="category" value="cosmetics" checked={localFilters.category === "cosmetics"} onChange={(e) => handleChange(e.target.value, "category")} label="Cosmetici" />
                                     </div>
                                 </div>
                             </div>
