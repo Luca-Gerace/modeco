@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getOrders } from "../../services/api";
 import SkeletonStats from "../../components/Skeleton/SkeletonStats";
-import IncomeChart from "../../components/Charts/IncomeChart";
+import RevenueChart from "../../components/Charts/RevenueChart";
 import OrdersChart from "../../components/Charts/OrdersChart";
 
 export default function Stats() {
@@ -12,7 +12,9 @@ export default function Stats() {
     async function fetchOrders() {
       try {
         const data = await getOrders();
-        setOrders(data);
+        // Filter orders with status completed
+        const completedOrders = data.filter(order => order.status === 'confirmed');
+        setOrders(completedOrders);
       } catch (error) {
         console.error("Error fetching orders:", error);
       } finally {
@@ -32,7 +34,7 @@ export default function Stats() {
         </>
       ) : (
         <>
-            <IncomeChart orders={orders} />
+            <RevenueChart orders={orders} />
             <OrdersChart orders={orders} />
         </>
       )}

@@ -93,7 +93,7 @@ function AreaChart({ height = 350, series, colors, options }) {
 export default function OrdersChart({ orders }) {
   const [series, setSeries] = useState([]);
   const [totalOrderCount, setTotalOrderCount] = useState(0);
-  const [timeRange, setTimeRange] = useState('lastMonth');
+  const [timeRange, setTimeRange] = useState('lastWeek');
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -128,14 +128,14 @@ export default function OrdersChart({ orders }) {
       if (orderDate >= startDate && orderDate <= now) {
         if (timeRange === 'lastYear') {
           const monthIndex = orderDate.getMonth();
-          orderCounts[monthIndex] += 1; // Contiamo gli ordini
+          orderCounts[monthIndex] += 1;
         } else if (timeRange === 'lastMonth') {
           const dayOfMonth = orderDate.getDate() - 1;
-          orderCounts[dayOfMonth] += 1; // Contiamo gli ordini
+          orderCounts[dayOfMonth] += 1;
         } else if (timeRange === 'lastWeek') {
           const dayOfWeek = orderDate.getDay();
           const mappedDay = (dayOfWeek === 0 ? 6 : dayOfWeek - 1);
-          orderCounts[mappedDay] += 1; // Contiamo gli ordini
+          orderCounts[mappedDay] += 1;
         }
         totalOrders += 1;
       }
@@ -149,7 +149,7 @@ export default function OrdersChart({ orders }) {
   return (
     <div>
       <Typography variant="h2" color="blue-gray" className="pb-6">
-        Number of Orders
+        Orders
       </Typography>
       <Card className="border">
         <CardBody className="!p-2">

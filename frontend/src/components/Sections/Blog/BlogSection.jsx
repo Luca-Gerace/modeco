@@ -10,7 +10,7 @@ export default function BlogSection() {
     useEffect(() => {
         const fetchPosts = async () => {
           try {
-            const data = await getPosts();
+            const data = (await getPosts()).slice().reverse();
             setAllPosts(data);
             setLoading(false);
           } catch (error) {

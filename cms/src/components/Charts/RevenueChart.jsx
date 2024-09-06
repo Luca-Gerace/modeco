@@ -90,10 +90,10 @@ function AreaChart({ height = 350, series, colors, options }) {
   );
 }
 
-export default function IncomeChart({ orders }) {
+export default function RevenueChart({ orders }) {
   const [series, setSeries] = useState([]);
   const [totalPriceSum, setTotalPriceSum] = useState(0);
-  const [timeRange, setTimeRange] = useState('lastMonth');
+  const [timeRange, setTimeRange] = useState('lastWeek');
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -141,7 +141,7 @@ export default function IncomeChart({ orders }) {
       }
     });
 
-    setSeries([{ name: "Income", data: totalPrice }]);
+    setSeries([{ name: "Revenue", data: totalPrice }]);
     setCategories(tempCategories);
     setTotalPriceSum(totalSum);
   }, [orders, timeRange]);
@@ -149,7 +149,7 @@ export default function IncomeChart({ orders }) {
   return (
     <div>
       <Typography variant="h2" color="blue-gray" className="pb-6">
-        Incomes
+        Revenue
       </Typography>
       <Card className="border">
         <CardBody className="!p-2">
