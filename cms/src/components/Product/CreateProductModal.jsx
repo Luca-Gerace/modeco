@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Dialog, DialogHeader, DialogBody, Button, Input, Select, Option, Textarea } from '@material-tailwind/react';
 import { createProduct, getBrands, getLicenses } from '../../services/api';
 import Alert from '../../../../frontend/src/components/Alert';
@@ -18,7 +19,7 @@ export default function CreateProductModal({ open, handleOpen, setAllProducts })
         brand: "",
         name: "",
         price: 0,
-        category: "clothes",
+        category: "",
         type: "",
         description: "",
         quantity: 0,
@@ -26,8 +27,11 @@ export default function CreateProductModal({ open, handleOpen, setAllProducts })
         licenses: [],
     });
     const [brands, setBrands] = useState([]);
-    const [category, setCategory] = useState("clothes");
+    const [category, setCategory] = useState("");
+    const [type, setType] = useState("");
     const [alert, setAlert] = useState(null);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchBrands = async () => {
@@ -52,6 +56,14 @@ export default function CreateProductModal({ open, handleOpen, setAllProducts })
         };
         fetchLicenses();
     }, []);
+
+    useEffect(() => {
+        setType("");
+        setNewProduct((prevProduct) => ({
+            ...prevProduct,
+            type: ""
+        }));
+    }, [category]);
 
     useEffect(() => {
         const validateStep1 = () => {
@@ -151,6 +163,11 @@ export default function CreateProductModal({ open, handleOpen, setAllProducts })
             handleOpen();
             setAlert({ message: 'Product created successfully!', type: 'success' });
 
+            // Go to thank you page
+            setTimeout(() => {
+                navigate('/products');
+            }, 1500);
+
         } catch (error) {
             console.error("Error creating the product:", error.response.data);
             setAlert({ message: 'Product creation error. Retry.', type: 'error' });
@@ -204,14 +221,39 @@ export default function CreateProductModal({ open, handleOpen, setAllProducts })
                                         <Option value="food and beverage">Food and Beverage</Option>
                                         <Option value="second hand">Second Hand</Option>
                                     </Select>
-                                    <Input
-                                        type="text"
-                                        label="Product Type"
-                                        name="type"
-                                        value={newProduct.type}
-                                        onChange={(e) => handleChange(e.target.value, 'type')}
+                                    <select
+                                        className="peer w-full h-[40px] bg-transparent text-blue-gray-700 transition-all border focus:border-2 placeholder:opacity-0 focus:placeholder:opacity-100 text-sm px-3 py-2.5 rounded-[7px] border-gray-500  focus:border-t-[#333]"
+                                        label="Type"
+                                        value={type}
+                                        onChange={(e) => {
+                                            setType(e.target.value);
+                                        }}
                                         required
-                                    />
+                                    >
+                                        <option value="" disabled>Subcategory</option>
+                                        {category === "clothes" || category === "second hand" ? (
+                                            <>
+                                                <option value="T-shirt">T-shirt</option>
+                                                <option value="Sweatshirt">Sweatshirt</option>
+                                                <option value="Jacket">Jacket</option>
+                                                <option value="Pants">Pants</option>
+                                            </>
+                                        ) : category === "food and beverage" ? (
+                                            <>
+                                                <option value="Dishes">Ready meals</option>
+                                                <option value="Beverage">Beverage</option>
+                                                <option value="Appetizer">Appetizer</option>
+                                                <option value="Dessert">Dessert</option>
+                                            </>
+                                        ) : category === "cosmetics" ? (
+                                            <>
+                                                <option value="Parfum">Parfum</option>
+                                                <option value="Lotion">Lotion</option>
+                                                <option value="Beauty">Beauty</option>
+                                                <option value="Makeup">Makeup</option>
+                                            </>
+                                        ) : ''}
+                                    </select>
                                     <Input
                                         type="text"
                                         label="Product Name"
