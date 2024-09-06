@@ -4,7 +4,7 @@ import { Button } from "@material-tailwind/react";
 import { SidebarCart } from "./Cart/SidebarCart";
 import { useUser } from "../modules/UserContext";
 
-export default function Navbar() {
+export default function Navbar({ cartCount, setCartCount }) {
   const { user } = useUser();
   const location = useLocation();
 
@@ -28,7 +28,7 @@ export default function Navbar() {
             <>
               {!hideSidebarCart && (
                 <li>
-                  <SidebarCart />
+                  <SidebarCart cartCount={cartCount} setCartCount={setCartCount} />
                 </li>
               )}
               <li>

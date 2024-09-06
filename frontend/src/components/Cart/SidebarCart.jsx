@@ -5,13 +5,14 @@ import {
   IconButton,
   Card,
   Button,
+  Badge,
 } from "@material-tailwind/react";
 import { ArchiveBoxXMarkIcon, ShoppingBagIcon } from "@heroicons/react/24/outline";
 import { getCart } from '../../services/api';
 import CartItem from "./CartItem";
 import { useNavigate } from "react-router-dom";
-export function SidebarCart() {
 
+export function SidebarCart({ cartCount, setCartCount }) {
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -26,15 +27,21 @@ export function SidebarCart() {
     }
   }, [isDrawerOpen]);
 
+  useEffect(() => {
+    fetchCartData();
+  }, []);
+
   const fetchCartData = async () => {
     try {
       const cartData = await getCart();
       setCartItems(cartData.items);
       setTotalPrice(cartData.totalPrice);
+      setCartCount(cartData.items.reduce((total, item) => total + item.quantity, 0));
     } catch (error) {
       console.error('Errore nel recupero dei dati del carrello:', error);
       setCartItems([]);
       setTotalPrice(0);
+      setCartCount(0);
     }
   };
 
@@ -45,9 +52,17 @@ export function SidebarCart() {
 
   return (
     <>
-      <IconButton variant="text" size="lg" onClick={openDrawer}>
-        <ShoppingBagIcon className="h-8 w-8 stroke-2" />
-      </IconButton>
+      {cartCount > 0 ? (
+        <Badge content={cartCount} placement="top-end">
+          <IconButton variant="text" size="lg" onClick={openDrawer}>
+            <ShoppingBagIcon className="h-8 w-8 stroke-2" />
+          </IconButton>
+        </Badge>
+      ) : (
+        <IconButton variant="text" size="lg" onClick={openDrawer}>
+          <ShoppingBagIcon className="h-8 w-8 stroke-2" />
+        </IconButton>
+      )}
       <Drawer open={isDrawerOpen} onClose={closeDrawer} placement="right">
         <Card
           color="transparent"

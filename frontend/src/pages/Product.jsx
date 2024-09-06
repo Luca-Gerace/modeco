@@ -9,7 +9,7 @@ import { Button, Input } from "@material-tailwind/react";
 import Badge from "../components/Badge";
 import RelatedProducts from "../components/Product/RelatedProducts";
 
-export default function Product() {
+export default function Product({ setCartCount }) {
   const { id } = useParams();
   const navigate = useNavigate();
   const { user } = useUser();
@@ -35,14 +35,15 @@ export default function Product() {
 
   const handleAddToCart = async () => {
     if ((product.category === 'clothes' || product.category === 'second_hand') && !size) {
-      setSizeError(true); // Mostra l'errore se la taglia non è selezionata
-      return; // Blocca l'aggiunta al carrello
+      setSizeError(true);
+      return; 
     }
   
     try {
       await addToCart(id, quantity);
       setAlert({ message: "Prodotto aggiunto al carrello!", type: "success" });
-      setSizeError(false); // Ripristina l'errore se l'aggiunta al carrello è riuscita
+      setSizeError(false);
+      setCartCount(prevCount => prevCount + quantity);
     } catch (error) {
       console.error('Errore nell\'aggiunta al carrello:', error);
       setAlert({ message: "Errore nell'aggiunta al carrello. Riprova.", type: "error" });

@@ -19,13 +19,16 @@ import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
 import License from "./pages/License";
 import Blog from "./pages/Blog";
+import { useState } from "react";
 
 function App() {
+  const [cartCount, setCartCount] = useState(0);
+
   return (
     <UserProvider>
       <Router>
         <ScrollToTop />
-        <Navbar />
+        <Navbar cartCount={cartCount} setCartCount={setCartCount} />
         <main className="w-full lg:w-[1024px] py-8 m-auto">
           <Routes>
             <Route path="/" element={<Home />} />
@@ -40,7 +43,7 @@ function App() {
             <Route path="/food-and-beverage" element={<ShopFoodAndBeverage />} />
             <Route path="/second-hand" element={<ShopSecondHand />} />
             <Route path="/products" element={<Products />} />
-            <Route path="/products/:id" element={<Product />} />
+            <Route path="/products/:id" element={<Product setCartCount={setCartCount} />} />
             <Route path="/checkout" element={<PrivateRoute><Checkout /></PrivateRoute>} />
             <Route path="/thank-you" element={<PrivateRoute><ThankYou /></PrivateRoute>} />
           </Routes>
