@@ -18,19 +18,25 @@ export default function Products() {
   const [searchParams] = useSearchParams();
   const [searchTerm, setSearchTerm] = useState("");
   const category = searchParams.get('category');
+  const type = searchParams.get('type');
 
-  useEffect(() => {
+  useEffect(() => { 
     const fetchProducts = async () => {
       try {
         const data = await getProducts();
         setAllProducts(data);
 
+        let filteredProducts = data;
+
         if (category) {
-          const filteredProducts = data.filter(product => product.category === category);
-          setProducts(filteredProducts.length > 0 ? filteredProducts : data); // Mostra i prodotti filtrati o tutti i prodotti se vuoti
-        } else {
-          setProducts(data); // Mostra tutti i prodotti se nessuna categoria è specificata
+          filteredProducts = filteredProducts.filter(product => product.category === category);
         }
+
+        if (type) {
+          filteredProducts = filteredProducts.filter(product => product.type === type);
+        }
+
+        setProducts(filteredProducts.length > 0 ? filteredProducts : data);
 
       } catch (error) {
         console.error('Errore nel recupero dei prodotti:', error);
@@ -38,13 +44,13 @@ export default function Products() {
     };
 
     fetchProducts();
-  }, [category]);
+  }, [category, type]);
 
   useEffect(() => {
-    // Filtra i prodotti in base al termine di ricerca e alla categoria selezionata
     const filteredProducts = allProducts.filter(product => {
       const matchesCategory = !category || product.category === category;
-      const matchesSearchTerm = (product.name.toLowerCase() || product.brand.toLowerCase()).includes(searchTerm.toLowerCase());
+      const matchesSearchTerm = (product.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+        product.brand.toLowerCase().includes(searchTerm.toLowerCase()));
       return matchesCategory && matchesSearchTerm;
     });
 
@@ -64,13 +70,13 @@ export default function Products() {
           {pageTitle}
         </h1>
         <div className="w-full md:w-72">
-            <Input
-              label="Cerca un prodotto"
-              icon={<MagnifyingGlassIcon className="h-5 w-5" />}
-              value={searchTerm}
-              onChange={handleSearchChange}
-            />
-          </div>
+          <Input
+            label="Cerca un prodotto"
+            icon={<MagnifyingGlassIcon className="h-5 w-5" />}
+            value={searchTerm}
+            onChange={handleSearchChange}
+          />
+        </div>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
         {products.length > 0 ? (

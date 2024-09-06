@@ -227,6 +227,7 @@ export default function CreateProductModal({ open, handleOpen, setAllProducts })
                                         value={type}
                                         onChange={(e) => {
                                             setType(e.target.value);
+                                            setNewProduct({ ...newProduct, type: e.target.value });
                                         }}
                                         required
                                     >
