@@ -1,5 +1,7 @@
 import ImageCard from '../components/ImageCard/ImageCard';
 import ProductSlider from '../components/Product/ProductSlider/ProductSlider';
+import LicenseSection from "../components/Sections/License/LicenseSection"
+import BrandSection from "../components/Sections/Brand/BrandSection"
 
 export default function ShopCosmetics() {
 
@@ -15,7 +17,7 @@ export default function ShopCosmetics() {
         link={`/products?category=${encodeURIComponent("cosmetics")}`}
         anchor="Vedi tutti i prodotti di cosmetica"
       />
-            <div className="flex flex-col gap-10 py-10 px-4 lg:px-0">
+      <div className="flex flex-col gap-10 py-10 px-4 lg:px-0">
         <h1 className="text-[32px] md:text-[38px] text-black font-bold leading-10 md:leading-[50px]">
           Prodotti <span className='text-green-500'>biologici</span> selezionati per il tuo <span className='text-green-500'>benessere</span>
         </h1>
@@ -46,6 +48,8 @@ export default function ShopCosmetics() {
           />
         </div>
       </div>
+      <LicenseSection />
+      <BrandSection />
     </>
   );
 }

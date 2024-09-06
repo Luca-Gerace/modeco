@@ -21,17 +21,16 @@ export default function RelatedProducts({ product }) {
 
   const relatedProducts = products
     .filter((relatedProduct) =>
-      relatedProduct._id !== product._id && // Esclude il prodotto attualmente visualizzato
-      relatedProduct.category === product.category && // Filtra per stessa categoria
-      relatedProduct.quantity > 0 // Filtra per disponibilità
+      relatedProduct._id !== product._id &&
+      relatedProduct.category === product.category &&
+      relatedProduct.quantity > 0 
     )
-    .slice(0, 4); // Limita ai primi 4 prodotti
+    .slice(0, 4);
 
-  // Verifica se ci sono prodotti correlati che soddisfano i criteri
   const hasRelatedProducts = relatedProducts.length > 0;
 
   return (
-    hasRelatedProducts && ( // Mostra solo se ci sono prodotti correlati
+    hasRelatedProducts && ( 
       <div className="flex flex-col gap-4 pb-16">
         <h2 className="text-[20px] font-bold pb-4 border-b">Potrebbe interessarti anche</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-2">

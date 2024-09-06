@@ -35,10 +35,9 @@ export default function ProductSlider({ filteredCategory, bgColor, title, altCol
         <div className="hidden md:flex md:overflow-hidden md:gap-6 pb-6 px-6 w-full">
           {loading ? (
             <>
-              <SkeletonProductCard />
-              <SkeletonProductCard />
-              <SkeletonProductCard />
-              <SkeletonProductCard />
+              {Array.from({ length: 4 }).map((_, index) => (
+                  <SkeletonProductCard key={index} />
+              ))}
             </>
           ) : (
             products

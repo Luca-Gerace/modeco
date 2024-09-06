@@ -1,5 +1,7 @@
 import ImageCard from '../components/ImageCard/ImageCard';
 import ProductSlider from '../components/Product/ProductSlider/ProductSlider';
+import LicenseSection from "../components/Sections/License/LicenseSection"
+import BrandSection from "../components/Sections/Brand/BrandSection"
 
 export default function ShopFoodAndBaverage() {
 
@@ -15,7 +17,7 @@ export default function ShopFoodAndBaverage() {
         link={`/products?category=${encodeURIComponent("food and beverage")}`}
         anchor="Vedi tutti i prodotti di cibo e bevande"
       />
-            <div className="flex flex-col gap-10 py-10 px-4 lg:px-0">
+      <div className="flex flex-col gap-10 py-10 px-4 lg:px-0">
         <h1 className="text-[32px] md:text-[38px] text-black font-bold leading-10 md:leading-[50px]">
           Ti proponiamo solo <span className='text-green-500'>cibi e bevande biologici</span> di qualità
         </h1>
@@ -46,6 +48,8 @@ export default function ShopFoodAndBaverage() {
           />
         </div>
       </div>
+      <LicenseSection />
+      <BrandSection />
     </>
   );
 }

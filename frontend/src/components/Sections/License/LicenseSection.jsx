@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getLicenses } from "../../../services/api";
 import { ArrowRightIcon } from '@heroicons/react/24/solid';
+import SkeletonLicense from '../../Skeleton/SkeletonLicense';
 
 export default function CategoryCards() {
     const [allLicenses, setAllLicenses] = useState([]);
@@ -13,7 +14,7 @@ export default function CategoryCards() {
           try {
             const data = await getLicenses();
             setAllLicenses(data);
-            setLoading(true);
+            setLoading(false);
           } catch (error) {
             console.error('Errore nel recupero dei licenze:', error);
             setLoading(false);
@@ -33,8 +34,10 @@ export default function CategoryCards() {
                     Noi contribuiamo rendendo la tua esperienza di acquisto <strong>100% rispettosa dell’ambiente</strong>, dal packaging fino al trasporto al tuo indirizzo.
                 </p>
                 <div className="grid grid-cols-4 md:grid-cols-8 gap-6">
-                    {loading ? (
-                        allLicenses.map((license) => (
+                    {!loading ? (
+                        allLicenses
+                        .slice(0, 8)
+                        .map((license) => (
                         <img
                             key={license._id}
                             className="w-full h-auto border-green-500 border-2 rounded-xl"
@@ -43,7 +46,11 @@ export default function CategoryCards() {
                         />
                         ))
                     ) : (
-                        <p>Loading...</p> 
+                        <>
+                            {Array.from({ length: 8 }).map((_, index) => (
+                                <SkeletonLicense key={index} />
+                            ))}
+                        </>
                     )}
                 </div>
                 <Link to='/licenze' className='flex gap-2 items-center flex-end text-black font-bold hover:underline justify-end'>

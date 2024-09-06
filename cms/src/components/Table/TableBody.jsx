@@ -26,12 +26,9 @@ export default function TableBody({
           <tbody>
             {loading ? (
               <>
-                <SkeletonRow />
-                <SkeletonRow />
-                <SkeletonRow />
-                <SkeletonRow />
-                <SkeletonRow />
-                <SkeletonRow />
+                {Array.from({ length: 6 }).map((_, index) => (
+                    <SkeletonRow key={index} />
+                ))}
               </>
             ) : hasRows ? (
               rows.map((row) => (

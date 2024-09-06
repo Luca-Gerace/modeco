@@ -29,8 +29,9 @@ export default function Stats() {
     <section className="px-4 md:px-0 py-3 flex flex-col gap-16">
       { loading ? (
         <>
-            <SkeletonStats />
-            <SkeletonStats />
+            {Array.from({ length: 2 }).map((_, index) => (
+                <SkeletonStats key={index} />
+            ))}
         </>
       ) : (
         <>

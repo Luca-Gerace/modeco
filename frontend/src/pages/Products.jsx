@@ -88,14 +88,9 @@ export default function Products() {
         {
           loading ? (
             <>
-              <SkeletonProductCard />
-              <SkeletonProductCard />
-              <SkeletonProductCard />
-              <SkeletonProductCard />
-              <SkeletonProductCard />
-              <SkeletonProductCard />
-              <SkeletonProductCard />
-              <SkeletonProductCard />
+              {Array.from({ length: 8 }).map((_, index) => (
+                  <SkeletonProductCard key={index} />
+              ))}
             </>
           ) : (
             <>
