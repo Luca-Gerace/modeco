@@ -137,7 +137,7 @@ export default function EditProductModal({ open, handleOpen, productData = {}, s
                 </DialogHeader>
                 <DialogBody className='border-t'>
                     <form>
-                        <div className='flex flex-col gap-4 py-4 overflow-scroll h-[32rem]'>
+                        <div className='flex flex-col gap-4 py-4 overflow-scroll h-[30rem]'>
                             <Input
                                 label="Name"
                                 name="name"
@@ -250,7 +250,7 @@ export default function EditProductModal({ open, handleOpen, productData = {}, s
                             )}
                         </div>
                         <div className="flex justify-between mt-6">
-                            <Button type="button" onClick={handleSubmit} className='bg-green-500 rounded-full px-6'>
+                            <Button type="button" onClick={handleSubmit} className='flex items-center bg-green-500 rounded-full px-6 m-auto'>
                                 Update Product
                             </Button>
                         </div>

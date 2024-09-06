@@ -44,7 +44,7 @@ export default function Products() {
     setProducts(filteredData);
   }, [productFilter, searchTerm, allProducts]);
 
-  const tableHeaders = ["Image", "Name", "Brand", "Category", "Quantity", "Price", "Product details"];
+  const tableHeaders = ["Image", "Name", "Brand", "Quantity", "Sale", "Price", "Product details"];
 
   return (
     <div className="px-4">

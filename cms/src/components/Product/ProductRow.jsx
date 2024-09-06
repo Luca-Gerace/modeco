@@ -25,11 +25,6 @@ export default function ProductRow({ rowData }) {
                 </Typography>
             </td>
             <td className="p-4">
-                <Typography variant="small" color="blue-gray" className="font-normal">
-                    {rowData.category}
-                </Typography>
-            </td>
-            <td className="p-4">
                 <div className="w-max">
                     <Chip
                         variant="ghost"
@@ -40,8 +35,30 @@ export default function ProductRow({ rowData }) {
                 </div>
             </td>
             <td className="p-4">
+                <div className="w-max">
+                    <Chip
+                        variant="ghost"
+                        size="sm"
+                        value={rowData.onSale ? `${rowData.discount}%` : "NO"}
+                        color={rowData.onSale ? "pink" : "blue-gray"}
+                        className={rowData.onSale ? "text-pink-900 px-3" : "text-gray-900 px-4"}
+                    />
+                </div>
+            </td>
+            <td className="p-4">
                 <Typography variant="small" color="blue-gray" className="font-normal">
-                    &euro;{rowData.price.toFixed(2)}
+                    {
+                        rowData.onSale ? (
+                            <>
+                            <span className="line-through">&euro;{rowData.price.toFixed(2)}</span> <strong>&euro;{rowData.discountedPrice.toFixed(2)}</strong>
+                            </>
+                        ) : (
+                            <>
+                            &euro;{rowData.price.toFixed(2)}
+                            </>
+                        )
+                    }
+                    
                 </Typography>
             </td>
             <td className="py-4 w-44 ps-8 pe-0">
