@@ -8,13 +8,13 @@ export default function ShopSecondHand() {
   return (
     <>
       <ProductSlider
-        filteredCategory="second hand"
+        filteredCategory="second_hand"
         bgColor="bg-[#9146A1]"
         title="Abbigliamento Usato"
         subtitle="in offerta"
         altColor="text-green-500"
         textColor="text-white"
-        link={`/products?category=${encodeURIComponent("second hand")}`}
+        link={`/products?category=second_hand`}
         anchor="Vedi tutti i prodotti usati"
       />
       <div className="flex flex-col gap-10 py-10 px-4 lg:px-0">
@@ -24,25 +24,25 @@ export default function ShopSecondHand() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           <ImageCard 
             title='T-shirt' 
-            link={`/products?category=${encodeURIComponent("second hand")}&type=${encodeURIComponent("T-shirt")}`}
+            link={`/products?category=second_hand&type=${encodeURIComponent("T-shirt")}`}
             backgroundClass='bg-green-300' 
             imageClass='w-full bg-contain tshirt' 
           />
           <ImageCard 
             title='Felpe' 
-            link={`/products?category=${encodeURIComponent("second hand")}&type=${encodeURIComponent("Sweatshirt")}`}
+            link={`/products?category=second_hand&type=${encodeURIComponent("Sweatshirt")}`}
             backgroundClass='bg-[#74c9c9]' 
             imageClass='w-full bg-contain sweatshirt' 
           />
           <ImageCard 
             title='Giacche' 
-            link={`/products?category=${encodeURIComponent("second hand")}&type=${encodeURIComponent("Jacket")}`}
+            link={`/products?category=second_hand&type=${encodeURIComponent("Jacket")}`}
             backgroundClass='bg-[#74c9c9] md:bg-green-300' 
             imageClass='w-full bg-contain jacket' 
           />
           <ImageCard 
             title='Pantaloni' 
-            link={`/products?category=${encodeURIComponent("second hand")}&type=${encodeURIComponent("Pants")}`}
+            link={`/products?category=second_hand&type=${encodeURIComponent("Pants")}`}
             backgroundClass='bg-green-300 md:bg-[#74c9c9]' 
             imageClass='w-full bg-contain pants' 
           />

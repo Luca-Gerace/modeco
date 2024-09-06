@@ -150,7 +150,7 @@ function EditProductModal({ open, handleOpen, productData = {}, setProduct }) {
                                 value={editedProduct.quantity}
                                 onChange={(e) => handleChange(e.target.value, 'quantity')}
                             />
-                            {(editedProduct.category === 'clothes' || editedProduct.category === 'second hand') && (
+                            {(editedProduct.category === 'clothes' || editedProduct.category === 'second_hand') && (
                                 <>
                                     <Input
                                         label="Color"

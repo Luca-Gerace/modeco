@@ -54,8 +54,8 @@ export default function Products() {
           { value: "all", label: "All products" },
           { value: "clothes", label: "Clothes" },
           { value: "cosmetics", label: "Cosmetics" },
-          { value: "food and beverage", label: "Food and Beverage" },
-          { value: "second hand", label: "Second Hand" }
+          { value: "food_and_beverage", label: "Food and Beverage" },
+          { value: "second_hand", label: "Second Hand" }
         ]}
         filterValue={productFilter}
         onFilterChange={setProductFilter}

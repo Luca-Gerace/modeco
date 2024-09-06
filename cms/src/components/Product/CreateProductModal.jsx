@@ -81,7 +81,7 @@ export default function CreateProductModal({ open, handleOpen, setAllProducts })
         const validateStep2 = () => {
             if (newProduct.description && newProduct.price && newProduct.quantity) {
                 setIsStep2Valid(true);
-            } else if ((newProduct.category === 'clothes' || newProduct.category === 'second hand') && (newProduct.color && newProduct.size)) {
+            } else if ((newProduct.category === 'clothes' || newProduct.category === 'second_hand') && (newProduct.color && newProduct.size)) {
                 setIsStep2Valid(true);
             } else {
                 setIsStep2Valid(false);
@@ -218,8 +218,8 @@ export default function CreateProductModal({ open, handleOpen, setAllProducts })
                                     >
                                         <Option value="clothes">Clothes</Option>
                                         <Option value="cosmetics">Cosmetics</Option>
-                                        <Option value="food and beverage">Food and Beverage</Option>
-                                        <Option value="second hand">Second Hand</Option>
+                                        <Option value="food_and_beverage">Food and Beverage</Option>
+                                        <Option value="second_hand">Second Hand</Option>
                                     </Select>
                                     <select
                                         className="peer w-full h-[40px] bg-transparent text-blue-gray-700 transition-all border focus:border-2 placeholder:opacity-0 focus:placeholder:opacity-100 text-sm px-3 py-2.5 rounded-[7px] border-gray-500  focus:border-t-[#333]"
@@ -232,14 +232,14 @@ export default function CreateProductModal({ open, handleOpen, setAllProducts })
                                         required
                                     >
                                         <option value="" disabled>Subcategory</option>
-                                        {category === "clothes" || category === "second hand" ? (
+                                        {category === "clothes" || category === "second_hand" ? (
                                             <>
                                                 <option value="T-shirt">T-shirt</option>
                                                 <option value="Sweatshirt">Sweatshirt</option>
                                                 <option value="Jacket">Jacket</option>
                                                 <option value="Pants">Pants</option>
                                             </>
-                                        ) : category === "food and beverage" ? (
+                                        ) : category === "food_and_beverage" ? (
                                             <>
                                                 <option value="Dishes">Ready meals</option>
                                                 <option value="Beverage">Beverage</option>
@@ -328,7 +328,7 @@ export default function CreateProductModal({ open, handleOpen, setAllProducts })
                                         onChange={(e) => handleChange(e.target.value, 'quantity')}
                                         required
                                     />
-                                    {category === "clothes" || category === "second hand" ? (
+                                    {category === "clothes" || category === "second_hand" ? (
                                         <>
                                             <Input
                                                 type="text"

@@ -8,13 +8,13 @@ export default function ShopFoodAndBaverage() {
   return (
     <>
       <ProductSlider
-        filteredCategory="food and beverage"
+        filteredCategory="food_and_beverage"
         bgColor="bg-[#9146A1]"
         title="Cibo e Bevande"
         subtitle="in offerta"
         altColor="text-green-500"
         textColor="text-white"
-        link={`/products?category=${encodeURIComponent("food and beverage")}`}
+        link={`/products?category=food_and_beverage`}
         anchor="Vedi tutti i prodotti di cibo e bevande"
       />
       <div className="flex flex-col gap-10 py-10 px-4 lg:px-0">
@@ -24,25 +24,25 @@ export default function ShopFoodAndBaverage() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           <ImageCard 
             title='Piatti pronti' 
-            link={`/products?category=${encodeURIComponent("food and beverage")}&type=${encodeURIComponent("dishes")}`}
+            link={`/products?category=food_and_beverage&type=${encodeURIComponent("dishes")}`}
             backgroundClass='bg-green-300' 
             imageClass='w-full bg-contain dishes' 
           />
           <ImageCard 
             title='Bevande' 
-            link={`/products?category=${encodeURIComponent("food and beverage")}&type=${encodeURIComponent("beverage")}`}
+            link={`/products?category=food_and_beverage&type=${encodeURIComponent("beverage")}`}
             backgroundClass='bg-[#74c9c9]' 
             imageClass='w-full bg-contain beverage' 
           />
           <ImageCard 
             title='Stuzzichini' 
-            link={`/products?category=${encodeURIComponent("food and beverage")}&type=${encodeURIComponent("apetizer")}`}
+            link={`/products?category=food_and_beverage&type=${encodeURIComponent("apetizer")}`}
             backgroundClass='bg-[#74c9c9] md:bg-green-300' 
             imageClass='w-full bg-contain apetizers' 
           />
           <ImageCard 
             title='Dessert' 
-            link={`/products?category=${encodeURIComponent("food and beverage")}&type=${encodeURIComponent("dessert")}`}
+            link={`/products?category=food_and_beverage&type=${encodeURIComponent("dessert")}`}
             backgroundClass='bg-green-300 md:bg-[#74c9c9]' 
             imageClass='w-full bg-contain desserts' 
           />

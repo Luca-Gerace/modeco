@@ -1,87 +1,112 @@
+import ProductsFilter from '../../components/Product/ProductsFilter'; 
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { getProducts } from '../../services/api';
 import ProductCard from '../../components/Product/ProductCard';
-import { Input } from "@material-tailwind/react";
+import { Input, Select, Option, Button } from "@material-tailwind/react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import SkeletonProductCard from '../../components/Skeleton/SkeletonProductCard';
-
-const TITLES = {
-  clothes: 'Abbigliamento',
-  'food-and-beverage': 'Cibo e bevande',
-  'second-hand': 'Abbigliamento usato',
-  cosmetics: 'Cosmetici'
-};
 
 export default function Products() {
   const [products, setProducts] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
-  const category = searchParams.get('category');
-  const type = searchParams.get('type');
+  const [sortOrder, setSortOrder] = useState("");
+  const [filterModalOpen, setFilterModalOpen] = useState(false);
+
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const data = await getProducts();
         setAllProducts(data);
-
+  
         let filteredProducts = data;
-
-        // Applicare il filtro per categoria e tipo
+  
+        const category = searchParams.get('category');
+        const type = searchParams.get('type');
+        const price = searchParams.get('price');
+  
         if (category) {
           filteredProducts = filteredProducts.filter(product => product.category === category);
         }
-
+  
         if (type) {
-          filteredProducts = filteredProducts.filter(product => product.type === type);
+          const typesArray = decodeURIComponent(type).split(',');
+          console.log('Types Array:', typesArray); // Debug
+          filteredProducts = filteredProducts.filter(product => typesArray.includes(product.type));
         }
 
+        if (price) {
+          filteredProducts = filteredProducts.filter(product => product.price <= price);
+        }
+  
         setProducts(filteredProducts);
+        console.log('Filtered Products:', filteredProducts); // Debug
         setLoading(false);
       } catch (error) {
         console.error('Errore nel recupero dei prodotti:', error);
         setLoading(false);
       }
     };
-
+  
     fetchProducts();
-  }, [category, type]);
-
-  useEffect(() => {
-    // Filtra i prodotti in base al termine di ricerca
-    const filteredProducts = allProducts.filter(product => {
-      const matchesCategory = !category || product.category === category;
-      const matchesType = !type || product.type === type;
-      const matchesSearchTerm = (product.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-        product.brand?.name.toLowerCase().includes(searchTerm.toLowerCase()));
-      return matchesCategory && matchesType && matchesSearchTerm;
-    });
-
-    setProducts(filteredProducts);
-  }, [searchTerm, category, type, allProducts]);
-
+  }, [searchParams]);
+  
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
 
-  const pageTitle = category && TITLES[category] ? TITLES[category] : 'Tutti i prodotti';
+  const handleSortChange = (e) => {
+    setSortOrder(e);
+  };
+
+  const applyFilters = (newFilters) => {
+    const params = {};
+    if (newFilters.category) {
+      params.category = newFilters.category;
+    }
+    if (newFilters.price) {
+      params.price = newFilters.price;
+    }
+    if (newFilters.type.length > 0) {
+      params.type = encodeURIComponent(newFilters.type.join(','));
+    }
+
+    setSearchParams(params);
+    setFilterModalOpen(false);
+  };
+
+  const handleOpenFilterModal = () => setFilterModalOpen(!filterModalOpen);
 
   return (
     <div className="container mx-auto px-4">
       <div className='flex w-full flex-col md:flex-row gap-4 items-center justify-between mt-2 mb-8'>
-        <h1 className="text-2xl font-bold">
-          {pageTitle}
-        </h1>
-        <div className="w-full md:w-72">
-          <Input
-            label="Cerca un prodotto"
-            icon={<MagnifyingGlassIcon className="h-5 w-5" />}
-            value={searchTerm}
-            onChange={handleSearchChange}
-          />
+        <div className="flex gap-4 w-full md:w-auto">
+          <div className="w-full md:w-72">
+            <Input
+              label="Cerca un prodotto"
+              icon={<MagnifyingGlassIcon className="h-5 w-5" />}
+              value={searchTerm}
+              onChange={handleSearchChange}
+            />
+          </div>
+          <div className="w-full md:w-72">
+            <Select
+              label="Ordina per prezzo"
+              value={sortOrder}
+              onChange={handleSortChange}
+            >
+              <Option value="">Nessun ordinamento</Option>
+              <Option value="lowToHigh">dal più basso al più alto</Option>
+              <Option value="highToLow">dal più alto al più basso</Option>
+            </Select>
+          </div>
+          <Button onClick={handleOpenFilterModal} className="md:w-auto w-full">
+            Filtra
+          </Button>
         </div>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -107,6 +132,13 @@ export default function Products() {
           )
         }
       </div>
+      
+      <ProductsFilter 
+        open={filterModalOpen} 
+        handleOpen={handleOpenFilterModal} 
+        applyFilters={applyFilters}
+        allProducts={allProducts} 
+      />
     </div>
   );
 }

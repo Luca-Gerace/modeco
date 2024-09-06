@@ -34,7 +34,7 @@ export default function Product() {
   }, [id]);
 
   const handleAddToCart = async () => {
-    if ((product.category === 'clothes' || product.category === 'second hand') && !size) {
+    if ((product.category === 'clothes' || product.category === 'second_hand') && !size) {
       setSizeError(true); // Mostra l'errore se la taglia non è selezionata
       return; // Blocca l'aggiunta al carrello
     }
@@ -86,7 +86,7 @@ export default function Product() {
               <h1 className="font-bold text-3xl mb-2 text-[#96A7AF]">{product.name}</h1>
               <p className="text-2xl font-bold mb-4">€{product.price?.toFixed(2)}</p>
             </div>
-            {(product.category === 'clothes' || product.category === 'second hand') && (
+            {(product.category === 'clothes' || product.category === 'second_hand') && (
               <div>
                 <label htmlFor="size" className="block text-base font-medium mb-2">Taglia</label>
                 <select 

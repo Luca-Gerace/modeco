@@ -20,17 +20,17 @@ const productSchema = new mongoose.Schema({
   image: { type: String, required: true },
   category: { 
     type: String,
-    enum: ['clothes', 'cosmetics', 'food and beverage', 'second hand'],
+    enum: ['clothes', 'cosmetics', 'food_and_beverage', 'second_hand'],
     default: 'clothes',
     required: true
   },
   color: { 
     type: String, 
-    required: function() { return this.category === 'clothes' || this.category === 'second hand'; } 
+    required: function() { return this.category === 'clothes' || this.category === 'second_hand'; } 
   },
   size: { 
     type: [String], 
-    required: function() { return this.category === 'clothes' || this.category === 'second hand'; } 
+    required: function() { return this.category === 'clothes' || this.category === 'second_hand'; } 
   },
   type: { type: String, required: true },
   reviews: [reviewSchema],

@@ -57,7 +57,7 @@ export default function Product() {
               <p className="text-2xl font-bold mb-4">€{product.price?.toFixed(2)}</p>
               <h4 className="font-bold">Quantity:</h4>
               <p className="mb-4">{product.quantity}</p>
-              {(product.category === 'clothes' || product.category === 'second hand') && (
+              {(product.category === 'clothes' || product.category === 'second_hand') && (
                 <>
                   <h4 className="font-bold">Color:</h4>
                   <p className="mb-4">{product.color}</p>
