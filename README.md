@@ -1,4 +1,4 @@
-# 🌿 MODECO - Il Blog Green
+# 🌿 MODECO - Il Marketplace ecologico
 
 Benvenuti nel repository di MODECO, il vostro punto di riferimento per esplorare articoli e approfondimenti sulla moda sostenibile, pratiche eco-friendly e consigli per uno stile di vita più consapevole, in armonia con il pianeta.
 
