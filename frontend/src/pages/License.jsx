@@ -30,16 +30,16 @@ export default function License() {
                 I <span className='text-green-500'>Certificati</span> di produzione <span className='text-green-500'>sostenibile</span>
             </h1>
             <p className='text-[18px] lg:text-[20px] px-4 lg:px-0'>
-                Esplora articoli e approfondimenti su <strong>moda sostenibile</strong>, pratiche <strong>eco-friendly</strong> e consigli per uno <strong>stile di vita più consapevole</strong>, in armonia con il pianeta.
+              Tutti i prodotti rispettano <strong>rigorosi standard di produzione</strong>, garantendo trasparenza, etica e un <strong>impatto ridotto sull&apos;ambiente</strong>. Dai materiali ai metodi di lavorazione, ci impegniamo a offrirti solo <strong>prodotti di qualità</strong> di brand che rispettano e <strong>proteggono il nostro pianeta</strong>.
             </p>
             <ul className="flex flex-col gap-8 pt-6">
                 { !loading && (
                     <>
                         {licenses.map((license) => (
-                            <li key={license._id} className="flex gap-6 items-center pb-8 border-b last:pb-0 last:border-0">
+                            <li key={license._id} className="flex gap-6 items-start pb-8 border-b last:pb-0 last:border-0">
                                 <img src={license.image} className="w-24 h-24 rounded-full border border-green-500" />
                                 <div className="flex flex-col">
-                                    <h2 className="font-bold text-[22px]">{license.name}</h2>
+                                    <h2 className="font-bold text-[22px] pb-3">{license.name}</h2>
                                     <p className='text-[18px] lg:text-[20px]'>{license.description}</p>
                                 </div>
                             </li>

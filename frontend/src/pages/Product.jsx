@@ -157,10 +157,10 @@ export default function Product({ setCartCount }) {
               <h2 className="text-[20px] font-bold pb-4 border-b">Cerfificati di produzione sostenibile</h2>
               <ul>
                 {product.licenses.map((license) => (
-                  <li key={license._id} className="flex gap-3 items-center pb-3 last:pb-0">
+                  <li key={license._id} className="flex gap-3 items-start pb-6 last:pb-0">
                     <img src={license.image} className="w-12 h-12 rounded-full border border-green-500" />
                     <div className="flex flex-col">
-                      <h3 className="font-bold text-[18px]">{license.name}</h3>
+                      <h3 className="font-bold text-[18px] pb-2">{license.name}</h3>
                       <p>{license.description}</p>
                     </div>
                   </li>
