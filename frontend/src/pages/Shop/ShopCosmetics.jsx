@@ -24,25 +24,25 @@ export default function ShopCosmetics() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           <ImageCard 
             title='Profumi' 
-            link={`/products?category=${encodeURIComponent("cosmetics")}&type=${encodeURIComponent("parfum")}`}
+            link={`/products?category=${encodeURIComponent("cosmetics")}&type=${encodeURIComponent("Parfum")}`}
             backgroundClass='bg-green-300' 
             imageClass='w-full bg-contain parfums' 
           />
           <ImageCard 
             title='Per il corpo' 
-            link={`/products?category=${encodeURIComponent("cosmetics")}&type=${encodeURIComponent("lotion")}`}
+            link={`/products?category=${encodeURIComponent("cosmetics")}&type=${encodeURIComponent("Lotion")}`}
             backgroundClass='bg-[#74c9c9]' 
             imageClass='w-full bg-contain lotions' 
           />
           <ImageCard 
             title='Per il viso' 
-            link={`/products?category=${encodeURIComponent("cosmetics")}&type=${encodeURIComponent("beauty")}`}
+            link={`/products?category=${encodeURIComponent("cosmetics")}&type=${encodeURIComponent("Beauty")}`}
             backgroundClass='bg-[#74c9c9] md:bg-green-300' 
             imageClass='w-full bg-contain beauty' 
           />
           <ImageCard 
             title='Trucchi' 
-            link={`/products?category=${encodeURIComponent("cosmetics")}&type=${encodeURIComponent("makeup")}`}
+            link={`/products?category=${encodeURIComponent("cosmetics")}&type=${encodeURIComponent("Makeup")}`}
             backgroundClass='bg-green-300 md:bg-[#74c9c9]' 
             imageClass='w-full bg-contain makeup' 
           />

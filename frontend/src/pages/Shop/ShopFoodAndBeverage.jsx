@@ -24,25 +24,25 @@ export default function ShopFoodAndBaverage() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           <ImageCard 
             title='Piatti pronti' 
-            link={`/products?category=food_and_beverage&type=${encodeURIComponent("dishes")}`}
+            link={`/products?category=food_and_beverage&type=${encodeURIComponent("Dishes")}`}
             backgroundClass='bg-green-300' 
             imageClass='w-full bg-contain dishes' 
           />
           <ImageCard 
             title='Bevande' 
-            link={`/products?category=food_and_beverage&type=${encodeURIComponent("beverage")}`}
+            link={`/products?category=food_and_beverage&type=${encodeURIComponent("Beverage")}`}
             backgroundClass='bg-[#74c9c9]' 
             imageClass='w-full bg-contain beverage' 
           />
           <ImageCard 
             title='Stuzzichini' 
-            link={`/products?category=food_and_beverage&type=${encodeURIComponent("apetizer")}`}
+            link={`/products?category=food_and_beverage&type=${encodeURIComponent("Appetizer")}`}
             backgroundClass='bg-[#74c9c9] md:bg-green-300' 
             imageClass='w-full bg-contain apetizers' 
           />
           <ImageCard 
             title='Dessert' 
-            link={`/products?category=food_and_beverage&type=${encodeURIComponent("dessert")}`}
+            link={`/products?category=food_and_beverage&type=${encodeURIComponent("Dessert")}`}
             backgroundClass='bg-green-300 md:bg-[#74c9c9]' 
             imageClass='w-full bg-contain desserts' 
           />

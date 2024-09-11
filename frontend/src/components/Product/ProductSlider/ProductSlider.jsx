@@ -66,6 +66,7 @@ export default function ProductSlider({ filteredCategory, bgColor, title, altCol
             </>
           ) : (
             products
+              .filter(product => product.onSale === true)
               .slice(0, 4)
               .map((product) => (
                 <div key={product._id} className="flex-shrink-0 w-1/2 sm:w-1/3 md:w-1/4 last:mr-4">
