@@ -20,7 +20,7 @@ export default function Products() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const data = (await getProducts()).slice().reverse();
+        const data = (await getProducts()).reverse();
         setAllProducts(data);
         setLoading(false);
       } catch (error) {

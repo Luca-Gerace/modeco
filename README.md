@@ -65,7 +65,7 @@ A differenza del Frontend, il CMS ha tutte le rotte delle pagine protette in mod
 Per iniziare a utilizzare MODECO, segui questi passi:
 1. Clona il repository.
 2. cd backend && npm -i.
-3. cd frondend && npm -i.
+3. cd frontend && npm -i.
 4. cd cms && npm -i.
 5. Nella cartella backend creare e popolare il file .env clonando il .env.dist.
 6. Avvia il server backend - node server.js.
